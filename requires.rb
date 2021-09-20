@@ -14,3 +14,7 @@ require_relative 'utilities/populator'
 require_relative 'utilities/colors'
 require_relative 'utilities/fertility'
 require_relative 'utilities/mortality'
+
+require_relative 'utilities/resource'
+
+
