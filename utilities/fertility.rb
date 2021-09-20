@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Fertility
+  def initialize
+    @resource = Resource.new
+  end
+
   def probability(age, color_id)
     return 0.00 unless valid?(age) && valid?(color_id)
 
@@ -29,11 +33,15 @@ class Fertility
     adj
   end
 
+  def adjustment_by_resource
+    @resource.level - 1.0
+  end
+
   def valid?(parm)
     (parm.is_a? Integer) && parm >= 0
   end
 
   def adjusted_fertility(age, color_id)
-    birth_prob_by_age[age] + adjustment_by_color[color_id]
+    birth_prob_by_age[age] + adjustment_by_color[color_id] + adjustment_by_resource
   end
 end

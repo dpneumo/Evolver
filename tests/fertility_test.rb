@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../utilities/resource'
 require_relative '../utilities/fertility'
 require_relative 'test_helper'
 

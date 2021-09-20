@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require_relative '../utilities/resource'
 require_relative '../utilities/mortality'
 require_relative 'test_helper'
 
 class MortalityTest < Minitest::Test
   def test_probability_returns_a_result_between_0_and_1
     age = 4
+
     color_id = 2
     assert_includes 0..1, Mortality.new.probability(age, color_id)
   end
