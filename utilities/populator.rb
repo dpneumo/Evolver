@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Populator
-  def initialize(id_generator)
-    @id_generator = id_generator
+  def initialize(toolbox)
+    @id_generator = toolbox.id_generator
   end
 
   def populate(size)

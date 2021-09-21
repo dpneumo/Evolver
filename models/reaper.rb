@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Reaper
-  def initialize(stats:)
-    @mortality = Mortality.new
-    @stats = stats
+  def initialize(toolbox)
+    @mortality = toolbox.mortality
+    @stats = toolbox.stats
   end
 
   def survive(critters)

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Fissioner
-  def initialize(id_generator)
-    @id_generator = id_generator
-    @fertility = Fertility.new
+  def initialize(toolbox)
+    @id_generator = toolbox.id_generator
+    @fertility = toolbox.fertility
   end
 
   def birth(critters)

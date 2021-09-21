@@ -9,6 +9,7 @@ require_relative 'models/reaper'
 require_relative 'models/stats'
 require_relative 'models/publisher'
 
+require_relative 'utilities/toolbox'
 require_relative 'utilities/id_generator'
 require_relative 'utilities/populator'
 require_relative 'utilities/colors'

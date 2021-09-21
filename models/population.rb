@@ -2,11 +2,11 @@
 
 class Population
   def initialize(initial_pop_size: 10)
-    @stats = Stats.new
-    @id_gen    = IDGenerator.new
-    @populator = Populator.new(@id_gen)
-    @fissioner = Fissioner.new(@id_gen)
-    @reaper    = Reaper.new(stats: @stats)
+    @toolbox = Toolbox.new
+    @stats = @toolbox.stats
+    @populator = Populator.new(@toolbox)
+    @fissioner = Fissioner.new(@toolbox)
+    @reaper    = Reaper.new(@toolbox)
     @publisher = Publisher.new
     @critters  = @populator.populate(initial_pop_size)
   end
