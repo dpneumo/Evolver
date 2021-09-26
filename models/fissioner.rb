@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Fissioner
+  include UtilityMethods
+
   def initialize(toolbox)
     @toolbox = toolbox
     @id_generator = toolbox.id_generator
@@ -16,29 +18,24 @@ class Fissioner
   end
 
   private
+    def new_child(critter)
+      return unless child_this_period?(critter)
 
-  def new_child(critter)
-    return unless child_this_period?(critter)
+      Critter.new(@toolbox,
+                  parent_id: critter.id,
+                  color_id: child_color_id(critter))
+    end
 
-    Critter.new(@toolbox,
-                parent_id: critter.id,
-                color_id: child_color_id(critter))
-  end
+    def child_this_period?(critter)
+      loaded_coin = @fertility.probability(critter.age, critter.color_id)
+      flip loaded_coin
+    end
 
-  def child_this_period?(critter)
-    rand < @fertility.probability(critter.age, critter.color_id)
-  end
+    def child_color_id(critter)
+      roll loaded_die(critter.color_id)
+    end
 
-  def child_color_id(critter)
-    mutated_color_id(critter.color_id)
-  end
-
-  def mutated_color_id(color_id)
-    die = loaded_die(color_id)
-    die.max_by { |_, weight| rand**(1.0 / weight) }.first
-  end
-
-  def loaded_die(color_id)
-    Colors.mutations[color_id]
-  end
+    def loaded_die(color_id)
+      Colors.mutations[color_id]
+    end
 end

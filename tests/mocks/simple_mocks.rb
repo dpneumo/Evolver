@@ -46,9 +46,14 @@ class MockResource
 end
 
 class MockStats
-  def initialize; end
+  def initialize(statstore:); end
   def add_population_data(critters, period); end
   def add_death_data(critter); end
+end
+
+class MockStatStore
+  attr_reader :data, :color_age_counts, :pop_counts
+  def initialize; end
 end
 
 class MockPublisher
@@ -57,14 +62,15 @@ class MockPublisher
 end
 
 class MockToolbox
-  attr_reader :id_generator, :stats, :resource, :colors
+  attr_reader :id_generator, :stats, :statstore, :resource, :colors
   attr_reader :fertility, :mortality
 
-  def initialize( id_generator: MockIDGenerator1, stats: MockStats, resource: MockResource,
+  def initialize( id_generator: MockIDGenerator1, stats: MockStats, statstore: MockStatStore, resource: MockResource,
                   colors: MockColors, fertility: MockFertility1, mortality: MockMortality1 )
-    @stats        = stats.new
     @id_generator = id_generator.new
-    @resource     = resource.new(stats: @stats)
+    @statstore    = statstore.new
+    @stats        = stats.new(statstore: @statstore)
+    @resource     = resource.new(statstore: @statstore)
     @fertility    = fertility.new(resource: @resource)
     @mortality    = mortality.new(resource: @resource)
     @colors       = colors.new
