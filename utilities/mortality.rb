@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Mortality
-  def initialize
-    @resource = Resource.new
+  def initialize(resource:)
+    @resource = resource
   end
 
   def probability(age, color_id)
@@ -39,7 +39,7 @@ class Mortality
   end
 
   def adjustment_by_resource
-    @resource.level - 1.0
+    1.0 * (1.0 - @resource.level)
   end
 
   def valid?(parm)
@@ -47,6 +47,7 @@ class Mortality
   end
 
   def adjusted_mortality(age, color_id)
+    #binding.pry
     death_prob_by_age[age] + adjustment_by_color[color_id] + adjustment_by_resource
   end
 end

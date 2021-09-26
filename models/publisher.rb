@@ -4,7 +4,7 @@ class Publisher
   def publish(stats)
     stats.pop_counts.each do |period, data|
       mean_age = mean(data[:count], data[:weighted_age]).round(2)
-      puts "period: #{period}, count: #{data[:count]}, mean age: #{mean_age}"
+      puts "period: #{period}, population: #{data[:count]}, mean age: #{mean_age}"
     end
     mean_death_age = mean(stats.death_counts['all'], stats.death_age_counts['all']).round(2)
     puts "\n"

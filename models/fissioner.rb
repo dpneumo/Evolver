@@ -2,6 +2,7 @@
 
 class Fissioner
   def initialize(toolbox)
+    @toolbox = toolbox
     @id_generator = toolbox.id_generator
     @fertility = toolbox.fertility
   end
@@ -19,7 +20,7 @@ class Fissioner
   def new_child(critter)
     return unless child_this_period?(critter)
 
-    Critter.new(@id_generator,
+    Critter.new(@toolbox,
                 parent_id: critter.id,
                 color_id: child_color_id(critter))
   end

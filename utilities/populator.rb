@@ -2,12 +2,12 @@
 
 class Populator
   def initialize(toolbox)
-    @id_generator = toolbox.id_generator
+    @toolbox = toolbox
   end
 
   def populate(size)
     size.times.map do |_n|
-      Critter.new(@id_generator.next)
+      Critter.new(@toolbox)
     end
   end
 end

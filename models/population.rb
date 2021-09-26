@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 class Population
-  def initialize(initial_pop_size: 10)
-    @toolbox = Toolbox.new
-    @stats = @toolbox.stats
-    @populator = Populator.new(@toolbox)
-    @fissioner = Fissioner.new(@toolbox)
-    @reaper    = Reaper.new(@toolbox)
-    @publisher = Publisher.new
+  def initialize( initial_pop_size: 10, toolbox: Toolbox, populator: Populator,
+                  fissioner: Fissioner, reaper: Reaper, publisher: Publisher)
+    @toolbox = toolbox.new
+    @populator = populator.new(@toolbox)
+    @fissioner = fissioner.new(@toolbox)
+    @reaper    = reaper.new(@toolbox)
+    @publisher = publisher.new
     @critters  = @populator.populate(initial_pop_size)
+    @stats = @toolbox.stats
   end
 
-  def run(count: 10)
-    count.times { |i| cycle(i + 1) }
+  def run(periods: 10)
+    periods.times { |i| cycle(i + 1) }
     show_stats
   end
 

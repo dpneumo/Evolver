@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Fertility
-  def initialize
-    @resource = Resource.new
+  def initialize(resource:)
+    @resource = resource
   end
 
   def probability(age, color_id)
