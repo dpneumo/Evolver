@@ -15,7 +15,10 @@ class Population
 
   def run(periods: 1)
     periods.times { |i| cycle(i + 1) }
-    show_stats
+  end
+
+  def show_stats
+    @publisher.publish(@store)
   end
 
   private
@@ -40,10 +43,5 @@ class Population
 
     def record_data(period)
       @stats.add_population_data(@critters, period)
-    end
-
-    def show_stats
-      #'Stats'
-      @publisher.publish(@store)
     end
 end

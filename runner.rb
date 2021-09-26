@@ -3,4 +3,7 @@
 require_relative 'requires'
 require 'pry'
 
-Population.new(initial_pop_size: 10).run(periods: 10)
+population = Population.new(initial_pop_size: 10)
+
+population.run(periods: 10)
+population.show_stats
