@@ -11,18 +11,18 @@ class Reaper
   end
 
   def survive(critters)
-    critters.select { |critter| survives_this_period?(critter) }
+    critters.reject { |critter| dies_this_period?(critter) }
   end
 
   private
-    def survives_this_period?(critter)
-      survives = will_survive?(critter)
-      @stats.add_death_data(critter) unless survives
-      survives
+    def dies_this_period?(critter)
+      dies = will_die?(critter)
+      @stats.add_death_data(critter) if dies
+      dies
     end
 
-    def will_survive?(critter)
-      !flip biased_coin(critter)
+    def will_die?(critter)
+      flip biased_coin(critter)
     end
 
     def biased_coin(critter)

@@ -39,7 +39,7 @@ class Mortality
   end
 
   def adjustment_by_resource
-    1.0 * (1.0 - @resource.level)
+    1.0 - @resource.level
   end
 
   def valid?(parm)
@@ -47,7 +47,6 @@ class Mortality
   end
 
   def adjusted_mortality(age, color_id)
-    #binding.pry
     death_prob_by_age[age] + adjustment_by_color[color_id] + adjustment_by_resource
   end
 end

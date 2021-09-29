@@ -59,8 +59,12 @@ class MockStats
 end
 
 class MockStatStore
-  attr_reader :pop_counts; :death_counts; :death_age_counts
-  def initialize; end
+  attr_reader :pop_counts, :death_counts, :death_age_counts
+  def initialize
+    @pop_counts       = { 1 => 10, 2 => 20 }
+    @death_counts     = { 1 => 10, 2 => 20 }
+    @death_age_counts = { 1 => 40, 2 => 100 }
+  end
   def save_raw_data(critters, period); end
   def build_color_stats(period); end
   def build_population_stats(period); end
