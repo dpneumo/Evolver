@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class StatStore
-  attr_reader :data, :color_age_counts, :pop_counts,
-              :death_counts, :death_age_counts
+  attr_reader :pop_counts, :death_counts, :death_age_counts
 
   def initialize
   	@data = data_hash
@@ -10,6 +9,37 @@ class StatStore
     @pop_counts = population_hash
     @death_counts = death_hash
     @death_age_counts = death_age_hash
+  end
+
+  def save_raw_data(critters, period)
+    critters.each do |c|
+      color = Colors.colors[c.color_id].to_sym
+      age = c.age
+      @data[period][color][age] += 1
+    end
+  end
+
+  def build_color_stats(period)
+    @data[period].each do |color, agedata|
+      agedata.each do |age, cnt|
+        @color_age_counts[period][color][:weighted_age] += age * cnt
+        @color_age_counts[period][color][:count] += cnt
+      end
+    end
+  end
+
+  def build_population_stats(period)
+    @color_age_counts[period].each do |_color, data|
+      @pop_counts[period][:weighted_age] += data[:weighted_age]
+      @pop_counts[period][:count] += data[:count]
+    end
+  end
+
+  def build_death_stats(critter)
+    @death_counts[critter.color_id] += 1
+    @death_counts['all'] += 1
+    @death_age_counts[critter.color_id] += critter.age
+    @death_age_counts['all'] += critter.age
   end
 
   private

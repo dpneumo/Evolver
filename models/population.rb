@@ -7,7 +7,7 @@ class Population
     @populator = populator.new(@toolbox)
     @fissioner = fissioner.new(@toolbox)
     @reaper    = reaper.new(@toolbox)
-    @publisher = publisher.new
+    @publisher = publisher.new(toolbox: @toolbox)
     @critters  = @populator.populate(initial_pop_size)
     @stats = @toolbox.stats
     @store = @toolbox.statstore
@@ -18,7 +18,7 @@ class Population
   end
 
   def show_stats
-    @publisher.publish(@store)
+    @publisher.publish
   end
 
   private

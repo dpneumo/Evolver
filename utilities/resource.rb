@@ -4,8 +4,8 @@ class Resource
 
   CarryCap = 100
 
-  def initialize(statstore:)
-    @store = statstore
+  def initialize(stats:)
+    @stats = stats
   end
 
   def level
@@ -14,11 +14,11 @@ class Resource
 
   private
     def population
-      return 1 if @store.pop_counts.empty?
-      @store.pop_counts[last_period][:count]
+      return 1 if @stats.pop_counts.empty?
+      @stats.pop_counts[last_period][:count]
     end
 
     def last_period
-      @store.pop_counts.keys.last
+      @stats.pop_counts.keys.last
     end
 end
