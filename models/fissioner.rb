@@ -27,8 +27,7 @@ class Fissioner
     end
 
     def child_this_period?(critter)
-      loaded_coin = @fertility.probability(critter.age, critter.color_id)
-      flip loaded_coin
+      flip biased_coin(critter)
     end
 
     def child_color_id(critter)
@@ -37,5 +36,9 @@ class Fissioner
 
     def loaded_die(color_id)
       Colors.mutations[color_id]
+    end
+
+    def biased_coin(critter)
+      @fertility.probability(critter.age, critter.color_id)
     end
 end
