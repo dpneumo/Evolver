@@ -5,8 +5,8 @@ module UtilityMethods
     loaded_die.max_by { |_, weight| rand**(1.0 / weight) }.first
   end
 
-  def flip(loaded_coin)
-    rand < loaded_coin
+  def flip(biased_coin)
+    rand < biased_coin
   end
 
   def mean(total, weighted_value)

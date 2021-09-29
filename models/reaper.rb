@@ -22,7 +22,10 @@ class Reaper
     end
 
     def will_survive?(critter)
-      loaded_coin = @mortality.probability(critter.age, critter.color_id)
-      !flip loaded_coin
+      !flip biased_coin(critter)
+    end
+
+    def biased_coin(critter)
+      @mortality.probability(critter.age, critter.color_id)
     end
 end
