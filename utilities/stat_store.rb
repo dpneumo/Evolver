@@ -13,7 +13,7 @@ class StatStore
 
   def save_raw_data(critters, period)
     critters.each do |c|
-      color = Colors.colors[c.color_id].to_sym
+      color = c.color_name.to_sym
       age = c.age
       @data[period][color][age] += 1
     end
