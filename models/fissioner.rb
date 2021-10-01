@@ -35,7 +35,7 @@ class Fissioner
     end
 
     def loaded_die(color_id)
-      Colors.mutations[color_id]
+      @toolbox.colors.mutations[color_id]
     end
 
     def biased_coin(critter)
