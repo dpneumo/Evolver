@@ -29,16 +29,14 @@ class MockIDGenerator2
 end
 
 class MockColors
-  attr_reader :mutations
+  attr_reader :mutations, :colors
   def initialize
     @mutations = {
       0 => { 0 => 1.00, 1 => 0.00, 2 => 0.00 },
       1 => { 0 => 1.00, 1 => 0.00, 2 => 0.00 },
       2 => { 0 => 1.00, 1 => 0.00, 2 => 0.00 },
     }
-  end
-  def self.colors
-    { 0 => 'test_color', 1 => 'red', 2 => 'green', }
+    @colors = { 0 => 'test_color', 1 => 'red', 2 => 'green', }
   end
 end
 
