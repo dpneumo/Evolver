@@ -14,7 +14,8 @@ class Population
   end
 
   def run(periods: 1)
-    periods.times { |i| cycle(i + 1) }
+    return if periods < 1
+    periods.times { |i| cycle( period: (i+1) ) }
   end
 
   def show_stats
