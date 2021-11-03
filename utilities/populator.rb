@@ -5,9 +5,9 @@ class Populator
     @toolbox = toolbox
   end
 
-  def populate(size)
+  def populate(size, species)
     size.times.map do |_n|
-      Critter.new(@toolbox)
+      species.new(@toolbox)
     end
   end
 end

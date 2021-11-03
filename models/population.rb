@@ -3,12 +3,12 @@
 class Population
   def initialize( initial_pop_size: 10, toolbox: Toolbox, populator: Populator,
                   fissioner: Fissioner, reaper: Reaper, publisher: Publisher)
-    @toolbox = toolbox.new
+    @toolbox   = toolbox.new
     @populator = populator.new(@toolbox)
     @fissioner = fissioner.new(@toolbox)
     @reaper    = reaper.new(@toolbox)
     @publisher = publisher.new(toolbox: @toolbox)
-    @critters  = @populator.populate(initial_pop_size)
+    @critters  = @populator.populate(initial_pop_size, Critter)
     @stats = @toolbox.stats
     @store = @toolbox.statstore
   end
