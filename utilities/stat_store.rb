@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class StatStore
-  attr_reader :pop_counts, :death_counts, :death_age_counts
+  attr_reader :pop_counts, :death_age_counts
 
   def initialize
   	@data = data_hash
     @color_age_counts = color_age_hash
     @pop_counts = population_hash
-    @death_counts = death_hash
     @death_age_counts = death_age_hash
   end
 
@@ -36,10 +35,10 @@ class StatStore
   end
 
   def build_death_stats(critter)
-    @death_counts[critter.color_id] += 1
-    @death_counts['all'] += 1
-    @death_age_counts[critter.color_id] += critter.age
-    @death_age_counts['all'] += critter.age
+    @death_age_counts[critter.color_id][:weighted_age] += critter.age
+    @death_age_counts['all'][:weighted_age] += critter.age
+    @death_age_counts[critter.color_id][:count] += 1
+    @death_age_counts['all'][:count] += 1
   end
 
   private
@@ -71,11 +70,11 @@ class StatStore
       end
     end
 
-    def death_hash
-      Hash.new { |h, key| h[key] = 0 }
-    end
-
     def death_age_hash
-      Hash.new { |h, key| h[key] = 0 }
+      Hash.new do |h, color|
+        h[color] = Hash.new do |h1, key|
+          h1[key] = 0
+        end
+      end
     end
 end

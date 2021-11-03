@@ -20,10 +20,6 @@ class Stats
     @store.pop_counts
   end
 
-  def death_counts
-    @store.death_counts
-  end
-
   def death_age_counts
     @store.death_age_counts
   end

@@ -54,17 +54,25 @@ class MockStats
   def initialize(statstore:); end
   def add_population_data(critters, period); end
   def add_death_data(critter); end
-  def pop_counts()       = { 1 => 10, 2 => 20 }
-  def death_counts()     = { 1 => 10, 2 => 20 }
-  def death_age_counts() = { 1 => 40, 2 => 100 }
+  def pop_counts
+    { 1 => { weighted_age: 2, count: 2 },
+      2 => { weighted_age: 4, count: 3 } }
+  end
+  def death_age_counts
+    { 1 => { weighted_age: 40,  count: 10 },
+      2 => { weighted_age: 100, count: 20 },
+      'all' => { weighted_age: 140, count: 30 } }
+  end
 end
 
 class MockStatStore
   attr_reader :pop_counts, :death_counts, :death_age_counts
   def initialize
-    @pop_counts       = { 1 => 10, 2 => 20 }
-    @death_counts     = { 1 => 10, 2 => 20 }
-    @death_age_counts = { 1 => 40, 2 => 100 }
+    @pop_counts       = { 1 => { weighted_age: 2, count: 2 },
+                          2 => { weighted_age: 4, count: 3 } }
+    @death_age_counts = { 1     => { weighted_age: 40,  count: 10 },
+                          2     => { weighted_age: 100, count: 20 },
+                          'all' => { weighted_age: 140, count: 30 } }
   end
   def save_raw_data(critters, period); end
   def build_color_stats(period); end
