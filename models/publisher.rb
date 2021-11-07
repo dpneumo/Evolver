@@ -10,7 +10,8 @@ class Publisher
 
   def publish
     @stats.pop_counts.each do |period, data|
-      puts "period: #{period}, population: #{data[:count]}, mean age: #{mean_age(data)}"
+      count = data[:count]; weighted_age = data[:weighted_age]
+      puts "period: #{period}, population: #{data[:count]}, mean age: #{mean_age(count, weighted_age)}"
     end
     puts "\n"
     puts "mean age at death (all): #{mean_age_at_death_all}\n"
@@ -20,8 +21,8 @@ class Publisher
   end
 
   private
-    def mean_age(data)
-      mean(count: data[:count], weighted_value: data[:weighted_age]).round(2)
+    def mean_age(count, weighted_age)
+      mean(count: count, weighted_value: weighted_age).round(2)
     end
 
     def mean_age_at_death(color_id)
