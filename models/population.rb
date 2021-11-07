@@ -4,11 +4,11 @@ class Population
   def initialize( initial_pop_size: 10, toolbox: Toolbox, populator: Populator,
                   fissioner: Fissioner, reaper: Reaper, publisher: Publisher)
     @toolbox   = toolbox.new
-    @populator = populator.new(@toolbox)
-    @fissioner = fissioner.new(@toolbox)
-    @reaper    = reaper.new(@toolbox)
+    @populator = populator.new(toolbox: @toolbox)
+    @fissioner = fissioner.new(toolbox: @toolbox)
+    @reaper    = reaper.new(toolbox: @toolbox)
     @publisher = publisher.new(toolbox: @toolbox)
-    @critters  = @populator.populate(initial_pop_size, Critter)
+    @critters  = @populator.populate(size: initial_pop_size, species: Critter)
     @stats = @toolbox.stats
     @store = @toolbox.statstore
   end
@@ -31,11 +31,11 @@ class Population
     end
 
     def birth
-      @critters = @fissioner.birth(@critters)
+      @critters = @fissioner.birth(critters: @critters)
     end
 
     def survive
-      @critters = @reaper.survive(@critters)
+      @critters = @reaper.survive(critters: @critters)
     end
 
     def age
@@ -43,6 +43,6 @@ class Population
     end
 
     def record_data(period)
-      @stats.add_population_data(@critters, period)
+      @stats.add_population_data(critters: @critters, period: period)
     end
 end

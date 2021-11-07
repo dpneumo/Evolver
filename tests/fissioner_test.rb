@@ -13,18 +13,18 @@ class FissionerTest < Minitest::Test
     @mockfert1 = MockFertility1
     @tb0 = Toolbox.new(id_generator: @mockidgen1, fertility: @mockfert0)
     @tb1 = Toolbox.new(id_generator: @mockidgen1, fertility: @mockfert1)
-    @critters = [ Critter.new(@tb0), Critter.new(@tb0) ]
+    @critters = [ Critter.new(toolbox: @tb0), Critter.new(toolbox: @tb0) ]
   end
 
   def test_birth_does_not_create_child_for_fertility_probability_0
-    fis = Fissioner.new(@tb0)
-    assert_equal 2, fis.birth(@critters).count
+    fis = Fissioner.new(toolbox: @tb0)
+    assert_equal 2, fis.birth(critters: @critters).count
     @critters.each {|c| assert c.children_ids.empty? }
   end
 
   def test_birth_creates_child_for_fertility_probability_1
-    fis = Fissioner.new(@tb1)
-    assert_equal 4, fis.birth(@critters).count
+    fis = Fissioner.new(toolbox: @tb1)
+    assert_equal 4, fis.birth(critters: @critters).count
     @critters.each {|c| assert_equal 1, c.children_ids.count }
   end
 end

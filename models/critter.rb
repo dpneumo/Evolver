@@ -4,7 +4,7 @@ class Critter
   attr_accessor :age
   attr_reader :id, :parent_id, :children_ids, :color_id
 
-  def initialize(toolbox,
+  def initialize(toolbox:,
                  parent_id: nil, children_ids: nil,
                  color_id: nil, age: nil)
     @colors       = toolbox.colors

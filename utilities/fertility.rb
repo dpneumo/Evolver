@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class Fertility
+  attr_reader :resource
+
   def initialize(resource:)
     @resource = resource
   end
 
-  def probability(age, color_id)
+  def probability(age:, color_id:)
     return 0.00 unless valid?(age) && valid?(color_id)
 
     adjusted_fertility(age, color_id).clamp(0.0, 1.0)

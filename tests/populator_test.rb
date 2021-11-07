@@ -8,7 +8,7 @@ require_relative 'test_helper'
 class PopulatorTest < Minitest::Test
   def test_populate_returns_array_of_critters
     toolbox = Toolbox.new
-    population = Populator.new(toolbox).populate(10, Critter)
+    population = Populator.new(toolbox: toolbox).populate(size: 10, species: Critter)
     assert population.is_a? Array
     assert_equal 10, population.size
   end

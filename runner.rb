@@ -5,5 +5,5 @@ require 'pry'
 
 population = Population.new(initial_pop_size: 10)
 
-population.run(periods: 100)
+population.run(periods: 50)
 population.show_stats

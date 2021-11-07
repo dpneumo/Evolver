@@ -16,7 +16,7 @@ class Toolbox
                   colors: Colors, fertility: Fertility, mortality: Mortality )
     @id_generator = id_generator.new
     @statstore    = statstore.new
-    @stats        = stats.new(statstore: @statstore)
+    @stats        = stats.new(store: @statstore)
     @resource     = resource.new(stats: @stats)
     @colors       = colors.new
     @fertility    = fertility.new(resource: @resource)

@@ -1,30 +1,36 @@
-class MockFertility0
+class MockFertility
   def initialize(resource:); end
-  def probability(age, color_id) = 0.0
 end
 
-class MockFertility1
-  def initialize(resource:); end
-  def probability(age, color_id) = 1.0
+class MockFertility0 < MockFertility
+  def probability(age:, color_id:) = 0.0
 end
 
-class MockMortality0
-  def initialize(resource:); end
-  def probability(age, color_id) = 0.0
+class MockFertility1 < MockFertility
+  def probability(age:, color_id:) = 1.0
 end
 
-class MockMortality1
+class MockMortality
   def initialize(resource:); end
-  def probability(age, color_id) = 1.0
 end
 
-class MockIDGenerator1
+class MockMortality0 < MockMortality
+  def probability(age:, color_id:) = 0.0
+end
+
+class MockMortality1 < MockMortality
+  def probability(age:, color_id:) = 1.0
+end
+
+class MockIDGenerator
   def initialize; end
+end
+
+class MockIDGenerator1 < MockIDGenerator
   def next() = 1
 end
 
-class MockIDGenerator2
-  def initialize; end
+class MockIDGenerator2 < MockIDGenerator
   def next() = 2
 end
 
@@ -41,43 +47,41 @@ class MockColors
 end
 
 class MockPopulator
-  def initialize(toolbox); end
-  def populate(size); end
+  def initialize(toolbox:); end
+  def populate(size:, species:); []; end
 end
 
 class MockResource
-  def initialize(stats); end
+  def initialize(stats:); end
   def level() = 1.0
 end
 
 class MockStats
   def initialize(statstore:); end
-  def add_population_data(critters, period); end
-  def add_death_data(critter); end
+  def add_population_data(critters:, period:); end
+  def add_death_data(critter:); end
   def pop_counts
     { 1 => { weighted_age: 2, count: 2 },
       2 => { weighted_age: 4, count: 3 } }
   end
   def death_age_counts
     { 1 => { weighted_age: 40,  count: 10 },
-      2 => { weighted_age: 100, count: 20 },
-      'all' => { weighted_age: 140, count: 30 } }
+      2 => { weighted_age: 100, count: 20 } }
   end
 end
 
 class MockStatStore
-  attr_reader :pop_counts, :death_counts, :death_age_counts
+  attr_reader :pop_counts, :death_age_counts
   def initialize
     @pop_counts       = { 1 => { weighted_age: 2, count: 2 },
                           2 => { weighted_age: 4, count: 3 } }
-    @death_age_counts = { 1     => { weighted_age: 40,  count: 10 },
-                          2     => { weighted_age: 100, count: 20 },
-                          'all' => { weighted_age: 140, count: 30 } }
+    @death_age_counts = { 1 => { weighted_age: 40,  count: 10 },
+                          2 => { weighted_age: 100, count: 20 } }
   end
-  def save_raw_data(critters, period); end
-  def build_color_stats(period); end
-  def build_population_stats(period); end
-  def build_death_stats(critter); end
+  def save_raw_data(critters:, period:); end
+  def build_color_stats(period:); end
+  def build_population_stats(period:); end
+  def build_death_stats(critter:); end
 end
 
 class MockPublisher
