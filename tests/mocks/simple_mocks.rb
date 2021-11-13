@@ -64,9 +64,14 @@ class MockStats
     { 1 => { weighted_age: 2, count: 2 },
       2 => { weighted_age: 4, count: 3 } }
   end
-  def death_age_counts
-    { 1 => { weighted_age: 40,  count: 10 },
-      2 => { weighted_age: 100, count: 20 } }
+  def death_age_counts(color_id:)
+    death_stats = { 0 => { weighted_age: 0,   count: 0 },
+                    1 => { weighted_age: 40,  count: 10 },
+                    2 => { weighted_age: 100, count: 20 } }
+    death_stats[color_id]
+  end
+  def dac_all
+    {count: 30, weighted_age: 140}
   end
 end
 

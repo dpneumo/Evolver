@@ -26,7 +26,7 @@ class Publisher
     end
 
     def mean_age_at_death(color_id)
-      stats = @stats.death_age_counts(color_id)
+      stats = @stats.death_age_counts(color_id: color_id)
       mean(count: stats[:count], weighted_value: stats[:weighted_age]).round(2)
     end
 
