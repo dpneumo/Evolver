@@ -22,16 +22,16 @@ class Publisher
 
   private
     def mean_age(count, weighted_age)
-      mean(count: count, weighted_value: weighted_age).round(2)
+      mean(count: count, summed_values: weighted_age).round(2)
     end
 
     def mean_age_at_death(color_id)
       stats = @stats.death_age_counts(color_id: color_id)
-      mean(count: stats[:count], weighted_value: stats[:weighted_age]).round(2)
+      mean(count: stats[:count], summed_values: stats[:weighted_age]).round(2)
     end
 
     def mean_age_at_death_all
       stats = @stats.dac_all
-      mean(count: stats[:count], weighted_value: stats[:weighted_age]).round(2)
+      mean(count: stats[:count], summed_values: stats[:weighted_age]).round(2)
     end
 end

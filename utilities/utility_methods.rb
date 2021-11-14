@@ -9,8 +9,8 @@ module UtilityMethods
     rand < biased_coin
   end
 
-  def mean(count:, weighted_value:)
-    count.zero? ? 0 : weighted_value.fdiv(count)
+  def mean(count:, summed_values:)
+    summed_values.fdiv(count)
   end
 
   def logistic(x:, x0: 0.0, k: 1.0, limit: 1)
