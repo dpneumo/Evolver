@@ -10,6 +10,7 @@ module UtilityMethods
   end
 
   def mean(count:, summed_values:)
+    return 0 if count.zero?
     summed_values.fdiv(count)
   end
 

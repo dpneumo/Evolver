@@ -35,8 +35,8 @@ class UtilityMethodsTest < Minitest::Test
     end
   end
 
-  def test_mean_returns_Infinity_for_count_0
-    assert_equal Float::INFINITY, mean(count: 0, summed_values: 10)
+  def test_mean_returns_0_for_count_0
+    assert_equal 0, mean(count: 0, summed_values: 10)
   end
 
   def test_mean_returns_mean_of_count_values
