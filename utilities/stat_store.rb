@@ -21,7 +21,7 @@ class StatStore
   def build_color_stats(period:)
     @data[period].each do |color, agedata|
       agedata.each do |age, cnt|
-        @color_age_counts[period][color][:weighted_age] += age * cnt
+        @color_age_counts[period][color][:summed_ages] += age * cnt
         @color_age_counts[period][color][:count] += cnt
       end
     end
@@ -29,13 +29,13 @@ class StatStore
 
   def build_population_stats(period:)
     @color_age_counts[period].each do |_color, data|
-      @pop_counts[period][:weighted_age] += data[:weighted_age]
+      @pop_counts[period][:summed_ages] += data[:summed_ages]
       @pop_counts[period][:count] += data[:count]
     end
   end
 
   def build_death_stats(critter:)
-    @death_age_counts[critter.color_id][:weighted_age] += critter.age
+    @death_age_counts[critter.color_id][:summed_ages] += critter.age
     @death_age_counts[critter.color_id][:count] += 1
   end
 

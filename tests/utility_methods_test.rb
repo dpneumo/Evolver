@@ -36,11 +36,11 @@ class UtilityMethodsTest < Minitest::Test
   end
 
   def test_mean_returns_0_for_count_0
-    assert_equal 0, mean(count: 0, summed_values: 10)
+    assert_equal 0, mean(count: 0, sum: 10)
   end
 
   def test_mean_returns_mean_of_count_values
-    assert_equal 2.5, mean(count: 4, summed_values: 10)
+    assert_equal 2.5, mean(count: 4, sum: 10)
   end
 end
   
