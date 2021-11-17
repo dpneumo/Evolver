@@ -20,7 +20,7 @@ class Stats
     @store.pop_counts
   end
 
-  def death_age_counts(color_id)
+  def death_age_counts(color_id:)
     @store.death_age_counts[color_id]
   end
 
