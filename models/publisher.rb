@@ -15,7 +15,7 @@ class Publisher
     end
     puts "\n"
     puts "mean age at death (all): #{mean_age_at_death_all}\n"
-    @colors.colors.each do |k,v|
+    @colors.color_names.each do |k,v|
       puts "mean age at death (#{v}): #{mean_age_at_death(k)}\n"
     end
   end
