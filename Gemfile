@@ -8,3 +8,6 @@ git_source(:github) do |repo_name|
 end
 
 gem 'minitest'
+
+gem 'pry'
+gem 'pry-byebug'
