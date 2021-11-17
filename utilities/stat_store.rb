@@ -14,7 +14,9 @@ class StatStore
     critters.each do |c|
       color = c.color_name.to_sym
       age = c.age
-      @data[period][color][age] += 1
+      unless save(period,color,age)
+        puts "\nCritter: #{c}, Period: #{period}, Color: #{color}, Age: #{age}"
+      end
     end
   end
 
@@ -40,6 +42,23 @@ class StatStore
   end
 
   private
+    def save(period, color, age)
+      return false unless valid?(period, color, age)
+      @data[period][color][age] += 1
+      @data
+    end
+
+    def valid?(*args)
+      args.each do |arg|
+        return false unless valid_class?(arg)
+      end
+      true
+    end
+
+    def valid_class?(a)
+      [Integer, Symbol].include?(a.class)
+    end
+
     def data_hash
       Hash.new do |h, period|
         h[period] = Hash.new do |h1, color|
