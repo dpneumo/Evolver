@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'requires'
-require 'pry'
-require 'pry-byebug'
+#require 'pry'
+#require 'pry-byebug'
 
 population = Population.new(initial_pop_size: 10)
 
