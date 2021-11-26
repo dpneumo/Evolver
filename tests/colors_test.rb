@@ -9,15 +9,15 @@ class ColorsTest < Minitest::Test
   end
 
   def test_colors_returns_a_hash
-    assert_equal Hash, @clrs.colors.class
+    assert_equal Hash, @clrs.color_names.class
   end
 
   def test_colors_keys_are_integers
-    assert(@clrs.colors.keys.all? { |k| k.is_a? Integer })
+    assert(@clrs.color_names.keys.all? { |k| k.is_a? Integer })
   end
 
   def test_colors_values_are_strings
-    assert(@clrs.colors.values.all? { |v| v.is_a? String })
+    assert(@clrs.color_names.values.all? { |v| v.is_a? String })
   end
 
   def test_mutations_returns_a_hash

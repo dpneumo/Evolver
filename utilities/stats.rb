@@ -25,10 +25,10 @@ class Stats
   end
 
   def dac_all
-    dac = {count: 0, weighted_age: 0}
+    dac = {count: 0, summed_ages: 0}
     @store.death_age_counts.each_value.reduce(dac) do |dac, val|
       dac[:count] += val[:count]
-      dac[:weighted_age] += val[:weighted_age]
+      dac[:summed_ages] += val[:summed_ages]
       dac
     end
   end

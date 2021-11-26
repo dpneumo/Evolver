@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Colors
-  attr_reader :mutations, :colors
+  attr_reader :mutations, :color_names
 
   def initialize
     @mutations = {
@@ -11,7 +11,7 @@ class Colors
       3 => { 0 => 0.00, 1 => 0.15, 2 => 0.30, 3 => 0.50, 4 => 0.05 },
       4 => { 0 => 0.00, 1 => 0.05, 2 => 0.05, 3 => 0.30, 4 => 0.60 }
     }
-    @colors = {
+    @color_names = {
       0 => 'test_color',
       1 => 'red',
       2 => 'green',
