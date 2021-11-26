@@ -5,27 +5,27 @@ class Reaper
   include UtilityMethods
 
   def initialize(toolbox:)
-    @mortality = toolbox.mortality
+    @vitality = toolbox.vitality
     @statstore = toolbox.statstore
     @stats     = toolbox.stats
   end
 
   def survive(critters:)
-    critters.reject { |critter| dies_this_period?(critter) }
+    critters.select { |critter| lives_this_period?(critter) }
   end
 
   private
-    def dies_this_period?(critter)
-      dies = will_die?(critter)
-      @stats.add_death_data(critter: critter) if dies
-      dies
+    def lives_this_period?(critter)
+      lives = will_live?(critter)
+      @stats.add_death_data(critter: critter) unless lives
+      lives
     end
 
-    def will_die?(critter)
-      flip(biased_coin: biased_coin(critter))
+    def will_live?(critter)
+      flip(biased_coin: vitality_biased_coin(critter))
     end
 
-    def biased_coin(critter)
-      @mortality.probability(age: critter.age, color_id: critter.color_id)
+    def vitality_biased_coin(critter)
+      @vitality.probability(age: critter.age, color_id: critter.color_id)
     end
 end

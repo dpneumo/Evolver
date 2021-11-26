@@ -7,13 +7,14 @@ require_relative 'resource'
 require_relative 'colors'
 require_relative 'fertility'
 require_relative 'mortality'
+require_relative 'vitality'
 
 class Toolbox
   attr_reader :id_generator, :stats, :statstore, :resource, :colors
-  attr_reader :fertility, :mortality
+  attr_reader :fertility, :mortality, :vitality
 
   def initialize( id_generator: IDGenerator, stats: Stats, statstore: StatStore, resource: Resource,
-                  colors: Colors, fertility: Fertility, mortality: Mortality )
+                  colors: Colors, fertility: Fertility, mortality: Mortality, vitality: Vitality )
     @id_generator = id_generator.new
     @statstore    = statstore.new
     @stats        = stats.new(store: @statstore)
@@ -21,5 +22,6 @@ class Toolbox
     @colors       = colors.new
     @fertility    = fertility.new(resource: @resource)
     @mortality    = mortality.new(resource: @resource)
+    @vitality     = vitality.new(resource: @resource)
   end
 end

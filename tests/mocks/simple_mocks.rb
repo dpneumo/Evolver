@@ -22,6 +22,18 @@ class MockMortality1 < MockMortality
   def probability(age:, color_id:) = 1.0
 end
 
+class MockVitality
+  def initialize(resource:); end
+end
+
+class MockVitality0 < MockVitality
+  def probability(age:, color_id:) = 1.0
+end
+
+class MockVitality1 < MockVitality
+  def probability(age:, color_id:) = 0.0
+end
+
 class MockIDGenerator
   def initialize; end
 end
@@ -96,16 +108,18 @@ end
 
 class MockToolbox
   attr_reader :id_generator, :stats, :statstore, :resource, :colors
-  attr_reader :fertility, :mortality
+  attr_reader :fertility, :mortality, :vitality
 
   def initialize( id_generator: MockIDGenerator1, stats: MockStats, statstore: MockStatStore, resource: MockResource,
-                  colors: MockColors, fertility: MockFertility1, mortality: MockMortality1 )
+                  colors: MockColors, fertility: MockFertility1,
+                  mortality: MockMortality1, vitality: MockVitality1  )
     @id_generator = id_generator.new
     @statstore    = statstore.new
     @stats        = stats.new(statstore: @statstore)
     @resource     = resource.new(stats: @stats)
     @fertility    = fertility.new(resource: @resource)
     @mortality    = mortality.new(resource: @resource)
+    @vitality     = vitality.new(resource: @resource)
     @colors       = colors.new
   end
 end
