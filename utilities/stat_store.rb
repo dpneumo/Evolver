@@ -28,7 +28,7 @@ class StatStore
   end
 
   def build_population_stats(period:)
-    @color_age_counts[period].each do |_color, data|
+    @color_age_counts[period].each do |color, data|
       @pop_counts[period][:weighted_age] += data[:weighted_age]
       @pop_counts[period][:count] += data[:count]
     end
