@@ -6,7 +6,7 @@ require_relative 'test_helper'
 
 class FertilityTest < Minitest::Test
   def setup
-    resource = Toolbox.new.resource
+    resource = MockToolbox.new(resource: MockResource9).resource
     @fertility = Fertility.new(resource: resource)
   end
 

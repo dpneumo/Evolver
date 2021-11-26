@@ -51,9 +51,14 @@ class MockPopulator
   def populate(size:, species:); []; end
 end
 
-class MockResource
+class MockResource1
   def initialize(stats:); end
   def level() = 1.0
+end
+
+class MockResource9
+  def initialize(stats:); end
+  def level() = 9.0
 end
 
 class MockStats
@@ -98,7 +103,7 @@ class MockToolbox
   attr_reader :id_generator, :stats, :statstore, :resource, :colors
   attr_reader :fertility, :vitality
 
-  def initialize( id_generator: MockIDGenerator1, stats: MockStats, statstore: MockStatStore, resource: MockResource,
+  def initialize( id_generator: MockIDGenerator1, stats: MockStats, statstore: MockStatStore, resource: MockResource1,
                   colors: MockColors, fertility: MockFertility1, vitality: MockVitality1  )
     @id_generator = id_generator.new
     @statstore    = statstore.new
