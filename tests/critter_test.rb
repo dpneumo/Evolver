@@ -20,6 +20,7 @@ class CritterTest < Minitest::Test
     assert_equal 0, critter.parent_id
     assert_equal 1, critter.color_id
     assert_equal 0, critter.age
+    assert_equal 1.0, critter.health
     assert_equal Array, critter.children_ids.class
     assert critter.children_ids.empty?
     assert critter.id.is_a? Integer
@@ -43,5 +44,11 @@ class CritterTest < Minitest::Test
   def test_critter_accepts_a_children_ids_argument
     critter = Critter.new(toolbox: @toolbox, children_ids: [3,4])
     assert_equal [3,4], critter.children_ids
+  end
+
+  def test_critter_health_is_publicly_writable
+    critter = Critter.new(toolbox: @toolbox)
+    critter.health = 0.5
+    assert_equal 0.5, critter.health
   end
 end
