@@ -9,6 +9,8 @@ class Population
     @reaper    = reaper.new(toolbox: @toolbox)
     @publisher = publisher.new(toolbox: @toolbox)
     @critters  = @populator.populate(size: initial_pop_size, species: Critter)
+    @rabbits   = @populator.populate(size: initial_pop_size, species: Rabbit)
+    @coyotes   = @populator.populate(size: initial_pop_size, species: Coyote)
     @stats = @toolbox.stats
     @store = @toolbox.statstore
   end

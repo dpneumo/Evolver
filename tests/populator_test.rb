@@ -2,6 +2,8 @@
 
 require_relative '../utilities/toolbox'
 require_relative '../models/critter'
+require_relative '../models/rabbit'
+require_relative '../models/coyote'
 require_relative '../utilities/populator'
 require_relative 'test_helper'
 
