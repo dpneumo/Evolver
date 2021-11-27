@@ -18,6 +18,7 @@ class StatStore
         puts "\nCritter: #{c}, Period: #{period}, Color: #{color}, Age: #{age}"
       end
     end
+    nil
   end
 
   def build_color_stats(period:)
@@ -27,6 +28,7 @@ class StatStore
         @color_age_counts[period][color][:count] += cnt
       end
     end
+    nil
   end
 
   def build_population_stats(period:)
@@ -34,11 +36,13 @@ class StatStore
       @pop_counts[period][:summed_ages] += data[:summed_ages]
       @pop_counts[period][:count] += data[:count]
     end
+    nil
   end
 
   def build_death_stats(critter:)
     @death_age_counts[critter.color_id][:summed_ages] += critter.age
     @death_age_counts[critter.color_id][:count] += 1
+    nil
   end
 
   private

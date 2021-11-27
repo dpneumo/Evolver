@@ -10,10 +10,12 @@ class Stats
     @store.save_raw_data(critters: critters, period: period)
     @store.build_color_stats(period: period)
     @store.build_population_stats(period: period)
+    nil
   end
 
   def add_death_data(critter:)
     @store.build_death_stats(critter: critter)
+    nil
   end
 
   def pop_counts
