@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/utility_methods'
 require_relative 'test_helper'
 
 class UtilityMethodsTest < Minitest::Test
@@ -18,7 +17,7 @@ class UtilityMethodsTest < Minitest::Test
     assert_in_delta 200, results[1], 40
     assert_in_delta 300, results[2], 60
     assert_in_delta 500, results[3], 100
-  end 
+  end
 
   def test_flip
     assert_equal 10, flip_results(coin: 1.0)[true]
@@ -43,4 +42,4 @@ class UtilityMethodsTest < Minitest::Test
     assert_equal 2.5, mean(count: 4, sum: 10)
   end
 end
-  
+

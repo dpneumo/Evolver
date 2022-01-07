@@ -5,16 +5,13 @@ class Fissioner
 
   def initialize(toolbox:)
     @toolbox = toolbox
-    @id_generator = toolbox.id_generator
     @fertility = toolbox.fertility
   end
 
   def birth(critters:)
-    critters.map do |critter|
-      child = new_child(critter)
-      critter.children_ids << child.id if child
-      [critter, child]
-    end.flatten.compact
+    critters.map {|critter| [critter, new_child(critter)] }
+            .flatten
+            .compact
   end
 
   private
@@ -22,7 +19,6 @@ class Fissioner
       return unless child_this_period?(critter)
 
       Critter.new(toolbox: @toolbox,
-                  parent_id: critter.id,
                   color_id: child_color_id(critter))
     end
 
@@ -42,3 +38,4 @@ class Fissioner
       @fertility.probability(age: critter.age, color_id: critter.color_id)
     end
 end
+

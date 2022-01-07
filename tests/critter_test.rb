@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/toolbox'
-require_relative '../models/critter'
 require_relative 'test_helper'
+require_relative '../models/critter'
 
 class CritterTest < Minitest::Test
   def setup
     @toolbox = Toolbox.new
+    @critter = Critter.new(toolbox: @toolbox)
   end
 
   def test_new_requires_a_toolbox_argument
@@ -16,39 +16,47 @@ class CritterTest < Minitest::Test
   end
 
   def test_critter_defaults
-    critter = Critter.new(toolbox: @toolbox)
-    assert_equal 0, critter.parent_id
-    assert_equal 1, critter.color_id
-    assert_equal 0, critter.age
-    assert_equal 1.0, critter.health
-    assert_equal Array, critter.children_ids.class
-    assert critter.children_ids.empty?
-    assert critter.id.is_a? Integer
+    assert_equal 0, @critter.age
+    assert_equal 1.0, @critter.health
+    assert_equal 1, @critter.color_id
+    assert_equal 'critter', @critter.species_name
   end
 
-  def test_critter_accepts_a_parent_id_argument
-    critter = Critter.new(toolbox: @toolbox, parent_id: 4)
-    assert_equal 4, critter.parent_id
+  def test_critter_age_is_publicly_writable
+    @critter.age = 2
+    assert_equal 2, @critter.age
   end
 
-  def test_critter_accepts_a_color_id_argument
-    critter = Critter.new(toolbox: @toolbox, color_id: 4)
-    assert_equal 4, critter.color_id
+  def test_critter_age_must_be_an_integer
+    assert_raises RuntimeError do
+      @critter.age = 3.5
+    end
   end
 
-  def test_critter_accepts_an_age_argument
-    critter = Critter.new(toolbox: @toolbox, age: 4)
-    assert_equal 4, critter.age
-  end
-
-  def test_critter_accepts_a_children_ids_argument
-    critter = Critter.new(toolbox: @toolbox, children_ids: [3,4])
-    assert_equal [3,4], critter.children_ids
+  def test_negative_age_is_forced_to_0
+    @critter.age = -2
+    assert_equal 0, @critter.age
   end
 
   def test_critter_health_is_publicly_writable
-    critter = Critter.new(toolbox: @toolbox)
-    critter.health = 0.5
-    assert_equal 0.5, critter.health
+    @critter.health = 0.5
+    assert_equal 0.5, @critter.health
   end
+
+  def test_critter_health_must_be_a_numeric
+    assert_raises RuntimeError do
+      @critter.health = 'three'
+    end
+  end
+
+  def test_negative_health_is_forced_to_0
+    @critter.health = -2
+    assert_equal 0.0, @critter.health
+  end
+
+  def test_health_gt_1_is_forced_to_1
+    @critter.health = 2
+    assert_equal 1.0, @critter.health
+  end
+
 end

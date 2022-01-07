@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../models/critter'
-require_relative '../utilities/toolbox'
-require_relative '../models/reaper'
 require_relative 'test_helper'
+require_relative '../models/critter'
+require_relative '../models/reaper'
 
 class ReaperTest < Minitest::Test
   def setup

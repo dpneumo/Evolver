@@ -8,8 +8,6 @@ class Stats
 
   def add_population_data(critters:, period:)
     @store.save_raw_data(critters: critters, period: period)
-    @store.build_color_stats(period: period)
-    @store.build_population_stats(period: period)
     nil
   end
 
@@ -22,16 +20,26 @@ class Stats
     @store.pop_counts
   end
 
-  def death_age_counts(color_id:)
-    @store.death_age_counts[color_id]
+  def death_age_counts(species:, color_id:)
+    @store.death_age_counts[species][color_id]
   end
 
   def dac_all
-    dac = {count: 0, summed_ages: 0}
-    @store.death_age_counts.each_value.reduce(dac) do |dac, val|
-      dac[:count] += val[:count]
-      dac[:summed_ages] += val[:summed_ages]
+    dac = dac_summary_hash
+    @store.death_age_counts.each.reduce(dac) do |dac, kv|
+      species = kv[0]
+      kv[1].each_value do |sums|
+        dac[species][:summed_ages] += sums[:summed_ages]
+        dac[species][:summed_count] += sums[:summed_count]
+      end
       dac
+    end
+    dac
+  end
+
+  def dac_summary_hash
+    Hash.new do |h, species|
+      h[species] = {summed_count: 0, summed_ages: 0}
     end
   end
 end

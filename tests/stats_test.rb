@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../tests/mocks/simple_mocks'
-require_relative '../utilities/stats'
 require_relative 'test_helper'
+require_relative '../utilities/stats'
 
 class StatsTest < Minitest::Test
   def setup
@@ -18,18 +17,19 @@ class StatsTest < Minitest::Test
   end
 
   def test_retrieves_pop_counts_from_store
-    expected = { 1 => { summed_ages: 2, count: 2 },
-                 2 => { summed_ages: 4, count: 3 } }
+    expected = {  1=> { :coyote => { :summed_ages=>2, :summed_count=>2 }},
+                  2=> { :coyote => { :summed_ages=>4, :summed_count=>3 }}}
     assert_equal expected, @stats.pop_counts
   end
 
   def test_retrieves_death_age_counts_from_store
-    expected = { summed_ages: 40,  count: 10 }
-    assert_equal expected, @stats.death_age_counts(color_id: 1)
+    expected = { summed_ages: 40,  summed_count: 10 }
+    assert_equal expected, @stats.death_age_counts(species: :coyote, color_id: 1)
   end
 
   def test_retrieves_dac_all_from_store
-    expected = { count: 30, summed_ages: 140 }
+    expected = { :coyote=>{:summed_count=>30, :summed_ages=>140},
+                 :rabbit=>{:summed_count=>30, :summed_ages=>140} }
     assert_equal expected, @stats.dac_all
   end
 end

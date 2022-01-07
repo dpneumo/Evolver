@@ -66,27 +66,29 @@ class MockStats
   def add_population_data(critters:, period:); end
   def add_death_data(critter:); end
   def pop_counts
-    { 1 => { summed_ages: 2, count: 2 },
-      2 => { summed_ages: 4, count: 3 } }
+    { 1 => {coyote: { summed_ages: 2, summed_count: 2 }},
+      2 => {coyote: { summed_ages: 4, summed_count: 3 }} }
   end
-  def death_age_counts(color_id:)
-    death_stats = { 0 => { summed_ages: 0,   count: 0 },
-                    1 => { summed_ages: 40,  count: 10 },
-                    2 => { summed_ages: 100, count: 20 } }
-    death_stats[color_id]
+  def death_age_counts(species:, color_id:)
+    death_stats = { coyote: { 0 => { summed_ages: 0,   summed_count: 0 },
+                              1 => { summed_ages: 40,  summed_count: 10 },
+                              2 => { summed_ages: 100, summed_count: 20 } } }
+    death_stats[species][color_id]
   end
   def dac_all
-    {count: 30, summed_ages: 140}
+    { coyote: { summed_count: 30, summed_ages: 140 } }
   end
 end
 
 class MockStatStore
   attr_reader :pop_counts, :death_age_counts
   def initialize
-    @pop_counts       = { 1 => { summed_ages: 2, count: 2 },
-                          2 => { summed_ages: 4, count: 3 } }
-    @death_age_counts = { 1 => { summed_ages: 40,  count: 10 },
-                          2 => { summed_ages: 100, count: 20 } }
+    @pop_counts       = { 1 => {coyote: { summed_ages: 2, summed_count: 2 }},
+                          2 => {coyote: { summed_ages: 4, summed_count: 3 }} }
+    @death_age_counts = { coyote: { 1 => { summed_ages: 40,  summed_count: 10 },
+                                    2 => { summed_ages: 100, summed_count: 20 } },
+                          rabbit: { 1 => { summed_ages: 40,  summed_count: 10 },
+                                    2 => { summed_ages: 100, summed_count: 20 } } }
   end
   def save_raw_data(critters:, period:); end
   def build_color_stats(period:); end

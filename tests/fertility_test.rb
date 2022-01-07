@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/toolbox'
-require_relative '../utilities/fertility'
 require_relative 'test_helper'
+require_relative '../utilities/fertility'
 
 class FertilityTest < Minitest::Test
   def setup

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/toolbox'
-require_relative '../utilities/vitality'
 require_relative 'test_helper'
+require_relative '../utilities/vitality'
 
 class VitalityTest < Minitest::Test
   def setup

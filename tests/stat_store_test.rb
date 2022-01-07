@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative '../tests/mocks/simple_mocks'
-require_relative '../utilities/stat_store'
 require_relative 'test_helper'
+require_relative '../models/coyote'
+require_relative '../utilities/stat_store'
 
 class StatStoreTest < Minitest::Test
   def setup
     tbx = MockToolbox.new
-    @crit1 = Critter.new(toolbox: tbx, age: 1, color_id: 1)
-    @crit2 = Critter.new(toolbox: tbx, age: 2, color_id: 2)
+    @crit1 = Coyote.new(toolbox: tbx, color_id: 1)
+    @crit2 = Coyote.new(toolbox: tbx, color_id: 1)
     @store = StatStore.new
   end
 
@@ -36,21 +36,19 @@ class StatStoreTest < Minitest::Test
     assert_nil @store.build_death_stats(critter: @crit1)
   end
 
-  def test_pop_counts_returns_population_by_period_as_hash
+  def test_pop_counts_returns_population_by_period_by_species_as_hash
     @store.save_raw_data(critters: [@crit1, @crit2], period: 1)
-    @store.build_color_stats(period: 1)
-    @store.build_population_stats(period: 1)
     @store.save_raw_data(critters: [@crit2], period: 2)
-    @store.build_color_stats(period: 2)
-    @store.build_population_stats(period: 2)
-    expected = {1=>{:summed_ages=>3, :count=>2}, 2=>{:summed_ages=>2, :count=>1}}
+    expected = { 1=>{:coyote=>{:summed_ages=>0, :summed_count=>2}},
+                 2=>{:coyote=>{:summed_ages=>0, :summed_count=>1}} }
     assert_equal expected, @store.pop_counts
   end
 
-  def test_death_age_counts_returns_age_of_death_data_by_color
+  def test_death_age_counts_returns_age_of_death_data_for_species_by_color
+    @crit1.age = 1; @crit2.age = 2
     @store.build_death_stats(critter: @crit1)
     @store.build_death_stats(critter: @crit2)
-    expected = {1=>{:summed_ages=>1, :count=>1}, 2=>{:summed_ages=>2, :count=>1}}
+    expected = {:coyote=>{1=>{:summed_ages=>3, :summed_count=>2}}}
     assert_equal expected, @store.death_age_counts
   end
 end

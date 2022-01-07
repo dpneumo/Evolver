@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/toolbox'
-require_relative '../models/population'
 require_relative 'test_helper'
+require_relative '../models/population'
 
 class PopulationTest < Minitest::Test
   def setup

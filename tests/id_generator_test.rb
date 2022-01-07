@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/id_generator'
 require_relative 'test_helper'
+require_relative '../utilities/id_generator'
 
 class IDGeneratorTest < Minitest::Test
   def test_first_id_is_1

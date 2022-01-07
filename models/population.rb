@@ -33,18 +33,26 @@ class Population
     end
 
     def birth
-      @critters = @fissioner.birth(critters: @critters)
+      #@critters = @fissioner.birth(critters: @critters)
+      @rabbits = @fissioner.birth(critters: @rabbits)
+      @coyotes = @fissioner.birth(critters: @coyotes)
     end
 
     def survive
-      @critters = @reaper.survive(critters: @critters)
+      #@critters = @reaper.survive(critters: @critters)
+      @rabbits = @reaper.survive(critters: @rabbits)
+      @coyotes = @reaper.survive(critters: @coyotes)
     end
 
     def age
-      @critters.each { |c| c.age += 1 }
+      #@critters.each { |c| c.age += 1 }
+      @rabbits.each { |r| r.age += 1 }
+      @coyotes.each { |c| c.age += 1 }
     end
 
     def record_data(period)
-      @stats.add_population_data(critters: @critters, period: period)
+      #@stats.add_population_data(critters: @critters, period: period)
+      @stats.add_population_data(critters: @rabbits, period: period)
+      @stats.add_population_data(critters: @coyotes, period: period)
     end
 end

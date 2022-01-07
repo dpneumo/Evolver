@@ -18,8 +18,8 @@ class Toolbox
     @statstore    = statstore.new
     @stats        = stats.new(store: @statstore)
     @resource     = resource.new(stats: @stats)
-    @colors       = colors.new
     @fertility    = fertility.new(resource: @resource)
     @vitality     = vitality.new(resource: @resource)
+    @colors       = colors.new
   end
 end

@@ -7,6 +7,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby '3.0.2'
+
+
 gem 'minitest'
-#gem 'pry'
-#gem 'pry-byebug'
+

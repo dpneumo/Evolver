@@ -13,3 +13,5 @@ require_relative 'models/publisher'
 require_relative 'utilities/toolbox'
 require_relative 'utilities/populator'
 require_relative 'utilities/stats'
+
+require 'pry'
