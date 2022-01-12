@@ -19,7 +19,7 @@ class CritterTest < Minitest::Test
     assert_equal 0, @critter.age
     assert_equal 1.0, @critter.health
     assert_equal 1, @critter.color_id
-    assert_equal 'critter', @critter.species_name
+    assert_equal 'critter', @critter.species
   end
 
   def test_critter_age_is_publicly_writable

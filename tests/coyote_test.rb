@@ -10,7 +10,7 @@ class CoyoteTest < Minitest::Test
   end
 
   def test_coyote_defaults
-    assert_equal 'coyote', @coyote.species_name
+    assert_equal 'coyote', @coyote.species
     assert_equal 1, @coyote.color_id
   end
 end

@@ -12,7 +12,7 @@ class StatStore
 
   def save_raw_data(critters:, period:)
     critters.each do |c|
-      species = c.species_name.to_sym
+      species = c.species.to_sym
       color = c.color_name.to_sym
       age = c.age
       unless save(period,species,color,age)
@@ -23,7 +23,7 @@ class StatStore
   end
 
   def build_death_stats(critter:)
-    species = critter.species_name.to_sym
+    species = critter.species.to_sym
     @death_age_counts[species][critter.color_id][:summed_ages] += critter.age
     @death_age_counts[species][critter.color_id][:summed_count] += 1
     nil

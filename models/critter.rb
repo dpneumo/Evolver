@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class Critter
-  attr_reader :age, :health, :color_id, :species_name
+  attr_reader :age, :health, :color_id, :species
 
   def initialize(toolbox:, color_id: 1)
     @age        = 0
     @health     = 1.0
     @color_id   = color_id
-    @species_name = 'critter'
+    @species = 'critter'
     @colors = toolbox.colors
   end
 
