@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../../../tests'
-require_relative '../../../../utilities/critters/rabbit/chocolate'
 require_relative '../../../test_helper'
+require_relative '../../../../utilities/critters/rabbit/chocolate'
 
 class Tests::Utilities::Critters::Rabbit::ChocolateTest < Minitest::Test
   def setup

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../../../tests'
-require_relative '../../../../utilities/critters/coyote/gray'
 require_relative '../../../test_helper'
+require_relative '../../../../utilities/critters/coyote/gray'
 
 class Tests::Utilities::Critters::Coyote::GrayTest < Minitest::Test
   def setup

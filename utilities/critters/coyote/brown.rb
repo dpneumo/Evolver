@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative '../../utilities'
 
 class Utilities::Critters::Coyote::Brown
   attr_reader :name, :mutations
