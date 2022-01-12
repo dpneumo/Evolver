@@ -22,30 +22,6 @@ class StatStore
     nil
   end
 
-  def build_color_stats(period:)
-    @data[period].each do |species, h1|
-      h1[species].each do |color, h2|
-        h2[color].each do |h3|
-          h3.each do |age, count|
-            @color_age_counts[period][species][color][:summed_ages] += age * count
-            @color_age_counts[period][species][color][:summed_count] += count
-          end
-        end
-      end
-    end
-    nil
-  end
-
-  def build_population_stats(period:)
-    @color_age_counts[period].each do |species, h1|
-      h1[species].each do |_color, h2|
-        @pop_counts[period][species][:summed_ages] += h2[:summed_ages]
-        @pop_counts[period][species][:summed_count] += h2[:summed_count]
-      end
-    end
-    nil
-  end
-
   def build_death_stats(critter:)
     species = critter.species_name.to_sym
     @death_age_counts[species][critter.color_id][:summed_ages] += critter.age

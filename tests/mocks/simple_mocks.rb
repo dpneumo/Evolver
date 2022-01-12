@@ -91,8 +91,6 @@ class MockStatStore
                                     2 => { summed_ages: 100, summed_count: 20 } } }
   end
   def save_raw_data(critters:, period:); end
-  def build_color_stats(period:); end
-  def build_population_stats(period:); end
   def build_death_stats(critter:); end
 end
 

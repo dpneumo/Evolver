@@ -24,14 +24,6 @@ class StatStoreTest < Minitest::Test
     assert_nil @store.save_raw_data(critters: [@crit1, @crit2], period: 3)
   end
 
-  def test_build_color_stats_returns_nil
-    assert_nil @store.build_color_stats(period: 3)
-  end
-
-  def test_build_population_stats_returns_nil
-    assert_nil @store.build_population_stats(period: 3)
-  end
-
   def test_add_critter_to_death_stats
     assert_nil @store.build_death_stats(critter: @crit1)
   end
