@@ -10,7 +10,7 @@ class PopulationTest < Minitest::Test
   end
 
   def test_run
-    pop = Population.new(toolbox: @mocktb, publisher: @mockpub)
+    pop = Population.new(initial_pop_size: 2, toolbox: @mocktb, publisher: @mockpub)
     assert_equal 3, pop.run(periods: 3)
   end
 end

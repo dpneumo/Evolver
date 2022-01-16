@@ -7,8 +7,8 @@ require_relative '../utilities/stat_store'
 class StatStoreTest < Minitest::Test
   def setup
     tbx = MockToolbox.new
-    @crit1 = Coyote.new(toolbox: tbx, color_id: 1)
-    @crit2 = Coyote.new(toolbox: tbx, color_id: 1)
+    @crit1 = Coyote.new(toolbox: tbx, color: 'brown')
+    @crit2 = Coyote.new(toolbox: tbx, color: 'brown')
     @store = StatStore.new
   end
 
@@ -31,8 +31,8 @@ class StatStoreTest < Minitest::Test
   def test_pop_counts_returns_population_by_period_by_species_as_hash
     @store.save_raw_data(critters: [@crit1, @crit2], period: 1)
     @store.save_raw_data(critters: [@crit2], period: 2)
-    expected = { 1=>{:coyote=>{:summed_ages=>0, :summed_count=>2}},
-                 2=>{:coyote=>{:summed_ages=>0, :summed_count=>1}} }
+    expected = { 1=>{"coyote"=>{:summed_ages=>0, :summed_count=>2}},
+                 2=>{"coyote"=>{:summed_ages=>0, :summed_count=>1}} }
     assert_equal expected, @store.pop_counts
   end
 
@@ -40,7 +40,7 @@ class StatStoreTest < Minitest::Test
     @crit1.age = 1; @crit2.age = 2
     @store.build_death_stats(critter: @crit1)
     @store.build_death_stats(critter: @crit2)
-    expected = {:coyote=>{1=>{:summed_ages=>3, :summed_count=>2}}}
+    expected = {"coyote"=>{"brown"=>{:summed_ages=>3, :summed_count=>2}}}
     assert_equal expected, @store.death_age_counts
   end
 end

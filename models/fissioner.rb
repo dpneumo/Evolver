@@ -5,7 +5,6 @@ class Fissioner
 
   def initialize(toolbox:)
     @toolbox = toolbox
-    @fertility = toolbox.fertility
   end
 
   def birth(critters:)
@@ -18,24 +17,24 @@ class Fissioner
     def new_child(critter)
       return unless child_this_period?(critter)
 
-      Critter.new(toolbox: @toolbox,
-                  color_id: child_color_id(critter))
+      critter.class.new(toolbox: @toolbox,
+                        color: child_color(critter))
     end
 
     def child_this_period?(critter)
       flip(biased_coin: biased_coin(critter))
     end
 
-    def child_color_id(critter)
-      roll(loaded_die: loaded_die(critter.color_id))
+    def child_color(critter)
+      roll(loaded_die: loaded_die(critter))
     end
 
-    def loaded_die(color_id)
-      @toolbox.colors.mutations[color_id]
+    def loaded_die(critter)
+      critter.class.colors[critter.color].mutations
     end
 
     def biased_coin(critter)
-      @fertility.probability(age: critter.age, color_id: critter.color_id)
+      critter.class.probability(age: critter.age, color: critter.color)
     end
 end
 

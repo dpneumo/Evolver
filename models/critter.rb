@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
-class Critter
-  attr_reader :age, :health, :color_id, :species
+require_relative '../utilities/utilities'
+require_relative '../utilities/critters/critter/critter_colors'
+require_relative '../utilities/critters/critter/critter_fertility'
 
-  def initialize(toolbox:, color_id: 1)
+class Critter
+  extend CritterColors
+  extend CritterFertility
+  attr_reader :age, :health, :species, :color
+
+  def initialize(toolbox:, color: 'red')
     @age        = 0
     @health     = 1.0
-    @color_id   = color_id
     @species = 'critter'
-    @colors = toolbox.colors
+    @color = 'red'
   end
 
   def age=(age)
@@ -17,16 +22,7 @@ class Critter
   end
 
   def health=(health)
-    raise "health must be a number" unless health.is_a? Numeric
+    raise "health must be a Numeric" unless health.is_a? Numeric
     @health = health.clamp(0.0..1.0)
-  end
-
-  def color_id=(color_id)
-    raise "color_id must be an Integer" unless color_id.is_a? Integer
-    @color_id = color_id.clamp(0..)
-  end
-
-  def color_name
-    @colors.color_names[@color_id]
   end
 end

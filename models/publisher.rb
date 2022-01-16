@@ -5,7 +5,6 @@ class Publisher
 
   def initialize(toolbox:)
     @stats = toolbox.stats
-    @colors = toolbox.colors
   end
 
   def publish

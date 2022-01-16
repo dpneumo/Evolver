@@ -11,43 +11,43 @@ class VitalityTest < Minitest::Test
 
   def test_probability_returns_a_result_between_0_and_1
     age = 4
-    color_id = 2
-    assert_includes 0.0..1.0, @vitality.probability(age: age, color_id: color_id)
+    color = 'brown'
+    assert_includes 0.0..1.0, @vitality.probability(age: age, color: color)
   end
 
   def test_probability_ignores_an_age_lt_0
     age = -1
-    color_id = 2
-    assert_equal 1.0, @vitality.probability(age: age, color_id: color_id)
+    color = 'brown'
+    assert_equal 1.0, @vitality.probability(age: age, color: color)
   end
 
   def test_probability_ignores_a_non_integer_age
     age = 4.4
-    color_id = 2
-    assert_equal 1.0, @vitality.probability(age: age, color_id: color_id)
+    color = 'brown'
+    assert_equal 1.0, @vitality.probability(age: age, color: color)
   end
 
-  def test_probability_ignores_a_color_id_lt_0
+  def test_probability_ignores_a_color_lt_0
     age = 4
-    color_id = -2
-    assert_equal 1.0, @vitality.probability(age: age, color_id: color_id)
+    color = -'test_color'
+    assert_equal 1.0, @vitality.probability(age: age, color: color)
   end
 
-  def test_probability_ignores_a_non_integer_color_id
+  def test_probability_ignores_a_non_integer_color
     age = 4
-    color_id = 2.4
-    assert_equal 1.00, @vitality.probability(age: age, color_id: color_id)
+    color = 'test_color'
+    assert_equal 1.00, @vitality.probability(age: age, color: color)
   end
 
   def test_probability_returns_1_if_age_is_nil
     age = nil
-    color_id = 2
-    assert_equal 1.0, @vitality.probability(age: age, color_id: color_id)
+    color = 'brown'
+    assert_equal 1.0, @vitality.probability(age: age, color: color)
   end
 
-  def test_probability_returns_1_if_color_id_is_nil
+  def test_probability_returns_1_if_color_is_nil
     age = 4
-    color_id = nil
-    assert_equal 1.0, @vitality.probability(age: age, color_id: color_id)
+    color = nil
+    assert_equal 1.0, @vitality.probability(age: age, color: color)
   end
 end

@@ -12,8 +12,8 @@ class StatStore
 
   def save_raw_data(critters:, period:)
     critters.each do |c|
-      species = c.species.to_sym
-      color = c.color_name.to_sym
+      species = c.species
+      color = c.color
       age = c.age
       unless save(period,species,color,age)
         puts "\nCritter: #{c}, Period: #{period}, Species: #{species}, Color: #{color}, Age: #{age}"
@@ -23,9 +23,9 @@ class StatStore
   end
 
   def build_death_stats(critter:)
-    species = critter.species.to_sym
-    @death_age_counts[species][critter.color_id][:summed_ages] += critter.age
-    @death_age_counts[species][critter.color_id][:summed_count] += 1
+    species = critter.species
+    @death_age_counts[species][critter.color][:summed_ages] += critter.age
+    @death_age_counts[species][critter.color][:summed_count] += 1
     nil
   end
 
@@ -48,7 +48,7 @@ class StatStore
     end
 
     def valid_class?(a)
-      [Integer, Symbol].include?(a.class)
+      [Integer, String].include?(a.class)
     end
 
     def data_hash

@@ -5,16 +5,16 @@ class Vitality
     @resource = resource
   end
 
-  def probability(age:, color_id:)
-    return 1.00 unless valid?(age) && valid?(color_id)
+  def probability(age:, color:)
+    return 1.00 unless valid?(age) && valid?(color)
 
-    adjusted_vitality(age, color_id)
+    adjusted_vitality(age, color)
   end
 
   private
 
-  def adjusted_vitality(age, color_id)
-    survive_prob_by_age[age] * adjustment_by_color[color_id] * adjustment_by_resource
+  def adjusted_vitality(age, color)
+    survive_prob_by_age[age] * adjustment_by_color[color] * adjustment_by_resource
   end
 
   def survive_prob_by_age
@@ -33,13 +33,19 @@ class Vitality
   end
 
   def adjustment_by_color
-    adj = Hash.new { |h, color_id| h[color_id] = 0.00 }
-    adj[0] = 0.00
-    adj[1] = 1.00
-    adj[2] = 1.00
-    adj[3] = 1.00
-    adj[4] = 1.00
-    adj
+    {
+      'test_color' => 0.00,
+      'black'      => 1.00,
+      'brown'      => 1.00,
+      'gray'       => 1.00,
+      'white'      => 1.00,
+     'blue'      => 1.00,
+     'green'      => 1.00,
+     'red'      => 1.00,
+     'yellow'      => 1.00,
+     'beige'      => 1.00,
+     'chocolate'      => 1.00,
+    }
   end
 
   def adjustment_by_resource

@@ -26,6 +26,6 @@ class Reaper
     end
 
     def vitality_biased_coin(critter)
-      @vitality.probability(age: critter.age, color_id: critter.color_id)
+      @vitality.probability(age: critter.age, color: critter.color)
     end
 end

@@ -2,11 +2,11 @@
 
 require_relative '../../../tests'
 require_relative '../../../test_helper'
-require_relative '../../../../utilities/critters/coyote/white'
+require_relative '../../../../utilities/critters/coyote/colors/white'
 
 class Tests::Utilities::Critters::Coyote::WhiteTest < Minitest::Test
   def setup
-    @clr = Utilities::Critters::Coyote::White.new
+    @clr = Utilities::Critters::Coyote::CoyoteColors::White.new
   end
 
   def test_color_name_is_white

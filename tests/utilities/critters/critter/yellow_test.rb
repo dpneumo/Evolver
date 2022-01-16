@@ -2,11 +2,11 @@
 
 require_relative '../../../tests'
 require_relative '../../../test_helper'
-require_relative '../../../../utilities/critters/critter/yellow'
+require_relative '../../../../utilities/critters/critter/colors/yellow'
 
-class Tests::Utilities::Critters::Critter::YellowTest < Minitest::Test
+class Tests::Utilities::Critters::Critter::CritterColors::YellowTest < Minitest::Test
   def setup
-    @clr = Utilities::Critters::Critter::Yellow.new
+    @clr = Utilities::Critters::Critter::CritterColors::Yellow.new
   end
 
   def test_color_name_is_yellow
