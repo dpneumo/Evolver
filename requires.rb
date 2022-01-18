@@ -3,6 +3,7 @@
 require_relative 'utilities/utility_methods'
 
 require_relative 'models/population'
+require_relative 'models/orgbase'
 require_relative 'models/critter'
 require_relative 'models/rabbit'
 require_relative 'models/coyote'

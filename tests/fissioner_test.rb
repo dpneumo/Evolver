@@ -6,7 +6,6 @@ require_relative '../models/fissioner'
 
 class FissionerTest < Minitest::Test
   def setup
-    #@mockfert0 = MockFertility0
     @tb = Toolbox.new
     @critter0 = Critter.new(toolbox: @tb)
     @critter1 = Critter.new(toolbox: @tb)
