@@ -1,19 +1,47 @@
 # frozen_string_literal: true
 
-require_relative 'colors/blue'
-require_relative 'colors/green'
-require_relative 'colors/red'
-require_relative 'colors/yellow'
-require_relative 'colors/test_color'
-
 module CritterColors
   def colors
+    ['blue', 'green', 'red', 'yellow', 'test_color']
+  end
+
+  def mutations
     {
-      'blue' => Utilities::Critters::Critter::CritterColors::Blue.new,
-      'green' => Utilities::Critters::Critter::CritterColors::Green.new,
-      'red' => Utilities::Critters::Critter::CritterColors::Red.new,
-      'yellow' => Utilities::Critters::Critter::CritterColors::Yellow.new,
-      'test_color' => Utilities::Critters::Critter::CritterColors::TestColor.new,
+      'blue' => {
+          'test_color' => 0.00,
+          'red' =>        0.15,
+          'green' =>      0.30,
+          'blue' =>       0.50,
+          'yellow' =>     0.05,
+      },
+      'green' => {
+          'test_color' => 0.00,
+          'red' =>        0.10,
+          'green' =>      0.80,
+          'blue' =>       0.05,
+          'yellow' =>     0.05,
+      },
+      'red' => {
+          'test_color' => 0.00,
+          'red' =>        0.70,
+          'green' =>      0.20,
+          'blue' =>       0.05,
+          'yellow' =>     0.05,
+      },
+      'yellow' => {
+          'test_color' => 0.00,
+          'red' =>        0.05,
+          'green' =>      0.05,
+          'blue' =>       0.30,
+          'yellow' =>     0.60,
+      },
+      'test_color' => {
+          'test_color' => 1.00,
+          'red' =>        0.00,
+          'green' =>      0.00,
+          'blue' =>       0.00,
+          'yellow' =>     0.00,
+      },
     }
   end
 end

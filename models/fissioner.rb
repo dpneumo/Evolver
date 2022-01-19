@@ -30,7 +30,7 @@ class Fissioner
     end
 
     def loaded_die(critter)
-      critter.class.colors[critter.color].mutations
+      critter.class.mutations[critter.color]
     end
 
     def biased_coin(critter)
