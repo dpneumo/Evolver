@@ -8,32 +8,31 @@ module RabbitFertility
   end
 
   private
+    def adjusted_fertility(age, color)
+      birth_prob_by_age[age] * (adjustment_by_color[color] || 0.0)
+    end
 
-  def adjusted_fertility(age, color)
-    birth_prob_by_age[age] * (adjustment_by_color[color] || 0.0)
-  end
+    def birth_prob_by_age
+      prob = Hash.new { |h, age| h[age] = 0.00 }
+      prob[2] = 0.05
+      prob[3] = 0.80
+      prob[4] = 0.50
+      prob[5] = 0.20
+      prob[6] = 0.05
+      prob
+    end
 
-  def birth_prob_by_age
-    prob = Hash.new { |h, age| h[age] = 0.00 }
-    prob[2] = 0.05
-    prob[3] = 0.80
-    prob[4] = 0.50
-    prob[5] = 0.20
-    prob[6] = 0.05
-    prob
-  end
+    def adjustment_by_color
+      {
+        'test_color' => 1.00,
+        'beige'      => 1.10,
+        'black'      => 0.95,
+        'chocolate'  => 1.30,
+        'white'      => 0.90,
+      }
+    end
 
-  def adjustment_by_color
-    {
-      'test_color' => 1.00,
-      'beige'      => 1.10,
-      'black'      => 0.95,
-      'chocolate'  => 1.30,
-      'white'      => 0.90,
-    }
-  end
-
-  def valid?(parm)
-    (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
-  end
+    def valid?(parm)
+      (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
+    end
 end

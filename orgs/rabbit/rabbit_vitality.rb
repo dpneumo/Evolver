@@ -4,11 +4,10 @@ module RabbitVitality
   def survival_probability(age:, color:)
     return 1.00 unless valid?(age) && valid?(color)
 
-    adjusted_vitality(age, color)
+    adjusted_vitality(age, color).clamp(0.0, 1.0)
   end
 
   private
-
     def adjusted_vitality(age, color)
       survive_prob_by_age[age] * (adjustment_by_color[color] || 1.0)
     end
