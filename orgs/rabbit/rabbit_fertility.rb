@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RabbitFertility
-  def probability(age:, color:)
+  def birth_probability(age:, color:)
     return 0.00 unless valid?(age) && valid?(color)
 
     adjusted_fertility(age, color).clamp(0.0, 1.0)

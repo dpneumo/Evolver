@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'test_helper'
-require_relative '../utilities/stats'
+require_relative '../test_helper'
+require_relative '../../storage/stats'
 
 class StatsTest < Minitest::Test
   def setup

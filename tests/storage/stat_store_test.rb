@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'test_helper'
-require_relative '../orgs/coyote/coyote'
-require_relative '../utilities/stat_store'
+require_relative '../test_helper'
+require_relative '../../orgs/coyote/coyote'
+require_relative '../../storage/stat_store'
 
 class StatStoreTest < Minitest::Test
   def setup

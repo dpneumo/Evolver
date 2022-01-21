@@ -1,22 +1,21 @@
 # frozen_string_literal: true
 
-require_relative '../utilities/stats'
+require_relative '../storage/stats'
 
 class Reaper
   include UtilityMethods
 
   def initialize(toolbox:)
-    @vitality = toolbox.vitality
     @statstore = toolbox.statstore
     @stats     = toolbox.stats
   end
 
   def survive(critters:)
-    critters.select { |critter| lives_this_period?(critter) }
+    critters.select { |critter| survives_this_period?(critter) }
   end
 
   private
-    def lives_this_period?(critter)
+    def survives_this_period?(critter)
       lives = will_live?(critter)
       @stats.add_death_data(critter: critter) unless lives
       lives
@@ -27,6 +26,6 @@ class Reaper
     end
 
     def vitality_biased_coin(critter)
-      @vitality.probability(age: critter.age, color: critter.color)
+    critter.class.survival_probability(age: critter.age, color: critter.color)
     end
 end
