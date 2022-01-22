@@ -25,11 +25,12 @@ module CritterFertility
 
   def adjustment_by_color
     {
-      'test_color' => 1.00,
       'blue'       => 1.10,
       'green'      => 0.95,
       'red'        => 1.30,
       'yellow'     => 0.90,
+      'test_color1' => 1.00,
+      'test_color2' => 2.00,
     }
   end
 

@@ -29,11 +29,12 @@ module CoyoteVitality
 
     def adjustment_by_color
       {
-        'test_color' => 1.00,
         'black'      => 1.00,
-        'brown'      => 0.00,
-        'gray'       => 2.00,
+        'brown'      => 1.00,
+        'gray'       => 1.00,
         'white'      => 1.00,
+        'test_color1' => 1.00,
+        'test_color2' => 2.00,
       }
     end
 

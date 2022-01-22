@@ -8,32 +8,32 @@ class CoyoteFertilityObj; extend CoyoteFertility; end
 class CoyoteFertilityTest < Minitest::Test
   def test_coyote_birth_probability_returns_a_result_between_0_and_1
     age = 4
-    color = 'brown'
+    color = 'test_color1'
     assert_includes 0.0..1.0, CoyoteFertilityObj.birth_probability(age: age, color: color)
   end
 
   def test_coyote_birth_probability_converts_a_result_gt_1_to_1
     # TODO: fix dependence on actual age and color adj return values
     age = 3
-    color = 'gray'
+    color = 'test_color2'
     assert_equal 1.0, CoyoteFertilityObj.birth_probability(age: age, color: color)
   end
 
   def test_coyote_birth_probability_ignores_an_age_lt_0
     age = -1
-    color = 'brown'
+    color = 'test_color1'
     assert_equal 0.0, CoyoteFertilityObj.birth_probability(age: age, color: color)
   end
 
   def test_coyote_birth_probability_ignores_a_non_integer_age
     age = 4.4
-    color = 'brown'
+    color = 'test_color1'
     assert_equal 0.0, CoyoteFertilityObj.birth_probability(age: age, color: color)
   end
 
   def test_coyote_birth_probability_ignores_a_non_coyote_color
     age = 4
-    color = 'orange'
+    color = 'Train'
     assert_equal 0.0, CoyoteFertilityObj.birth_probability(age: age, color: color)
   end
 
@@ -45,7 +45,7 @@ class CoyoteFertilityTest < Minitest::Test
 
   def test_coyote_birth_probability_returns_0_if_age_is_nil
     age = nil
-    color = 'brown'
+    color = 'test_color1'
     assert_equal 0.0, CoyoteFertilityObj.birth_probability(age: age, color: color)
   end
 

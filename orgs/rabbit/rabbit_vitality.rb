@@ -29,11 +29,12 @@ module RabbitVitality
 
     def adjustment_by_color
       {
-        'test_color' => 1.00,
         'beige'      => 1.00,
-        'black'      => 0.00,
-        'chocolate'  => 2.00,
+        'black'      => 1.00,
+        'chocolate'  => 1.00,
         'white'      => 1.00,
+        'test_color1' => 1.00,
+        'test_color2' => 2.00,
       }
     end
 
