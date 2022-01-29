@@ -26,6 +26,7 @@ class Publisher
           count = sums[:summed_count]; summed_ages = sums[:summed_ages]
           puts "period: #{period}, species: #{species}, population: #{count}, mean age: #{mean_age(count, summed_ages)}"
         end
+        puts "\n"
       end
     end
 
