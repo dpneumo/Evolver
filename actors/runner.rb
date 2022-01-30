@@ -52,6 +52,6 @@ class Runner
     end
 
     def populate(size:, species:)
-      size.times.map {|_n| species.new(toolbox: @toolbox) }
+      size.times.map {|_n| species.new }
     end
 end

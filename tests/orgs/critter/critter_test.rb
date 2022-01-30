@@ -6,20 +6,12 @@ require_relative '../../../orgs/critter/critter'
 
 class CritterTest < Minitest::Test
   def setup
-    @toolbox = Toolbox.new
-    @critter = Critter.new(toolbox: @toolbox)
-  end
-
-  def test_new_requires_a_toolbox_argument
-    assert_raises ArgumentError do
-      Critter.new
-    end
+    @critter = Critter.new
   end
 
   def test_critter_defaults
     assert_equal 0, @critter.age
     assert_equal 1.0, @critter.health
-    #assert_equal 1, @critter.color_id
     assert_equal 'critter', @critter.species
   end
 

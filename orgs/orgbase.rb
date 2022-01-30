@@ -3,11 +3,11 @@
 class Orgbase
   attr_reader :age, :health, :vigor, :satiety, :species, :color
 
-  def initialize(toolbox:, color: 'red')
+  def initialize(color: 'red')
     @age        = 0
     @health     = 1.0
-    @vigor     = 1.0
-    @satiety     = 1.0
+    @vigor      = 1.0
+    @satiety    = 1.0
     @species = 'orgbase'
     @color = color
   end

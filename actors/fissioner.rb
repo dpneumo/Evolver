@@ -17,8 +17,7 @@ class Fissioner
     def new_child(critter)
       return unless child_this_period?(critter)
 
-      critter.class.new(toolbox: @toolbox,
-                        color: child_color(critter))
+      critter.class.new(color: child_color(critter))
     end
 
     def child_this_period?(critter)

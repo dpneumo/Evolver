@@ -9,9 +9,8 @@ class Coyote < Orgbase
   extend CoyoteColors
   extend CoyoteFertility
   extend CoyoteVitality
-  def initialize(toolbox:, color: 'black')
-    super(toolbox: toolbox, color: color)
+  def initialize(color: 'black')
+    super(color: color)
     @species = 'coyote'
-    @color   = color
   end
 end

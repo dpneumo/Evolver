@@ -7,8 +7,8 @@ require_relative '../../actors/fissioner'
 class FissionerTest < Minitest::Test
   def setup
     @tb = Toolbox.new
-    @critter0 = Critter.new(toolbox: @tb)
-    @critter1 = Critter.new(toolbox: @tb)
+    @critter0 = Critter.new
+    @critter1 = Critter.new
   end
 
   def test_birth_does_not_create_child_for_fertility_probability_0

@@ -9,9 +9,8 @@ class Critter < Orgbase
   extend CritterColors
   extend CritterFertility
   extend CritterVitality
-  def initialize(toolbox:, color: 'red')
-    super(toolbox: toolbox, color: color)
+  def initialize(color: 'red')
+    super(color: color)
     @species = 'critter'
-    @color = color
   end
 end

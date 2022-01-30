@@ -6,8 +6,7 @@ require_relative '../../../orgs/coyote/coyote'
 
 class CoyoteTest < Minitest::Test
   def setup
-    toolbox = Toolbox.new
-    @coyote = Coyote.new(toolbox: toolbox)
+    @coyote = Coyote.new
   end
 
   def test_coyote_defaults

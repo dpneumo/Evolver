@@ -6,10 +6,8 @@ require_relative '../../../orgs/rabbit/rabbit'
 
 class RabbitTest < Minitest::Test
   def setup
-    toolbox = Toolbox.new
-    @rabbit = Rabbit.new(toolbox: toolbox)
+    @rabbit = Rabbit.new
   end
-
 
   def test_rabbit_defaults
     assert_equal 'rabbit', @rabbit.species
