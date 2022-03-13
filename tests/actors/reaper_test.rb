@@ -6,7 +6,9 @@ require_relative '../../actors/reaper'
 
 class ReaperTest < Minitest::Test
   def test_only_viable_critters_survive
-    creatures = MockCreatures.new
+    foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
+                  'fertile' => {size: 2, prey: 'none'} }
+    creatures = MockCreatures.new(foodchain: foodchain)
     mockstats = MockStats.new(store: MockStatStore.new)
     reap = Reaper.new(stats: mockstats)
 

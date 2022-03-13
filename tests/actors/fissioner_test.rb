@@ -11,7 +11,9 @@ class FissionerTest < Minitest::Test
   end
 
   def test_reproduce_only_creates_child_for_fertile_critters
-    creatures = MockCreatures.new
+    foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
+                  'fertile' => {size: 2, prey: 'none'} }
+    creatures = MockCreatures.new(foodchain: foodchain)
     assert_nil @fis.reproduce(creatures: creatures)
     assert_equal 2, creatures.census['sterile'].count
     assert_equal 4, creatures.census['fertile'].count

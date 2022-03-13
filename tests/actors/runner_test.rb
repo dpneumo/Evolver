@@ -7,7 +7,10 @@ require_relative '../../actors/runner'
 
 class RunnerTest < Minitest::Test
   def setup
-    @runner = Runner.new( stats: MockStats, statstore: MockStatStore,
+    foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
+                  'rabbit' => {size: 2, prey: 'carrot'} }
+    @runner = Runner.new( foodchain: foodchain,
+                          stats: MockStats, statstore: MockStatStore,
                           creatures: MockCreatures, consumer: MockConsumer,
                           publisher: MockPublisher )
   end

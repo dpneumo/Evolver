@@ -2,6 +2,7 @@ class MockCritter0
   def initialize(color: 'red'); @color = color; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
+  def self.enctr_scale; 3.9; end
   def self.survival_probability(age:, color:); 0.0; end
   def self.birth_probability(age:, color:); 0.0; end
   def self.mutations
@@ -22,6 +23,7 @@ class MockCritter1
   def initialize(color: 'green'); @color = color; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
+  def self.enctr_scale; 2.4; end
   def self.survival_probability(age:, color:); 1.0; end
   def self.birth_probability(age:, color:); 1.0; end
   def self.mutations
@@ -41,10 +43,11 @@ end
 class MockCreatures
   attr_accessor :census
   attr_reader   :foodchain
-  def initialize
+  def initialize(foodchain:)
     @census = {'sterile' => [MockCritter0.new, MockCritter0.new],
                'fertile' => [MockCritter1.new, MockCritter1.new] }
-    @foodchain = {'sterile' => 'fertile'}
+    @foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
+                   'fertile' => {size: 2, prey: 'none'} }
     nil
   end
   def age; end

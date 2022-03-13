@@ -4,15 +4,17 @@ class Creatures
   attr_accessor :census
   attr_reader   :foodchain
 
-  def initialize
-    @census = {'coyotes' => populate(size: 1, species: Coyote),
-               'rabbits' => populate(size: 2, species: Rabbit)}
-    @foodchain = {'coyotes' => 'rabbits'}
+  def initialize(foodchain:)
+    @foodchain = foodchain
+    @census = @foodchain.reduce({}) do |c, (species, list)|
+      population = populate(size: list[:size],  species: species )
+      c.update( species => population )
+    end
     nil
   end
 
   def populate(size:, species:)
-    size.times.map {|_n| species.new }
+    size.times.map {|_n| constantize(species).new }
   end
 
   def age
@@ -22,8 +24,8 @@ class Creatures
   end
 
   def ratios
-    @foodchain.reduce({}) do |r, (hunters, prey)|
-      r.update(hunters => ratio(hunters, prey))
+    @foodchain.reduce({}) do |r, (hunters, detail)|
+      r.update(hunters => ratio(hunters, detail[:prey]))
     end
   end
 
@@ -40,6 +42,6 @@ class Creatures
     end
 
     def constantize(my_str)
-      Object.const_get(my_str.chop.capitalize)
+      Object.const_get(my_str.split('_').map(&:capitalize).join)
     end
 end

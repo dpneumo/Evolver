@@ -7,7 +7,10 @@ require_relative '../../actors/consumer'
 class ConsumerTest < Minitest::Test
   def setup
     @cnsmr = Consumer.new
-    @crturs = MockCreatures.new
+    foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
+                  'rabbit' => {size: 2, prey: 'critter'},
+                  'critter' => {size: 0, prey: 'none'} }
+    @crturs = MockCreatures.new(foodchain: foodchain)
   end
 
   def test_encounters_does_not_replace_the_creatures_instance_provided

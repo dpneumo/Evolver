@@ -7,10 +7,10 @@ class Consumer
     ratios = creatures.ratios
     scales = creatures.scales
     census = creatures.census
-    creatures.foodchain.each do |hunters, prey|
+    creatures.foodchain.each do |hunters, detail|
       enctrs = enctrs_count(ratios[hunters], scales[hunters])
       census[hunters].each do |hunter|
-        hunt(hunter, census[prey], enctrs)
+        hunt(hunter, census[detail[:prey]], enctrs)
       end
     end
     nil
@@ -18,6 +18,7 @@ class Consumer
 
   private
     def hunt(hunter, prey, enctrs)
+      return if prey.nil?
       prey.sample(enctrs).each do |hunted|
         eaten(hunter, hunted) ? eat(hunter, hunted) : fast(hunter, hunted)
       end
@@ -34,13 +35,14 @@ class Consumer
     end
 
     def enctrs_count(ratio, scale)
+      return 0 if (ratio.nil? || scale.nil?)
       log2curve(x:ratio, scale:scale).truncate
     end
 
     def eaten(hunter, prey)
-      puts "prey eaten prob: #{prey.eaten_prob}"
-      puts "hunter eats prob: #{hunter.eats_prob}"
-      puts
+      #puts "prey eaten prob: #{prey.eaten_prob}"
+      #puts "hunter eats prob: #{hunter.eats_prob}"
+      #puts
       flip(biased_coin: biased_coin(hunter, prey))
     end
 

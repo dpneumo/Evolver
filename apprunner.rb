@@ -2,7 +2,12 @@
 
 require_relative 'requires'
 
-runner = Runner.new
+foodchain = {'coyote' => {size: 1, prey: 'rabbit'},
+             'rabbit' => {size: 2, prey: 'critter'},
+             'critter' => {size: 0, prey: 'none'}
+            }
+
+runner = Runner.new(foodchain: foodchain)
 
 runner.run(periods: 5)
 runner.show_stats
