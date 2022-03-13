@@ -6,7 +6,6 @@ require_relative '../../storage/stat_store'
 
 class StatStoreTest < Minitest::Test
   def setup
-    tbx = MockToolbox.new
     @crit1 = Coyote.new(color: 'brown')
     @crit2 = Coyote.new(color: 'brown')
     @store = StatStore.new

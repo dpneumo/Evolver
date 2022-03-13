@@ -1,8 +1,9 @@
 class Publisher
   include UtilityMethods
 
-  def initialize(toolbox:)
-    @stats = toolbox.stats
+  def initialize(stats:)
+    @stats = stats
+    nil
   end
 
   def publish

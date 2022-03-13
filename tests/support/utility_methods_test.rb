@@ -5,41 +5,51 @@ require_relative '../test_helper'
 class UtilityMethodsTest < Minitest::Test
   include UtilityMethods
 
-  def test_roll
-    threesided = {1 => 0.2, 2 => 0.3, 3 => 0.5}
-    results = Hash.new {|h,side| h[side] = 0 }
-    (1..1000).reduce(results) do |results,_|
-      throw = roll(loaded_die: threesided)
-      results[throw] += 1
-      results
-    end
-    assert_equal 1000, results[1]+results[2]+results[3]
-    assert_in_delta 200, results[1], 40
-    assert_in_delta 300, results[2], 60
-    assert_in_delta 500, results[3], 100
-  end
-
   def test_flip
-    assert_equal 10, flip_results(coin: 1.0)[true]
-    assert_equal 10, flip_results(coin: 0.0)[false]
-    res = flip_results(coin: 0.5,times: 100)[true]
-    assert_in_delta 50, res, 10
+    Random.stub :rand, 0.4 do
+      assert flip(biased_coin: 0.5)
+      refute flip(biased_coin: 0.4)
+      refute flip(biased_coin: 0.2)
+    end
   end
 
-  def flip_results(coin:,times: 10)
-    results = Hash.new {|h,toss| h[toss] = 0 }
-    (1..times).reduce(results) do |results,_|
-      results[flip(biased_coin: coin)] += 1
-      results
+  def test_roll
+    Random.stub :rand, 0.4 do
+      threesided_1 = {1 => 0.6, 2 => 0.3, 3 => 0.1}
+      threesided_3 = {1 => 0.2, 2 => 0.3, 3 => 0.5}
+      assert_equal 3, roll(loaded_die: threesided_3)
+      assert_equal 1, roll(loaded_die: threesided_1)
+    end
+  end
+
+  def test_random_ndxs
+    Random.stub :rand, 4 do
+      collection = %w[ a b c d e f g h i j k l m ]
+      ndx_count = 3
+      assert_equal [4,4,4], random_ndxs(collection, ndx_count)
     end
   end
 
   def test_mean_returns_0_for_count_0
-    assert_equal 0, mean(count: 0, sum: 10)
+    result = mean(count: 0, sum: 10)
+    refute result.is_a?(Integer), "Result is an integer"
+    assert result.is_a?(Numeric)
+    assert_equal 0.0, mean(count: 0, sum: 10)
   end
 
   def test_mean_returns_mean_of_count_values
     assert_equal 2.5, mean(count: 4, sum: 10)
+  end
+
+  def test_log2curve_for_x_eq_1_returns_0
+    result = log2curve(x:1)
+    refute result.is_a?(Integer)
+    assert result.is_a?(Numeric)
+    assert_equal 0.0, result
+  end
+
+  def test_log2curve_scaled_returns_a_Numeric
+    assert_in_delta 6.262, log2curve(x:4.25, scale:3.0), 0.0005
   end
 end
 

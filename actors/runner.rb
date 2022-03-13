@@ -1,57 +1,57 @@
 # frozen_string_literal: true
 
 class Runner
-  def initialize( initial_pop_size: 10, toolbox: Toolbox,
-                  fissioner: Fissioner, reaper: Reaper, publisher: Publisher)
-    @toolbox   = toolbox.new
-    @fissioner = fissioner.new(toolbox: @toolbox)
-    @reaper    = reaper.new(toolbox: @toolbox)
-    @publisher = publisher.new(toolbox: @toolbox)
-    @rabbits   = populate(size: initial_pop_size, species: Rabbit)
-    @coyotes   = populate(size: initial_pop_size, species: Coyote)
-    @stats = @toolbox.stats
-    @store = @toolbox.statstore
+  def initialize( stats: Stats, statstore: StatStore, creatures: Creatures,
+                  fissioner: Fissioner, consumer: Consumer, reaper: Reaper,
+                  publisher: Publisher)
+    @statstore = statstore.new
+    @stats = stats.new(store: @statstore)
+    @creatures = creatures.new
+    @fissioner = fissioner.new
+    @consumer  = consumer.new
+    @reaper    = reaper.new(stats: @stats)
+    @publisher = publisher.new(stats: @stats)
+    nil
   end
 
   def run(periods: 1)
     return if periods < 1
     record_data(0)
     periods.times {|i| cycle(i+1) }
+    nil
   end
 
   def show_stats
     @publisher.publish
+    nil
   end
 
   private
     def cycle(period)
-      birth
+      reproduce
+      hunt
       survive
       age
       record_data(period)
     end
 
-    def birth
-      @rabbits = @fissioner.birth(critters: @rabbits)
-      @coyotes = @fissioner.birth(critters: @coyotes)
+    def reproduce
+      @fissioner.reproduce(creatures: @creatures)
+    end
+
+    def hunt
+      @consumer.encounters(creatures: @creatures)
     end
 
     def survive
-      @rabbits = @reaper.survive(critters: @rabbits)
-      @coyotes = @reaper.survive(critters: @coyotes)
+      @reaper.survive(creatures: @creatures)
     end
 
     def age
-      @rabbits.each { |r| r.age += 1 }
-      @coyotes.each { |c| c.age += 1 }
+      @creatures.age
     end
 
     def record_data(period)
-      @stats.add_population_data(critters: @rabbits, period: period)
-      @stats.add_population_data(critters: @coyotes, period: period)
-    end
-
-    def populate(size:, species:)
-      size.times.map {|_n| species.new }
+      @stats.add_population_data(creatures: @creatures, period: period)
     end
 end

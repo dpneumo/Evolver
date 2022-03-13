@@ -14,11 +14,16 @@ module RabbitFertility
 
     def birth_prob_by_age
       prob = Hash.new { |h, age| h[age] = 0.00 }
-      prob[2] = 0.05
+      prob[0] = 0.05
+      prob[1] = 0.10
+      prob[2] = 0.20
       prob[3] = 0.80
-      prob[4] = 0.50
-      prob[5] = 0.20
-      prob[6] = 0.05
+      prob[4] = 0.95
+      prob[5] = 0.80
+      prob[6] = 0.75
+      prob[7] = 0.50
+      prob[8] = 0.20
+      prob[9] = 0.05
       prob
     end
 

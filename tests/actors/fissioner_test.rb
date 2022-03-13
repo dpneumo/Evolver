@@ -6,25 +6,14 @@ require_relative '../../actors/fissioner'
 
 class FissionerTest < Minitest::Test
   def setup
-    @tb = Toolbox.new
-    @critter0 = Critter.new
-    @critter1 = Critter.new
+    @fis = Fissioner.new
+    def @fis.child_color(critter); 'red'; end
   end
 
-  def test_birth_does_not_create_child_for_fertility_probability_0
-    fis = Fissioner.new(toolbox: @tb)
-    critters = [ @critter0, @critter1 ]
-    assert_equal 2, critters.count
-    assert_equal 2, fis.birth(critters: critters).count
-  end
-
-  def test_birth_creates_child_for_fertility_probability_1
-    fis = Fissioner.new(toolbox: @tb)
-    @critter0.age = 3
-    @critter1.age = 3
-    critters = [ @critter0, @critter1 ]
-    assert_equal 2, critters.count
-    newcrits = fis.birth(critters: critters)
-    assert_equal 4, newcrits.count
+  def test_reproduce_only_creates_child_for_fertile_critters
+    creatures = MockCreatures.new
+    assert_nil @fis.reproduce(creatures: creatures)
+    assert_equal 2, creatures.census['sterile'].count
+    assert_equal 4, creatures.census['fertile'].count
   end
 end

@@ -8,6 +8,7 @@ class StatStore
     @color_age_counts = color_age_hash
     @pop_counts = population_hash
     @death_age_counts = death_age_hash
+    nil
   end
 
   def save_raw_data(critters:, period:)

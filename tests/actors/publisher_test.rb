@@ -5,7 +5,8 @@ require_relative '../../actors/publisher'
 
 class PublisherTest < Minitest::Test
   def test_publishes_a_stats_summary
-  	@publisher = Publisher.new(toolbox: MockToolbox.new)
+    mockstats = MockStats.new(store: MockStatStore.new)
+  	publisher = Publisher.new(stats: mockstats)
   	expected = <<~EXPECTED
       pop stats by period:
         period: 1
@@ -18,6 +19,6 @@ class PublisherTest < Minitest::Test
 
     EXPECTED
 
-  	assert_output(expected) {@publisher.publish}
+  	assert_output(expected) {publisher.publish}
   end
 end

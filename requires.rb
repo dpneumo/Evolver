@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 require_relative 'support/utility_methods'
-require_relative 'support/toolbox'
 
 require_relative 'actors/runner'
+require_relative 'actors/creatures'
 require_relative 'actors/fissioner'
+require_relative 'actors/consumer'
 require_relative 'actors/reaper'
 require_relative 'actors/publisher'
 

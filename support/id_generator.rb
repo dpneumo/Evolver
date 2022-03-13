@@ -9,6 +9,7 @@ class IDGenerator
         id += 1
       end
     end
+    nil
   end
 
   def next

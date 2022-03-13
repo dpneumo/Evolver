@@ -9,7 +9,7 @@ class StatsTest < Minitest::Test
   end
 
   def test_can_add_population_data
-    assert_nil @stats.add_population_data(critters: ['C1', 'C2'], period: 3)
+    assert_nil @stats.add_population_data(creatures: MockCreatures.new, period: 3)
   end
 
   def test_can_add_death_data
@@ -24,7 +24,7 @@ class StatsTest < Minitest::Test
 
   def test_retrieves_death_age_counts_from_store
     expected = { summed_ages: 40,  summed_count: 10 }
-    assert_equal expected, @stats.death_age_counts(species: :coyote, color_id: 1)
+    assert_equal expected, @stats.death_age_counts(species: :coyote, color: 'red')
   end
 
   def test_retrieves_dac_all_from_store

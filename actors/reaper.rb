@@ -5,16 +5,24 @@ require_relative '../storage/stats'
 class Reaper
   include UtilityMethods
 
-  def initialize(toolbox:)
-    @statstore = toolbox.statstore
-    @stats     = toolbox.stats
+  def initialize(stats:)
+    @stats = stats
+    nil
   end
 
-  def survive(critters:)
-    critters.select { |critter| survives_this_period?(critter) }
+  def survive(creatures:)
+    creatures.census = new_census(creatures)
+    nil
   end
 
   private
+    def new_census(creatures)
+      creatures.census.reduce({}) do |new_census, (species, list)|
+        new_list = list.select { |critter| survives_this_period?(critter) }
+        new_census.update( species => new_list )
+      end
+    end
+
     def survives_this_period?(critter)
       lives = will_live?(critter)
       @stats.add_death_data(critter: critter) unless lives
@@ -26,6 +34,14 @@ class Reaper
     end
 
     def vitality_biased_coin(critter)
-    critter.class.survival_probability(age: critter.age, color: critter.color)
+      class_survival_prob(critter) * individual_survival_prob(critter)
+    end
+
+    def class_survival_prob(critter)
+      critter.class.survival_probability(age: critter.age, color: critter.color)
+    end
+
+    def individual_survival_prob(critter)
+      critter.health.fdiv(critter.class.max_health)
     end
 end

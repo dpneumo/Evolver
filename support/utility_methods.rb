@@ -1,21 +1,29 @@
 # frozen_string_literal: true
 
 module UtilityMethods
-  def roll(loaded_die:)
-    loaded_die.max_by { |_, weight| rand**(1.0 / weight) }.first
+  def flip(biased_coin:)
+    Random.rand < biased_coin
   end
 
-  def flip(biased_coin:)
-    rand < biased_coin
+  def roll(loaded_die:)
+    loaded_die.max_by { |_, weight| Random.rand**(1.0 / weight) }.first
+  end
+
+  def random_ndxs(collection, ndx_count)
+    ndx_count.times.map {|i| Random.rand(0..(collection.size-1))}
   end
 
   def mean(count:, sum:)
-    return 0 if count.zero?
+    return 0.0 if count.zero?
     sum.fdiv(count)
   end
 
-  def logistic(x:, x0: 0.0, k: 1.0, limit: 1)
-    denom = 1 + Math::E**(-k*(x-x0))
+  def log2curve(x:, scale: 1)
+    scale*Math.log2(x)
+  end
+
+  def logistic(x:, x0:0.0, k:1.0, limit:1.0)
+    denom = 1.0 + Math::E**(-k*(x-x0))
     limit/denom
   end
 end
