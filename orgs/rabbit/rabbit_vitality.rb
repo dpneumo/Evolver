@@ -1,44 +1,40 @@
 # frozen_string_literal: true
 
 module RabbitVitality
-  def survival_probability(age:, color:)
-    return 1.00 unless valid?(age) && valid?(color)
-
-    adjusted_vitality(age, color).clamp(0.0, 1.0)
-  end
-
   private
-    def adjusted_vitality(age, color)
-      survive_prob_by_age[age] * (adjustment_by_color[color] || 1.0)
+    def survive_by_age(age)
+      @rab_age_survival ||= rab_age_survival
+      @rab_age_survival[age]
     end
 
-    def survive_prob_by_age
-      prob = Hash.new { |h, age| h[age] = 0.00 }
-      prob[0] = 1.00
-      prob[1] = 1.00
-      prob[2] = 1.00
-      prob[3] = 0.95
-      prob[4] = 0.90
-      prob[5] = 0.85
-      prob[6] = 0.70
-      prob[7] = 0.50
-      prob[8] = 0.20
-      prob[9] = 0.0
-      prob
+    def survival_color_adjust(color)
+      @rab_surv_color_adj ||= rab_surv_color_adj
+      @rab_surv_color_adj[color]
     end
 
-    def adjustment_by_color
-      {
-        'beige'      => 1.00,
-        'black'      => 1.00,
-        'chocolate'  => 1.00,
-        'white'      => 1.00,
-        'test_color1' => 1.00,
-        'test_color2' => 2.00,
-      }
+    def rab_age_survival
+      surv = Hash.new { |h, age| h[age] = 0.00 }
+      surv[0] = 1.00
+      surv[1] = 1.00
+      surv[2] = 1.00
+      surv[3] = 0.95
+      surv[4] = 0.90
+      surv[5] = 0.85
+      surv[6] = 0.70
+      surv[7] = 0.50
+      surv[8] = 0.20
+      surv[9] = 0.0
+      surv
     end
 
-    def valid?(parm)
-      (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
+    def rab_surv_color_adj
+      adj = Hash.new {|h, color| h[color] = 1.0 }
+      adj['beige']      = 1.10
+      adj['black']      = 1.00
+      adj['chocolate']  = 1.00
+      adj['white']      = 1.00
+      adj['test_color1'] = 1.00
+      adj['test_color2'] = 2.00
+      adj
     end
 end

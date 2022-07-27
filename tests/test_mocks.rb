@@ -42,8 +42,8 @@ end
 
 class MockCreatures
   attr_accessor :census
-  attr_reader   :foodchain
-  def initialize(foodchain:)
+  attr_reader   :foodchain, :baselink
+  def initialize(foodchain:, baselink:)
     @census = {'sterile' => [MockCritter0.new, MockCritter0.new],
                'fertile' => [MockCritter1.new, MockCritter1.new] }
     @foodchain = { 'sterile' => {size: 2, prey: 'fertile'},

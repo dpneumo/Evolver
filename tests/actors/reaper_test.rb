@@ -8,7 +8,7 @@ class ReaperTest < Minitest::Test
   def test_only_viable_critters_survive
     foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
                   'fertile' => {size: 2, prey: 'none'} }
-    creatures = MockCreatures.new(foodchain: foodchain)
+    creatures = MockCreatures.new(foodchain: foodchain, baselink: 'none')
     mockstats = MockStats.new(store: MockStatStore.new)
     reap = Reaper.new(stats: mockstats)
 

@@ -1,41 +1,37 @@
 # frozen_string_literal: true
 
 module CoyoteFertility
-  def birth_probability(age:, color:)
-    return 0.00 unless (valid?(age) && valid?(color))
-
-    adjusted_fertility(age, color).clamp(0.0, 1.0)
-  end
-
   private
-    def adjusted_fertility(age, color)
-      birth_prob_by_age[age] * (adjustment_by_color[color] || 0.0)
+    def fertility_by_age(age)
+      @coy_age_fertility ||= coy_age_fertility
+      @coy_age_fertility[age]
     end
 
-    def birth_prob_by_age
-      prob = Hash.new { |h, age| h[age] = 0.00 }
-      prob[0] = 0.05
-      prob[1] = 0.10
-      prob[2] = 0.20
-      prob[3] = 0.80
-      prob[4] = 0.50
-      prob[5] = 0.20
-      prob[6] = 0.05
-      prob
+    def fertility_color_adjust(color)
+      @coy_fert_color_adj ||= coy_fert_color_adj
+      @coy_fert_color_adj[color]
     end
 
-    def adjustment_by_color
-      {
-        'black'      => 1.10,
-        'brown'      => 0.95,
-        'gray'       => 1.30,
-        'white'      => 0.90,
-        'test_color1' => 1.00,
-        'test_color2' => 2.00,
-      }
+    def coy_age_fertility
+      fert = Hash.new {|h, age| h[age] = 0.00 }
+      fert[0] = 0.05
+      fert[1] = 0.10
+      fert[2] = 0.20
+      fert[3] = 0.80
+      fert[4] = 0.50
+      fert[5] = 0.20
+      fert[6] = 0.05
+      fert
     end
 
-    def valid?(parm)
-      (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
+    def coy_fert_color_adj
+      adj = Hash.new {|h, color| h[color] = 0.0 }
+      adj['black'] = 1.10
+      adj['brown'] = 0.95
+      adj['gray']  = 1.30
+      adj['white'] = 0.90
+      adj['test_color1'] = 1.00
+      adj['test_color2'] = 2.00
+      adj
     end
 end

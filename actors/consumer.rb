@@ -7,7 +7,9 @@ class Consumer
     ratios = creatures.ratios
     scales = creatures.scales
     census = creatures.census
+    baselink = creatures.baselink
     creatures.foodchain.each do |hunters, detail|
+      break if hunters == baselink
       enctrs = enctrs_count(ratios[hunters], scales[hunters])
       census[hunters].each do |hunter|
         hunt(hunter, census[detail[:prey]], enctrs)

@@ -9,9 +9,9 @@ class RunnerTest < Minitest::Test
   def setup
     foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
                   'rabbit' => {size: 2, prey: 'carrot'} }
-    @runner = Runner.new( foodchain: foodchain,
-                          stats: MockStats, statstore: MockStatStore,
+    @runner = Runner.new( foodchain: foodchain, baselink: 'carrot',
                           creatures: MockCreatures, consumer: MockConsumer,
+                          stats: MockStats, statstore: MockStatStore,
                           publisher: MockPublisher )
   end
 

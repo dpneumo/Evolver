@@ -1,44 +1,40 @@
 # frozen_string_literal: true
 
 module CritterVitality
-  def survival_probability(age:, color:)
-    return 1.00 unless valid?(age) && valid?(color)
-
-    adjusted_vitality(age, color).clamp(0.0, 1.0)
-  end
-
   private
-    def adjusted_vitality(age, color)
-      survive_prob_by_age[age] * (adjustment_by_color[color] || 1.0)
+    def survive_by_age(age)
+      @crt_age_survival ||= crt_age_survival
+      @crt_age_survival[age]
     end
 
-    def survive_prob_by_age
-      prob = Hash.new { |h, age| h[age] = 0.00 }
-      prob[0] = 1.00
-      prob[1] = 1.00
-      prob[2] = 1.00
-      prob[3] = 0.95
-      prob[4] = 0.90
-      prob[5] = 0.85
-      prob[6] = 0.70
-      prob[7] = 0.50
-      prob[8] = 0.20
-      prob[9] = 0.0
-      prob
+    def survival_color_adjust(color)
+      @crt_surv_color_adj ||= crt_surv_color_adj
+      @crt_surv_color_adj[color]
     end
 
-    def adjustment_by_color
-      {
-        'blue'       => 1.00,
-        'green'      => 0.00,
-        'red'        => 2.00,
-        'yellow'     => 1.00,
-        'test_color1' => 1.00,
-        'test_color2' => 2.00,
-      }
+    def crt_age_survival
+      surv = Hash.new { |h, age| h[age] = 0.00 }
+      surv[0] = 1.00
+      surv[1] = 1.00
+      surv[2] = 1.00
+      surv[3] = 0.95
+      surv[4] = 0.90
+      surv[5] = 0.85
+      surv[6] = 0.70
+      surv[7] = 0.50
+      surv[8] = 0.20
+      surv[9] = 0.0
+      surv
     end
 
-    def valid?(parm)
-      (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
+    def crt_surv_color_adj
+      adj = Hash.new {|h, color| h[color] = 1.0 }
+      adj['blue']        = 1.00
+      adj['green']       = 0.00
+      adj['red']         = 2.00
+      adj['yellow']      = 1.00
+      adj['test_color1'] = 1.00
+      adj['test_color2'] = 2.00
+      adj
     end
 end

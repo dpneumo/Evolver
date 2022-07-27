@@ -2,10 +2,11 @@
 
 class Creatures
   attr_accessor :census
-  attr_reader   :foodchain
+  attr_reader   :foodchain, :baselink
 
-  def initialize(foodchain:)
+  def initialize(foodchain:, baselink:)
     @foodchain = foodchain
+    @baselink = baselink
     @census = @foodchain.reduce({}) do |c, (species, list)|
       population = populate(size: list[:size],  species: species )
       c.update( species => population )

@@ -11,7 +11,7 @@ class CreaturesTest < Minitest::Test
     foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
                   'rabbit' => {size: 2, prey: 'mock_critter1'},
                   'mock_critter1' => {size: 0, prey: 'none'} }
-    @creatures = Creatures.new(foodchain: foodchain)
+    @creatures = Creatures.new(foodchain: foodchain, baselink: 'none')
   end
 
   def test_can_populate_with_4_mock_critters

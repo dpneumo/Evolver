@@ -1,40 +1,35 @@
 # frozen_string_literal: true
 
 module CritterFertility
-  def birth_probability(age:, color:)
-    return 0.00 unless valid?(age) && valid?(color)
-
-    adjusted_fertility(age, color).clamp(0.0, 1.0)
-  end
-
   private
+    def fertility_by_age(age)
+      @crt_age_fertility ||= crt_age_fertility
+      @crt_age_fertility[age]
+    end
 
-  def adjusted_fertility(age, color)
-    birth_prob_by_age[age] * (adjustment_by_color[color] || 0.0)
-  end
+    def fertility_color_adjust(color)
+      @crt_fert_color_adj ||= crt_fert_color_adj
+      @crt_fert_color_adj[color]
+    end
 
-  def birth_prob_by_age
-    prob = Hash.new { |h, age| h[age] = 0.00 }
-    prob[2] = 0.05
-    prob[3] = 0.80
-    prob[4] = 0.50
-    prob[5] = 0.20
-    prob[6] = 0.05
-    prob
-  end
+    def crt_age_fertility
+      fert = Hash.new { |h, age| h[age] = 0.00 }
+      fert[2] = 0.05
+      fert[3] = 0.80
+      fert[4] = 0.50
+      fert[5] = 0.20
+      fert[6] = 0.05
+      fert
+    end
 
-  def adjustment_by_color
-    {
-      'blue'       => 1.10,
-      'green'      => 0.95,
-      'red'        => 1.30,
-      'yellow'     => 0.90,
-      'test_color1' => 1.00,
-      'test_color2' => 2.00,
-    }
-  end
-
-  def valid?(parm)
-    (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
-  end
+    def crt_fert_color_adj
+      adj = Hash.new {|h, color| h[color] = 0.0 }
+      adj['blue']   = 1.10
+      adj['green']  = 0.95
+      adj['red']    = 1.30
+      adj['yellow'] = 0.90
+      adj['test_color1'] = 1.00
+      adj['test_color2'] = 2.00
+      adj
+    end
 end

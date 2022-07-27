@@ -10,7 +10,7 @@ class ConsumerTest < Minitest::Test
     foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
                   'rabbit' => {size: 2, prey: 'critter'},
                   'critter' => {size: 0, prey: 'none'} }
-    @crturs = MockCreatures.new(foodchain: foodchain)
+    @crturs = MockCreatures.new(foodchain: foodchain, baselink: 'none')
   end
 
   def test_encounters_does_not_replace_the_creatures_instance_provided
