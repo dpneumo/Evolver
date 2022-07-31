@@ -12,13 +12,15 @@ class Orgbase
   def self.enctr_scale; 5; end
 
   def self.birth_probability(age:, color:)
-    return 0.00 unless (valid?(age) && valid?(color))
+    return 0.00 unless (age.is_a? Integer) && age >= 0
+    return 0.00 unless color.is_a? String
 
     adjusted_fertility(age, color).clamp(0.0, 1.0)
   end
 
   def self.survival_probability(age:, color:)
-    return 1.00 unless valid?(age) && valid?(color)
+    return 0.00 unless (age.is_a? Integer) && age >= 0
+    return 0.00 unless color.is_a? String
 
     adjusted_vitality(age, color).clamp(0.0, 1.0)
   end
@@ -26,26 +28,26 @@ class Orgbase
   #Instance
   attr_reader :age, :health, :vigor, :species, :color
   def initialize(color: 'red')
+    @species  = self.class.species
     @age      = 0
     @health   = 100
     @vigor    = 100
     @color    = color
-    @species  = self.class.species
     nil
   end
 
   def age=(age)
-    raise "age must be an Integer" unless age.is_a? Integer
+    raise ArgumentError, "age must be an Integer" unless age.is_a? Integer
     @age = age.clamp(0..)
   end
 
   def health=(health)
-    raise "health must be an Integer" unless health.is_a? Integer
+    raise ArgumentError, "health must be an Integer" unless health.is_a? Integer
     @health = health.clamp(0..self.class.max_health)
   end
 
   def vigor=(vigor)
-    raise "vigor must be an Integer" unless vigor.is_a? Integer
+    raise ArgumentError, "vigor must be an Integer" unless vigor.is_a? Integer
     @vigor = vigor.clamp(0..self.class.max_vigor)
   end
 
@@ -74,11 +76,11 @@ class Orgbase
     end
 
     def self.fertility_by_age(age)
-      raise "fertility_by_age not implemented in OrgbaseFertility"
+      raise NotImplementedError, "fertility_by_age not implemented in OrgbaseFertility"
     end
 
     def self.fertility_color_adjust(color)
-      raise "fertility_color_adjust not implemented in OrgbaseFertility"
+      raise NotImplementedError, "fertility_color_adjust not implemented in OrgbaseFertility"
     end
 
   # Vitality
@@ -87,36 +89,36 @@ class Orgbase
     end
 
     def self.survive_by_age(age)
-      raise "survive_by_age not implemented in OrgbaseVitality"
+      raise NotImplementedError, "survive_by_age not implemented in OrgbaseVitality"
     end
 
     def self.survival_color_adjust(color)
-      raise "survival_color_adjust not implemented in OrgbaseFertility"
+      raise NotImplementedError, "survival_color_adjust not implemented in OrgbaseFertility"
     end
 
     # As hunter
     def eat_by_age
-      raise "eat_by_age not implemented in Orgbase"
+      raise NotImplementedError, "eat_by_age not implemented in Orgbase"
     end
 
     def eat_by_health
-      raise "eat_by_health not implemented in Orgbase"
+      raise NotImplementedError, "eat_by_health not implemented in Orgbase"
     end
 
     def eat_by_vigor
-      raise "eat_by_vigor not implemented in Orgbase"
+      raise NotImplementedError, "eat_by_vigor not implemented in Orgbase"
     end
 
     # As prey
     def eaten_by_age
-      raise "eaten_by_age not implemented in Orgbase"
+      raise NotImplementedError, "eaten_by_age not implemented in Orgbase"
     end
 
     def eaten_by_health
-      raise "eaten_by_health not implemented in Orgbase"
+      raise NotImplementedError, "eaten_by_health not implemented in Orgbase"
     end
 
     def eaten_by_vigor
-      raise "eaten_by_vigor not implemented in Orgbase"
+      raise NotImplementedError, "eaten_by_vigor not implemented in Orgbase"
     end
 end
