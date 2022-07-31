@@ -25,21 +25,21 @@ class Creatures
   end
 
   def ratios
-    @foodchain.reduce({}) do |r, (hunters, detail)|
-      r.update(hunters => ratio(hunters, detail[:prey]))
+    @foodchain.reduce({}) do |r, (hunter, detail)|
+      r.update(hunter => ratio(hunter, detail[:prey]))
     end
   end
 
   def scales
-    @foodchain.reduce({}) do |s, (hunters, prey)|
-      s.update(hunters => constantize(hunters).enctr_scale)
+    @foodchain.reduce({}) do |s, (hunter, prey)|
+      s.update(hunter => constantize(hunter).enctr_scale)
     end
   end
 
   private
-    def ratio(hunters, prey)
-      return 20.0 if @census[hunters].count.zero?
-      @census[prey].count.fdiv(@census[hunters].count).clamp(1.0 .. 20.0)
+    def ratio(hunter, prey)
+      return 20.0 if @census[hunter].count.zero?
+      @census[prey].count.fdiv(@census[hunter].count).clamp(1.0 .. 20.0)
     end
 
     def constantize(my_str)
