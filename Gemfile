@@ -11,4 +11,6 @@ ruby '3.0.2'
 
 
 gem 'minitest'
+gem 'pry', '~> 0.13.1'
+gem 'pry-byebug'
 
