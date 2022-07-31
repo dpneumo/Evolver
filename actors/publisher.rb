@@ -1,18 +1,15 @@
 class Publisher
   include UtilityMethods
 
-  def initialize(stats:)
+  def initialize(stats:, statements: Statements)
     @stats = stats
+    @statements = statements.new
     nil
   end
 
   def publish
-    puts <<~TEXT
-      pop stats by period:
-      #{pop_stats_by_period}
-      mean age at death by_species:
-      #{mean_age_at_death_all}
-    TEXT
+    @statements.period_stats(pop_stats_by_period)
+    @statements.death_stats(mean_age_at_death_all)
     nil
   end
 

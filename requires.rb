@@ -15,5 +15,6 @@ require_relative 'orgs/critter/critter'
 require_relative 'orgs/rabbit/rabbit'
 
 require_relative 'storage/stats'
+require_relative 'support/statements'
 
 require 'pry'

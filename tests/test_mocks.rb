@@ -104,3 +104,8 @@ class MockPublisher
   def initialize(stats:); nil; end
   def publish; 'Stats'; end
 end
+
+class MockStatements
+  def period_stats(stats); print nil; end
+  def death_stats(stats); print nil; end
+end  
