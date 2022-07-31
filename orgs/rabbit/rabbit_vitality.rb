@@ -28,7 +28,7 @@ module RabbitVitality
     end
 
     def rab_surv_color_adj
-      adj = Hash.new {|h, color| h[color] = 1.0 }
+      adj = Hash.new {|h, color| h[color] = 0.0 }
       adj['beige']      = 1.10
       adj['black']      = 1.00
       adj['chocolate']  = 1.00

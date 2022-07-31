@@ -28,7 +28,7 @@ module CritterVitality
     end
 
     def crt_surv_color_adj
-      adj = Hash.new {|h, color| h[color] = 1.0 }
+      adj = Hash.new {|h, color| h[color] = 0.0 }
       adj['blue']        = 1.00
       adj['green']       = 0.00
       adj['red']         = 2.00

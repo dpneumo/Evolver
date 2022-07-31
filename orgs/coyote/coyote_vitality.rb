@@ -28,7 +28,7 @@ module CoyoteVitality
     end
 
     def coy_surv_color_adj
-      adj = Hash.new {|h, color| h[color] = 1.0 }
+      adj = Hash.new {|h, color| h[color] = 0.0 }
       adj['black'] = 1.10
       adj['brown'] = 1.00
       adj['gray']  = 1.00
