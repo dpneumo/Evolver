@@ -26,4 +26,15 @@ module UtilityMethods
     denom = 1.0 + Math::E**(-k*(x-x0))
     limit/denom
   end
+
+  def suppress_output
+    # Usage: suppress_output { a_noisy_method }
+    original_stdout, original_stderr = $stdout.clone, $stderr.clone
+    $stderr.reopen File.new('/dev/null', 'w')
+    $stdout.reopen File.new('/dev/null', 'w')
+    yield
+  ensure
+    $stdout.reopen original_stdout
+    $stderr.reopen original_stderr
+  end
 end
