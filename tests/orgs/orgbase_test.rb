@@ -18,23 +18,23 @@ class OrgbaseTest < Minitest::Test
   end
 
   def test_Orgbase_birth_probability_raises
-    assert_raises RuntimeError do
+    assert_raises NotImplementedError do
       Orgbase.birth_probability(age: 2, color: 'red')
     end
   end
 
   def test_Orgbase_survival_probability_raises
-    assert_raises RuntimeError do
+    assert_raises NotImplementedError do
       Orgbase.survival_probability(age: 2, color: 'red')
     end
   end
 
 # Instance tests
   def test_orgbase_instance_defaults_are_set
+    assert @org.species
     assert @org.age
     assert @org.health
     assert @org.vigor
-    assert @org.species
     assert @org.color
   end
 
@@ -49,10 +49,10 @@ class OrgbaseTest < Minitest::Test
   end
 
   def test_orgbase_age_raises_on_noninteger_value
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       @org.age = 3.5
     end
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       @org.age = 'A string'
     end
   end
@@ -68,10 +68,10 @@ class OrgbaseTest < Minitest::Test
   end
 
   def test_orgbase_health_raises_on_noninteger_value
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       @org.health = 'three'
     end
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       @org.health = 3.0
     end
   end
@@ -92,10 +92,10 @@ class OrgbaseTest < Minitest::Test
   end
 
   def test_orgbase_vigor_raises_on_noninteger_value
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       @org.vigor = 'three'
     end
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       @org.vigor = 3.0
     end
   end

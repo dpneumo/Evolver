@@ -25,6 +25,10 @@ class StatsTest < Minitest::Test
     assert_equal expected, @stats.pop_counts
   end
 
+  def test_retrieves_species_count_from_store
+    assert_equal 3, @stats.species_count(period: 2, species: :coyote)
+  end
+
   def test_retrieves_death_age_counts_from_store
     expected = { summed_ages: 40,  summed_count: 10 }
     assert_equal expected, @stats.death_age_counts(species: :coyote, color: 'red')
