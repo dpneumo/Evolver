@@ -13,6 +13,7 @@ require_relative 'orgs/orgbase'
 require_relative 'orgs/coyote/coyote'
 require_relative 'orgs/critter/critter'
 require_relative 'orgs/rabbit/rabbit'
+require_relative 'orgs/carrot/carrot'
 
 require_relative 'storage/stats'
 require_relative 'support/statements'

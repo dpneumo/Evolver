@@ -16,7 +16,7 @@ class MockCritter0
   def species; "mockcrit"; end
   def health=(health); @health = health; end
   def eats_prob; 0.5; end
-  def eaten_prob; 0.5; end
+  def eaten_vulnerability; 0.5; end
 end
 
 class MockCritter1
@@ -37,22 +37,23 @@ class MockCritter1
   def species; "mockcrit"; end
   def health=(health); @health = health; end
   def eats_prob; 0.5; end
-  def eaten_prob; 0.5; end
+  def eaten_vulnerability; 0.5; end
 end
 
 class MockCreatures
   attr_accessor :census
-  attr_reader   :foodchain, :baselink
-  def initialize(foodchain:, baselink:)
-    @census = {'sterile' => [MockCritter0.new, MockCritter0.new],
-               'fertile' => [MockCritter1.new, MockCritter1.new] }
+  attr_reader   :foodchain, :base_species
+  def initialize(foodchain:)
     @foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
                    'fertile' => {size: 2, prey: 'none'} }
+    @base_species = 'fertile'
+    @census = {'sterile' => [MockCritter0.new, MockCritter0.new],
+               'fertile' => [MockCritter1.new, MockCritter1.new] }
     nil
   end
   def age; end
   def ratios; {'sterile' => 3.4}; end
-  def scales; {'sterile' => 2}; end
+  def scale_factors; {'sterile' => 2}; end
 end
 
 class MockConsumer
@@ -62,7 +63,7 @@ end
 class MockStats
   def initialize(store:); nil; end
   def add_population_data(creatures:, period:); nil; end
-  def add_death_data(critter:); nil; end
+  def add_death_data(creature:); nil; end
   def pop_counts
     { 1 => {coyote: { summed_ages: 2, summed_count: 2 }},
       2 => {coyote: { summed_ages: 4, summed_count: 3 }} }
@@ -96,8 +97,8 @@ class MockStatStore
                                     'white' => { summed_ages: 100, summed_count: 20 } } }
     nil
   end
-  def save_raw_data(critters:, period:); nil; end
-  def build_death_stats(critter:); nil; end
+  def save_raw_data(creatures:, period:); nil; end
+  def build_death_stats(creature:); nil; end
 end
 
 class MockPublisher

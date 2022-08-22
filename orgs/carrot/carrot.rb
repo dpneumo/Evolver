@@ -40,15 +40,15 @@ class Carrot < Orgbase
     end
 
     # As prey
-    def eaten_by_age
+    def eaten_vulnerability_by_age
       1.0
     end
 
-    def eaten_by_health
+    def eaten_vulnerability_by_health
       1.0
     end
 
-    def eaten_by_vigor
+    def eaten_vulnerability_by_vigor
       1.0
     end
 end

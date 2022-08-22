@@ -9,7 +9,7 @@ class Orgbase
   def self.satiety; 20; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
-  def self.enctr_scale; 5; end
+  def self.enctr_scale; 5.0; end
 
   def self.birth_probability(age:, color:)
     return 0.00 unless (age.is_a? Integer) && age >= 0
@@ -60,8 +60,8 @@ class Orgbase
     eat_by_age * eat_by_health * eat_by_vigor
   end
 
-  def eaten_prob
-    eaten_by_age * eaten_by_health * eaten_by_vigor
+  def eaten_vulnerability
+    eaten_vulnerability_by_age * eaten_vulnerability_by_health * eaten_vulnerability_by_vigor
   end
 
   private
@@ -110,15 +110,15 @@ class Orgbase
     end
 
     # As prey
-    def eaten_by_age
+    def eaten_vulnerability_by_age
       raise NotImplementedError, "eaten_by_age not implemented in Orgbase"
     end
 
-    def eaten_by_health
+    def eaten_vulnerability_by_health
       raise NotImplementedError, "eaten_by_health not implemented in Orgbase"
     end
 
-    def eaten_by_vigor
+    def eaten_vulnerability_by_vigor
       raise NotImplementedError, "eaten_by_vigor not implemented in Orgbase"
     end
 end

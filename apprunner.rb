@@ -2,13 +2,13 @@
 
 require_relative 'requires'
 
-foodchain = {'coyote' => {size: 10, prey: 'rabbit'},
-             'rabbit' => {size: 20, prey: 'critter'},
-             'critter' => {size: 0, prey: 'none'}
-            }
-baselink = 'critter'
+foodchain = {
+              'coyote' => { size:  5, prey: 'rabbit' },
+              'rabbit' => { size: 15, prey: 'carrot' },
+              'carrot' => { size:  0, prey: 'none'   }
+}
 
-runner = Runner.new(foodchain: foodchain, baselink: baselink)
+runner = Runner.new(foodchain: foodchain)
 
-runner.run(periods: 20)
+runner.run(periods: 10)
 runner.show_stats

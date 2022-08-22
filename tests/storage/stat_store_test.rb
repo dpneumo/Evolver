@@ -24,16 +24,16 @@ class StatStoreTest < Minitest::Test
   end
 
   def test_save_raw_data_returns_nil
-    assert_nil @store.save_raw_data(critters: [@crit1, @crit2], period: 3)
+    assert_nil @store.save_raw_data(creatures: [@crit1, @crit2], period: 3)
   end
 
   def test_build_death_stats_returns_nil
-    assert_nil @store.build_death_stats(critter: @crit1)
+    assert_nil @store.build_death_stats(creature: @crit1)
   end
 
   def test_pop_counts_returns_population_by_period_by_species_as_hash
-    @store.save_raw_data(critters: [@crit1, @crit2], period: 1)
-    @store.save_raw_data(critters: [@crit2], period: 2)
+    @store.save_raw_data(creatures: [@crit1, @crit2], period: 1)
+    @store.save_raw_data(creatures: [@crit2], period: 2)
     expected = { 1=>{"coyote"=>{:summed_ages=>0, :summed_count=>2}},
                  2=>{"coyote"=>{:summed_ages=>0, :summed_count=>1}} }
     assert_equal expected, @store.pop_counts
@@ -41,8 +41,8 @@ class StatStoreTest < Minitest::Test
 
   def test_death_age_counts_returns_age_of_death_data_for_species_by_color
     @crit1.age = 1; @crit2.age = 2
-    @store.build_death_stats(critter: @crit1)
-    @store.build_death_stats(critter: @crit2)
+    @store.build_death_stats(creature: @crit1)
+    @store.build_death_stats(creature: @crit2)
     expected = {"coyote"=>{"brown"=>{:summed_ages=>3, :summed_count=>2}}}
     assert_equal expected, @store.death_age_counts
   end

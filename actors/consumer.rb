@@ -5,14 +5,14 @@ class Consumer
 
   def encounters(creatures:)
     ratios = creatures.ratios
-    scales = creatures.scales
+    scale_factors = creatures.scale_factors
     census = creatures.census
-    baselink = creatures.baselink
-    creatures.foodchain.each do |hunters, detail|
-      break if hunters == baselink
-      enctrs = enctrs_count(ratios[hunters], scales[hunters])
-      census[hunters].each do |hunter|
-        hunt(hunter, census[detail[:prey]], enctrs)
+    base_species = creatures.base_species
+    creatures.foodchain.each do |species, properties|
+      break if species == base_species
+      enctrs = enctrs_count(ratios[species], scale_factors[species])
+      census[species].each do |member|
+        hunt(member, census[properties[:prey]], enctrs)
       end
     end
     nil
@@ -22,6 +22,7 @@ class Consumer
     def hunt(hunter, prey, enctrs)
       return if prey.nil?
       prey.sample(enctrs).each do |hunted|
+        #binding.pry
         eaten(hunter, hunted) ? eat(hunter, hunted) : fast(hunter, hunted)
       end
     end
@@ -32,8 +33,8 @@ class Consumer
     end
 
     def fast(hunter, hunted)
-      hunted.health -= 4
-      hunter.health -= 4
+      hunted.health -= 3
+      hunter.health -= 1
     end
 
     def enctrs_count(ratio, scale)
@@ -42,13 +43,14 @@ class Consumer
     end
 
     def eaten(hunter, prey)
-      #puts "prey eaten prob: #{prey.eaten_prob}"
+      #puts "prey eaten prob: #{prey.eaten_vulnerability}"
       #puts "hunter eats prob: #{hunter.eats_prob}"
       #puts
       flip(biased_coin: biased_coin(hunter, prey))
     end
 
     def biased_coin(hunter, prey)
-      prey.eaten_prob * hunter.eats_prob
+      prey.eaten_vulnerability * hunter.eats_prob
     end
+    # vulnerability & capability?
 end

@@ -42,15 +42,15 @@ class Coyote < Orgbase
     end
 
     # As prey
-    def eaten_by_age
+    def eaten_vulnerability_by_age
       AgeLogistic[age]
     end
 
-    def eaten_by_health
+    def eaten_vulnerability_by_health
       1.0 - HealthLogistic[health]
     end
 
-    def eaten_by_vigor
+    def eaten_vulnerability_by_vigor
       1.0 - VigorLogistic[vigor]
     end
 end

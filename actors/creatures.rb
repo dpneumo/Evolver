@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
+  # Examples:
+  # foodchain = { 'coyote' => {size:  5, prey: 'rabbit'},
+  #               'rabbit' => {size: 15, prey: 'carrot'},
+  #               'carrot' => {size:  0, prey: 'none'  } }
+
 class Creatures
   attr_accessor :census
-  attr_reader   :foodchain, :baselink
+  attr_reader   :foodchain, :base_species
 
-  def initialize(foodchain:, baselink:)
+  def initialize(foodchain:)
     @foodchain = foodchain
-    @baselink = baselink
-    @census = @foodchain.reduce({}) do |c, (species, list)|
-      population = populate(size: list[:size],  species: species )
+    @base_species = last_species(foodchain)
+    @census = @foodchain.reduce({}) do |c, (species, properties)|
+      population = populate(size: properties[:size],  species: species )
       c.update( species => population )
     end
     nil
@@ -19,8 +24,8 @@ class Creatures
   end
 
   def age
-    census.each do |species, list|
-      list.each {|critter| critter.age += 1 }
+    @census.each do |species, members|
+      members.each {|member| member.age += 1 }
     end
   end
 
@@ -30,7 +35,7 @@ class Creatures
     end
   end
 
-  def scales
+  def scale_factors
     @foodchain.reduce({}) do |s, (hunter, prey)|
       s.update(hunter => constantize(hunter).enctr_scale)
     end
@@ -44,5 +49,12 @@ class Creatures
 
     def constantize(my_str)
       Object.const_get(my_str.split('_').map(&:capitalize).join)
+    end
+
+    def last_species(foodchain)
+      foodchain.each do |species, properties|
+        return species if properties[:prey] == 'none'
+      end
+      raise ArgumentError, 'foodchain does not have a base_species'
     end
 end
