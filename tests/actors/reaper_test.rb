@@ -8,7 +8,7 @@ class ReaperTest < Minitest::Test
   def setup
     foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
                   'fertile' => {size: 2, prey: 'none'} }
-    @mockcreatures = MockCreatures.new(foodchain: foodchain, baselink: 'none')
+    @mockcreatures = MockCreatures.new(foodchain: foodchain)
     @mockstats = MockStats.new(store: MockStatStore.new)
     @reaper = Reaper.new(stats: @mockstats)
   end

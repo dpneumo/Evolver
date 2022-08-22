@@ -8,10 +8,17 @@ require_relative '../../orgs/rabbit/rabbit'
 class CreaturesTest < Minitest::Test
 
   def setup
-    foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
-                  'rabbit' => {size: 2, prey: 'mock_critter1'},
-                  'mock_critter1' => {size: 0, prey: 'none'} }
-    @creatures = Creatures.new(foodchain: foodchain, baselink: 'none')
+    @foodchain = { 'coyote' =>        {size: 1, prey: 'rabbit'},
+                   'rabbit' =>        {size: 2, prey: 'mock_critter1'},
+                   'mock_critter1' => {size: 0, prey: 'none'} }
+    @creatures = Creatures.new(foodchain: @foodchain)
+  end
+
+  def test_raises_when_base_species_missing_from_foodchain
+    @foodchain['mock_critter1'][:prey] = 'another_critter'
+    assert_raises ArgumentError do
+      Creatures.new(foodchain: @foodchain)
+    end
   end
 
   def test_can_populate_with_4_mock_critters
@@ -33,15 +40,16 @@ class CreaturesTest < Minitest::Test
     assert_equal expected, @creatures.ratios
   end
 
-  def test_can_get_scale_factor_for_hunter_prey_encounter
+  def test_can_get_scale_factors_for_hunter_prey_encounters
     expected = {"coyote"=>4.7, "rabbit"=>20, "mock_critter1"=>2.4}
-    assert_equal expected, @creatures.scales
+    assert_equal expected, @creatures.scale_factors
   end
 
-  def creature_ages(creatures)
-    creatures.census.reduce({}) do |h, (species, list)|
-      crtr_ages = list.map {|crtr| crtr.age }
-      h.update(species => crtr_ages)
+  private
+    def creature_ages(creatures)
+      creatures.census.reduce({}) do |h, (species, list)|
+        crtr_ages = list.map {|crtr| crtr.age }
+        h.update(species => crtr_ages)
+      end
     end
-  end
 end

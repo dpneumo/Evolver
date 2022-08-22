@@ -11,12 +11,12 @@ class StatsTest < Minitest::Test
   def test_can_add_population_data
     foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
                   'fertile' => {size: 2, prey: 'none'} }
-    creatures = MockCreatures.new(foodchain: foodchain, baselink: 'none')
+    creatures = MockCreatures.new(foodchain: foodchain)
     assert_nil @stats.add_population_data(creatures: creatures, period: 3)
   end
 
   def test_can_add_death_data
-    assert_nil @stats.add_death_data(critter: 'C1')
+    assert_nil @stats.add_death_data(creature: 'C1')
   end
 
   def test_retrieves_pop_counts_from_store

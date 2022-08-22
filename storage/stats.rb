@@ -9,13 +9,13 @@ class Stats
 
   def add_population_data(creatures:, period:)
     creatures.census.each do |_, list|
-      @store.save_raw_data(critters: list, period: period)
+      @store.save_raw_data(creatures: list, period: period)
     end
     nil
   end
 
-  def add_death_data(critter:)
-    @store.build_death_stats(critter: critter)
+  def add_death_data(creature:)
+    @store.build_death_stats(creature: creature)
     nil
   end
 

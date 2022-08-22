@@ -11,8 +11,8 @@ class StatStore
     nil
   end
 
-  def save_raw_data(critters:, period:)
-    critters.each do |c|
+  def save_raw_data(creatures:, period:)
+    creatures.each do |c|
       species = c.species
       color = c.color
       age = c.age
@@ -23,10 +23,10 @@ class StatStore
     nil
   end
 
-  def build_death_stats(critter:)
-    species = critter.species
-    @death_age_counts[species][critter.color][:summed_ages] += critter.age
-    @death_age_counts[species][critter.color][:summed_count] += 1
+  def build_death_stats(creature:)
+    species = creature.species
+    @death_age_counts[species][creature.color][:summed_ages] += creature.age
+    @death_age_counts[species][creature.color][:summed_count] += 1
     nil
   end
 

@@ -8,7 +8,7 @@ class FissionerTest < Minitest::Test
   def setup
     foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
                   'fertile' => {size: 2, prey: 'none'} }
-    @creatures = MockCreatures.new(foodchain: foodchain, baselink: 'none')
+    @creatures = MockCreatures.new(foodchain: foodchain)
     @fis = Fissioner.new
     def @fis.child_color(critter); 'red'; end
   end

@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class Runner
-  def initialize( foodchain:, baselink:, creatures: Creatures,
-                  fissioner: Fissioner, consumer: Consumer, reaper: Reaper,
+  def initialize( foodchain:,
+                  creatures: Creatures,
+                  consumer: Consumer, fissioner: Fissioner, reaper: Reaper,
                   stats: Stats, statstore: StatStore,
                   publisher: Publisher)
     @statstore = statstore.new
     @stats = stats.new(store: @statstore)
-    @creatures = creatures.new(foodchain: foodchain, baselink: baselink)
-    @fissioner = fissioner.new
+    @creatures = creatures.new(foodchain: foodchain)
     @consumer  = consumer.new
+    @fissioner = fissioner.new
     @reaper    = reaper.new(stats: @stats)
     @publisher = publisher.new(stats: @stats)
     nil
