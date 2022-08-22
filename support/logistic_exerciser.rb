@@ -1,6 +1,6 @@
 require_relative 'utility_methods'
 
-class LogisticTester
+class LogisticExerciser
   include UtilityMethods
 
   def run(k: 1.0, limit: 1.0, x0: 0)
@@ -14,7 +14,7 @@ class LogisticTester
   end
 end
 
-lt = LogisticTester.new
+lt = LogisticExerciser.new
 
 lt.run(k: 0.15, x0: 40)
 
