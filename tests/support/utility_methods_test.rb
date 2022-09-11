@@ -42,14 +42,14 @@ class UtilityMethodsTest < Minitest::Test
   end
 
   def test_log2curve_for_x_eq_1_returns_0
-    result = log2curve(x:1)
+    result = self.class.log2curve(x:1)
     refute result.is_a?(Integer)
     assert result.is_a?(Numeric)
     assert_equal 0.0, result
   end
 
   def test_log2curve_scaled_returns_a_Numeric
-    assert_in_delta 6.262, log2curve(x:4.25, scale:3.0), 0.0005
+    assert_in_delta 6.262, self.class.log2curve(x:4.25, scale:3.0), 0.0005
   end
 end
 

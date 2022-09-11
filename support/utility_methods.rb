@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module UtilityMethods
+  def self.included(klass)
+    klass.extend(ClassMethods)
+  end
+
   def flip(biased_coin:)
     Random.rand < biased_coin
   end
@@ -18,15 +22,6 @@ module UtilityMethods
     sum.fdiv(count)
   end
 
-  def log2curve(x:, scale: 1)
-    scale*Math.log2(x)
-  end
-
-  def logistic(x:, x0:0.0, k:1.0, limit:1.0)
-    denom = 1.0 + Math::E**(-k*(x-x0))
-    limit/denom
-  end
-
   def suppress_output
     # Usage: suppress_output { a_noisy_method }
     original_stdout, original_stderr = $stdout.clone, $stderr.clone
@@ -36,5 +31,21 @@ module UtilityMethods
   ensure
     $stdout.reopen original_stdout
     $stderr.reopen original_stderr
+  end
+
+  def constantize(my_str)
+    Object.const_get(my_str.split('_').map(&:capitalize).join)
+  end
+
+  module ClassMethods
+    def log2curve(x:, scale: 1)
+      scale*Math.log2(x)
+    end
+
+    # x0: midpoint, k: steepness, limit: maximum
+    def logistic(x:, x0:0.0, k:1.0, limit:1.0)
+      denom = 1.0 + Math::E**(-k*(x-x0))
+      limit/denom
+    end
   end
 end
