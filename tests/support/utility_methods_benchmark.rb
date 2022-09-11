@@ -3,8 +3,6 @@
 require_relative '../test_helper'
 
 class UtilityMethodsBenchmark < Minitest::Benchmark
-  include UtilityMethods
-
   class MyClass
     include UtilityMethods
   end
@@ -24,11 +22,7 @@ class UtilityMethodsBenchmark < Minitest::Benchmark
       @obj = MyClass.new
      end
 
-    bench_range { [10_000, 100_000] }
-
-    bench_performance_linear "logistic" do |n|
-      n.times { 1.upto(30) {|j| @obj.logistic(x: j) } }
-    end
+    bench_range { [10_000, 100_000, 1_000_000] }
 
     bench_performance_linear "hash" do |n|
       n.times { 1.upto(30) {|j| @myhash[j] } }
@@ -46,12 +40,16 @@ class UtilityMethodsBenchmark < Minitest::Benchmark
       n.times { @obj.mean(count:123, sum:9876) }
     end
 
-    bench_performance_linear "log2crve" do |n|
-      n.times { 1.upto(30) {|j| @obj.log2curve(x:j, scale:6.7) } }
-    end
-
     bench_performance_linear "rnd_ndxs" do |n|
       n.times { @obj.random_ndxs(@arry, 20) }
+    end
+
+    bench_performance_linear "log2crve" do |n|
+      n.times { 1.upto(30) {|j| MyClass.log2curve(x:j, scale:6.7) } }
+    end
+
+    bench_performance_linear "logistic" do |n|
+      n.times { 1.upto(30) {|j| MyClass.logistic(x: j) } }
     end
   end
 end
