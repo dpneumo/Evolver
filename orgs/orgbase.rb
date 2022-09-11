@@ -3,13 +3,12 @@
 require_relative 'orgbase_encounters'
 
 class Orgbase
-  extend UtilityMethods
+  extend OrgbaseEncounters
+  include UtilityMethods
 
   def self.species; 'orgbase'; end
-  def self.satiety; 20; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
-  def self.enctr_scale; 5.0; end
 
   def self.birth_probability(age:, color:)
     return 0.00 unless (age.is_a? Integer) && age >= 0
@@ -25,14 +24,17 @@ class Orgbase
     adjusted_vitality(age, color).clamp(0.0, 1.0)
   end
 
+
   #Instance
-  attr_reader :age, :health, :vigor, :species, :color
+  attr_reader :species, :satiety, 
+              :color, :age, :health, :vigor
   def initialize(color: 'red')
     @species  = self.class.species
+    @satiety  = self.class.satiety
+    @color    = color
     @age      = 0
     @health   = 100
     @vigor    = 100
-    @color    = color
     nil
   end
 
@@ -50,11 +52,6 @@ class Orgbase
     raise ArgumentError, "vigor must be an Integer" unless vigor.is_a? Integer
     @vigor = vigor.clamp(0..self.class.max_vigor)
   end
-
-  def encounter_count(ratio:, health:)
-    adjusted_encounter_count(ratio, health).clamp(0, self.class.satiety)
-  end
-
 
   def eats_prob
     eat_by_age * eat_by_health * eat_by_vigor
@@ -96,6 +93,7 @@ class Orgbase
       raise NotImplementedError, "survival_color_adjust not implemented in OrgbaseFertility"
     end
 
+  # Feeding
     # As hunter
     def eat_by_age
       raise NotImplementedError, "eat_by_age not implemented in Orgbase"

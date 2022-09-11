@@ -4,27 +4,39 @@ class Consumer
   include UtilityMethods
 
   def encounters(creatures:)
-    ratios = creatures.ratios
-    scale_factors = creatures.scale_factors
     census = creatures.census
-    base_species = creatures.base_species
-    creatures.foodchain.each do |species, properties|
-      break if species == base_species
-      enctrs = enctrs_count(ratios[species], scale_factors[species])
-      census[species].each do |member|
-        hunt(member, census[properties[:prey]], enctrs)
+    hunters = creatures.hunter_chain
+    ratios = creatures.ratios
+    hunters.each do |hunter_species, properties|
+      prey_population = census[properties[:prey]]
+      number_of_encounters = enctrs_count(hunter_species, ratios)
+      census[hunter_species].each do |hunter|
+        hunt(hunter, prey_population, number_of_encounters)
       end
     end
     nil
   end
 
   private
-    def hunt(hunter, prey, enctrs)
-      return if prey.nil?
-      prey.sample(enctrs).each do |hunted|
-        #binding.pry
+    def enctrs_count(hunter_species, ratios)
+      hunter_class = constantize(hunter_species)
+      hunter_prey_ratio = ratios[hunter_species]
+      hunter_class.enctrs_count(hunter_prey_ratio)
+    end
+
+    def hunt(hunter, prey_population, number_of_encounters)
+      return if prey_population.nil?
+      prey_population.sample(number_of_encounters).each do |hunted|
         eaten(hunter, hunted) ? eat(hunter, hunted) : fast(hunter, hunted)
       end
+    end
+
+    def eaten(hunter, prey)
+      flip(biased_coin: biased_coin(hunter, prey))
+    end
+
+    def biased_coin(hunter, prey)
+      prey.eaten_vulnerability * hunter.eats_prob
     end
 
     def eat(hunter, hunted)
@@ -36,21 +48,4 @@ class Consumer
       hunted.health -= 3
       hunter.health -= 1
     end
-
-    def enctrs_count(ratio, scale)
-      return 0 if (ratio.nil? || scale.nil?)
-      log2curve(x:ratio, scale:scale).truncate
-    end
-
-    def eaten(hunter, prey)
-      #puts "prey eaten prob: #{prey.eaten_vulnerability}"
-      #puts "hunter eats prob: #{hunter.eats_prob}"
-      #puts
-      flip(biased_coin: biased_coin(hunter, prey))
-    end
-
-    def biased_coin(hunter, prey)
-      prey.eaten_vulnerability * hunter.eats_prob
-    end
-    # vulnerability & capability?
 end

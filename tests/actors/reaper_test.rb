@@ -6,8 +6,8 @@ require_relative '../../actors/reaper'
 
 class ReaperTest < Minitest::Test
   def setup
-    foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
-                  'fertile' => {size: 2, prey: 'none'} }
+    foodchain = { 'sterile_critter' => {size: 2, prey: 'fertile_critter'},
+                  'fertile_critter' => {size: 2, prey: 'none'} }
     @mockcreatures = MockCreatures.new(foodchain: foodchain)
     @mockstats = MockStats.new(store: MockStatStore.new)
     @reaper = Reaper.new(stats: @mockstats)
@@ -18,10 +18,10 @@ class ReaperTest < Minitest::Test
   end
 
   def test_only_viable_critters_survive
-    assert_equal 2, @mockcreatures.census['sterile'].count
-    assert_equal 2, @mockcreatures.census['fertile'].count
+    assert_equal 2, @mockcreatures.census['sterile_critter'].count
+    assert_equal 2, @mockcreatures.census['fertile_critter'].count
     @reaper.survive(creatures: @mockcreatures)
-    assert_equal 0, @mockcreatures.census['sterile'].count
-    assert_equal 2, @mockcreatures.census['fertile'].count
+    assert_equal 0, @mockcreatures.census['sterile_critter'].count
+    assert_equal 2, @mockcreatures.census['fertile_critter'].count
   end
 end

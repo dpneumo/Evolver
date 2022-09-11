@@ -6,16 +6,15 @@
   #               'carrot' => {size:  0, prey: 'none'  } }
 
 class Creatures
+  include UtilityMethods
+
   attr_accessor :census
-  attr_reader   :foodchain, :base_species
+  attr_reader   :foodchain, :hunter_chain
 
   def initialize(foodchain:)
     @foodchain = foodchain
-    @base_species = last_species(foodchain)
-    @census = @foodchain.reduce({}) do |c, (species, properties)|
-      population = populate(size: properties[:size],  species: species )
-      c.update( species => population )
-    end
+    @census = init_census
+    build_hunter_chain
     nil
   end
 
@@ -42,19 +41,27 @@ class Creatures
   end
 
   private
+    def init_census
+      @foodchain.reduce({}) do |c, (species, properties)|
+        population = populate(size: properties[:size],  species: species )
+        c.update( species => population )
+      end
+    end
+
+    def build_hunter_chain
+      @hunter_chain = @foodchain.clone
+      res = @hunter_chain.reject! {|_, prop| prop[:prey] == 'none'}
+      err_msg = 'foodchain does not have a base_species'
+      raise ArgumentError, err_msg unless res 
+      nil
+    end
+
+    def del_base_sp(hc)
+      @hunter_chain.delete_if {|_, prop| prop[:prey] == 'none'}
+    end
+
     def ratio(hunter, prey)
       return 20.0 if @census[hunter].count.zero?
       @census[prey].count.fdiv(@census[hunter].count).clamp(1.0 .. 20.0)
-    end
-
-    def constantize(my_str)
-      Object.const_get(my_str.split('_').map(&:capitalize).join)
-    end
-
-    def last_species(foodchain)
-      foodchain.each do |species, properties|
-        return species if properties[:prey] == 'none'
-      end
-      raise ArgumentError, 'foodchain does not have a base_species'
     end
 end

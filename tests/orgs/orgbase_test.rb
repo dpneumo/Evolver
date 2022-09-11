@@ -32,6 +32,7 @@ class OrgbaseTest < Minitest::Test
 # Instance tests
   def test_orgbase_instance_defaults_are_set
     assert @org.species
+    assert @org.satiety
     assert @org.age
     assert @org.health
     assert @org.vigor

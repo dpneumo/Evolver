@@ -3,34 +3,27 @@
 # Usage: extend OrgbaseEncounters
 module OrgbaseEncounters
   def satiety; 20; end
+  def midpoint_ratio; 10; end
+  def enctr_scale; 5.0; end
 
-  def encntr_hash
-    hash = Hash.new {|h, ratio| h[ratio] = satiety }
+  def enctrs_count(ratio)
+    return 0 if ratio.nil?
+    @enctrs ||= enctr_hash
+    @enctrs[ratio]
+  end
+
+  def enctr_hash
+    # Users of the returned hash MUST insure keys are non-negative Integers
+    hash = Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
     hash[0]  = 0
-    hash[1]  = 0
-    hash[2]  = 1
-    hash[3]  = 1
-    hash[4]  = 2
-    hash[5]  = 2
-    hash[6]  = 3
-    hash[7]  = 4
-    hash[8]  = 6
-    hash[9]  = 8
-    hash[10] = 10
-    hash[11] = 12
-    hash[12] = 14
-    hash[13] = 16
-    hash[14] = 17
-    hash[15] = 18
-    hash[16] = 18
-    hash[17] = 19
-    hash[18] = 19
     hash
   end
 
-  def population_encounters(ratio)
-    # Users of the returned hash MUST insure keys are non-negative Integers
-    @enctrs_by_ratio ||= encntr_hash
-    @enctrs_by_ratio[ratio]
+  def log2_encounter(ratio)
+    log2curve(x:ratio, scale:enctr_scale).truncate
+  end
+
+  def logistic_encounter(ratio)
+    logistic(x:ratio, x0:midpoint_ratio, limit:satiety).truncate
   end
 end

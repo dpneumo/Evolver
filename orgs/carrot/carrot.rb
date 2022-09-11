@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative '../orgbase'
+require_relative 'carrot_encounters'
 require_relative 'carrot_colors'
 require_relative 'carrot_fertility'
 require_relative 'carrot_vitality'
 
 class Carrot < Orgbase
+  extend CarrotEncounters
   extend CarrotColors
   extend CarrotFertility
   extend CarrotVitality
@@ -15,10 +17,8 @@ class Carrot < Orgbase
   VigorLogistic =    Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }
 
   def self.species; 'carrot'; end
-  def self.satiety; 20; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
-  def self.enctr_scale; 4.7; end
 
   def initialize(color: 'yellow')
     super(color: color)

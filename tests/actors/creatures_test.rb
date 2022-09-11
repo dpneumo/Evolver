@@ -9,39 +9,39 @@ class CreaturesTest < Minitest::Test
 
   def setup
     @foodchain = { 'coyote' =>        {size: 1, prey: 'rabbit'},
-                   'rabbit' =>        {size: 2, prey: 'mock_critter1'},
-                   'mock_critter1' => {size: 0, prey: 'none'} }
+                   'rabbit' =>        {size: 2, prey: 'fertile_critter'},
+                   'fertile_critter' => {size: 0, prey: 'none'} }
     @creatures = Creatures.new(foodchain: @foodchain)
   end
 
   def test_raises_when_base_species_missing_from_foodchain
-    @foodchain['mock_critter1'][:prey] = 'another_critter'
+    @foodchain['fertile_critter'][:prey] = 'another_critter'
     assert_raises ArgumentError do
       Creatures.new(foodchain: @foodchain)
     end
   end
 
   def test_can_populate_with_4_mock_critters
-    mocks = @creatures.populate(size: 4, species: 'mock_critter_0')
+    mocks = @creatures.populate(size: 4, species: 'sterile_critter')
     assert_equal 4, mocks.size
   end
 
   def test_can_age_all_species_members
-    expected = {"coyote"=>[0], "rabbit"=>[0, 0], "mock_critter1"=>[]}
+    expected = {"coyote"=>[0], "rabbit"=>[0, 0], "fertile_critter"=>[]}
     assert_equal expected, creature_ages(@creatures)
 
     @creatures.age
-    expected = {"coyote"=>[1], "rabbit"=>[1, 1], "mock_critter1"=>[]}
+    expected = {"coyote"=>[1], "rabbit"=>[1, 1], "fertile_critter"=>[]}
     assert_equal expected, creature_ages(@creatures)
   end
 
   def test_can_get_ratio_of_prey_to_hunter
-    expected = {"coyote"=>2.0, "rabbit"=>1.0, "mock_critter1"=>20.0}
+    expected = {"coyote"=>2.0, "rabbit"=>1.0, "fertile_critter"=>20.0}
     assert_equal expected, @creatures.ratios
   end
 
   def test_can_get_scale_factors_for_hunter_prey_encounters
-    expected = {"coyote"=>4.7, "rabbit"=>20, "mock_critter1"=>2.4}
+    expected = {"coyote"=>4.7, "rabbit"=>20, "fertile_critter"=>2.4}
     assert_equal expected, @creatures.scale_factors
   end
 

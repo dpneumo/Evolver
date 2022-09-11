@@ -1,8 +1,9 @@
-class MockCritter0
+class SterileCritter
   def initialize(color: 'red'); @color = color; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
   def self.enctr_scale; 3.9; end
+  def self.enctrs_count(ratio); 10; end
   def self.survival_probability(age:, color:); 0.0; end
   def self.birth_probability(age:, color:); 0.0; end
   def self.mutations
@@ -13,17 +14,18 @@ class MockCritter0
   def age; 2; end
   def health; 100; end
   def color; 'red'; end
-  def species; "mockcrit"; end
+  def species; "sterile_critter"; end
   def health=(health); @health = health; end
   def eats_prob; 0.5; end
   def eaten_vulnerability; 0.5; end
 end
 
-class MockCritter1
+class FertileCritter
   def initialize(color: 'green'); @color = color; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
   def self.enctr_scale; 2.4; end
+  def self.enctrs_count(ratio); 20; end
   def self.survival_probability(age:, color:); 1.0; end
   def self.birth_probability(age:, color:); 1.0; end
   def self.mutations
@@ -34,7 +36,7 @@ class MockCritter1
   def age; 2; end
   def health; 100; end
   def color; 'red'; end
-  def species; "mockcrit"; end
+  def species; "fertile_critter"; end
   def health=(health); @health = health; end
   def eats_prob; 0.5; end
   def eaten_vulnerability; 0.5; end
@@ -42,13 +44,13 @@ end
 
 class MockCreatures
   attr_accessor :census
-  attr_reader   :foodchain, :base_species
+  attr_reader   :foodchain, :hunter_chain
   def initialize(foodchain:)
-    @foodchain = { 'sterile' => {size: 2, prey: 'fertile'},
-                   'fertile' => {size: 2, prey: 'none'} }
-    @base_species = 'fertile'
-    @census = {'sterile' => [MockCritter0.new, MockCritter0.new],
-               'fertile' => [MockCritter1.new, MockCritter1.new] }
+    @foodchain =    { 'sterile_critter' => {size: 2, prey: 'fertile_critter'},
+                      'fertile_critter' => {size: 2, prey: 'none'} }
+    @hunter_chain = { 'sterile_critter' => {size: 2, prey: 'fertile_critter'} }
+    @census = {'sterile_critter' => [SterileCritter.new, SterileCritter.new],
+               'fertile_critter' => [FertileCritter.new, FertileCritter.new] }
     nil
   end
   def age; end

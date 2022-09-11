@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative '../orgbase'
+require_relative 'critter_encounters'
 require_relative 'critter_colors'
 require_relative 'critter_fertility'
 require_relative 'critter_vitality'
 
 class Critter < Orgbase
+  extend CritterEncounters
   extend CritterColors
   extend CritterFertility
   extend CritterVitality
@@ -15,10 +17,8 @@ class Critter < Orgbase
   VigorLogistic =    Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.05, x0:50).round(4) }
 
   def self.species; 'critter'; end
-  def self.satiety; 20; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
-  def self.enctr_scale; 5.0; end
 
   def initialize(color: 'red')
     super(color: color)
