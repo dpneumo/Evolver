@@ -47,5 +47,9 @@ module UtilityMethods
       denom = 1.0 + Math::E**(-k*(x-x0))
       limit/denom
     end
+
+    def sinecurve(x:, x0:0.0, period:1.0, scale:1.0)
+      scale*Math::sin((x-x0)/period)
+    end
   end
 end

@@ -3,7 +3,7 @@ class SterileCritter
   def self.max_health; 100; end
   def self.max_vigor; 100; end
   def self.enctr_scale; 3.9; end
-  def self.enctrs_count(ratio); 10; end
+  def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 10 }; end
   def self.survival_probability(age:, color:); 0.0; end
   def self.birth_probability(age:, color:); 0.0; end
   def self.mutations
@@ -25,7 +25,7 @@ class FertileCritter
   def self.max_health; 100; end
   def self.max_vigor; 100; end
   def self.enctr_scale; 2.4; end
-  def self.enctrs_count(ratio); 20; end
+  def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 20 }; end
   def self.survival_probability(age:, color:); 1.0; end
   def self.birth_probability(age:, color:); 1.0; end
   def self.mutations

@@ -3,7 +3,7 @@
 require_relative 'orgbase_encounters'
 
 class Orgbase
-  extend OrgbaseEncounters
+  include OrgbaseEncounters
   include UtilityMethods
 
   def self.species; 'orgbase'; end
