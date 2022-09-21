@@ -41,6 +41,18 @@ class UtilityMethodsTest < Minitest::Test
     assert_equal 2.5, mean(count: 4, sum: 10)
   end
 
+  def test_constantize_returns_a_constant_with_the_given_string_as_name 
+    const = constantize('my_class')
+    assert_equal MyClass, const 
+  end
+
+  def test_a_noisy_method_output_is_silenced
+    assert_output(nil,nil) do 
+      rslt = silence_streams(STDERR, STDOUT) { NoisyClass.new.be_loud }
+      assert_equal 'Is that loud enough?', rslt
+    end
+  end
+
   def test_log2curve_for_x_eq_1_returns_0
     result = self.class.log2curve(x:1)
     refute result.is_a?(Integer)
@@ -51,5 +63,23 @@ class UtilityMethodsTest < Minitest::Test
   def test_log2curve_scaled_returns_a_Numeric
     assert_in_delta 6.262, self.class.log2curve(x:4.25, scale:3.0), 0.0005
   end
+
+  def test_sinecurve_for_x_eq_0_returns_0
+    result = self.class.sinecurve(x:0)
+    refute result.is_a? Integer
+    assert result.is_a? Numeric
+    assert_equal 0.0, result
+  end
+
+  def test_sinecurve_for_x_eq_half_PI_and_scale_eq_3_returns_3
+    assert_equal 3.0, self.class.sinecurve(x:Math::PI/2, scale:3)
+  end
 end
 
+class NoisyClass
+  def be_loud
+    puts "A VERY NOISY METHOD!!!"
+    'Is that loud enough?'
+  end
+end
+class MyClass;end

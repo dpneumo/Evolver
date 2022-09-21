@@ -22,19 +22,23 @@ module UtilityMethods
     sum.fdiv(count)
   end
 
-  def suppress_output
-    # Usage: suppress_output { a_noisy_method }
-    original_stdout, original_stderr = $stdout.clone, $stderr.clone
-    $stderr.reopen File.new('/dev/null', 'w')
-    $stdout.reopen File.new('/dev/null', 'w')
-    yield
-  ensure
-    $stdout.reopen original_stdout
-    $stderr.reopen original_stderr
-  end
-
   def constantize(my_str)
     Object.const_get(my_str.split('_').map(&:capitalize).join)
+  end
+
+  # Usage: result = silence_streams(STDERR, STDOUT) { a_noisy_method }
+  def silence_streams(*streams)
+    on_hold = streams.collect { |stream| stream.dup }
+    streams.each do |stream|
+      stream.reopen(RUBY_PLATFORM =~ /mswin/ ? 'NUL:' : '/dev/null')
+      stream.sync = true
+    end
+    retval = yield
+  ensure
+    streams.each_with_index do |stream, i|
+      stream.reopen(on_hold[i])
+    end
+    retval
   end
 
   module ClassMethods
