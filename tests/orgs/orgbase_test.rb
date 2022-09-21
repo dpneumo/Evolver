@@ -110,4 +110,32 @@ class OrgbaseTest < Minitest::Test
     @org.vigor = @org.class.max_vigor + 1
     assert_equal @org.class.max_vigor, @org.vigor
   end
+
+  def test_fertility_adjustments_are_not_implemented
+    assert_raises NotImplementedError do
+      Orgbase.fertility_by_age(2)
+    end
+    assert_raises NotImplementedError do 
+      Orgbase.fertility_color_adjust('red')
+    end
+  end
+
+  def test_vitality_adjustments_are_not_implemented
+    assert_raises NotImplementedError do 
+      Orgbase.survive_by_age(3)
+    end
+    assert_raises NotImplementedError do 
+      Orgbase.survival_color_adjust('green')
+    end
+  end
+
+  def test_a_new_org_eats_prob_is_close_to_1
+    assert_in_delta 1.0, @org.eats_prob, 0.1
+  end
+
+  def test_a_1_yo_org_with_vigor_and_health_50_has_eaten_vulnerability_near_0
+    @org.age = 1
+    @org.health = @org.vigor = 50
+    assert_in_delta 0.0, @org.eaten_vulnerability, 0.1
+  end
 end

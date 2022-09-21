@@ -6,6 +6,20 @@ class Orgbase
   include OrgbaseEncounters
   include UtilityMethods
 
+  class << self
+    def age_curve
+      @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }
+    end
+
+    def health_curve
+      @health_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }
+    end
+
+    def vigor_curve
+      @vigor_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }
+    end
+  end
+
   def self.species; 'orgbase'; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
@@ -62,11 +76,6 @@ class Orgbase
   end
 
   private
-  # Validation
-    def self.valid?(parm)
-       (parm.is_a? String) || ((parm.is_a? Integer) && parm >= 0)
-    end
-
   # Fertility
     def self.adjusted_fertility(age, color)
       fertility_by_age(age) * fertility_color_adjust(color)
@@ -96,27 +105,27 @@ class Orgbase
   # Feeding
     # As hunter
     def eat_by_age
-      raise NotImplementedError, "eat_by_age not implemented in Orgbase"
+      1.0 - self.class.age_curve[age]
     end
 
     def eat_by_health
-      raise NotImplementedError, "eat_by_health not implemented in Orgbase"
+      self.class.health_curve[health]
     end
 
     def eat_by_vigor
-      raise NotImplementedError, "eat_by_vigor not implemented in Orgbase"
+      self.class.vigor_curve[vigor]
     end
 
     # As prey
     def eaten_vulnerability_by_age
-      raise NotImplementedError, "eaten_by_age not implemented in Orgbase"
+      self.class.age_curve[age]
     end
 
     def eaten_vulnerability_by_health
-      raise NotImplementedError, "eaten_by_health not implemented in Orgbase"
+      1.0 - self.class.health_curve[health]
     end
 
     def eaten_vulnerability_by_vigor
-      raise NotImplementedError, "eaten_by_vigor not implemented in Orgbase"
+      1.0 - self.class.vigor_curve[vigor]
     end
 end

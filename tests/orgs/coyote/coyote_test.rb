@@ -45,6 +45,24 @@ class CoyoteTest < Minitest::Test
     end
   end
 
+  def test_Coyote_age_curve_always_returns_the_same_hash
+    initial_curve = Coyote.age_curve
+    assert initial_curve == Coyote.age_curve
+    assert_equal Hash, Coyote.age_curve.class
+  end
+
+  def test_Coyote_health_curve_always_returns_the_same_hash
+    initial_curve = Coyote.health_curve
+    assert initial_curve == Coyote.health_curve
+    assert_equal Hash, Coyote.health_curve.class 
+  end
+
+  def test_Coyote_vigor_curve_always_returns_the_same_hash
+    initial_curve = Coyote.vigor_curve
+    assert initial_curve == Coyote.vigor_curve
+    assert_equal Hash, Coyote.vigor_curve.class 
+  end
+
 # Instance tests
   def test_coyote_defaults
     assert_equal 'black', @coyote.color
@@ -57,15 +75,5 @@ class CoyoteTest < Minitest::Test
   def test_can_set_color_in_instance_initialization
     @coyote_con_color = Coyote.new(color: 'mauve')
     assert_equal 'mauve', @coyote_con_color.color
-  end
-
-  def test_a_new_coyote_eats_prob_is_close_to_1
-    assert_in_delta 1.0, @coyote.eats_prob, 0.1
-  end
-
-  def test_a_1_yo_coyote_with_vigor_and_health_50_has_eaten_vulnerability_near_0
-    @coyote.age = 1
-    @coyote.health = @coyote.vigor = 50
-    assert_in_delta 0.0, @coyote.eaten_vulnerability, 0.1
   end
 end

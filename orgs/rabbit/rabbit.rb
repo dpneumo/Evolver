@@ -27,39 +27,9 @@ class Rabbit < Orgbase
   end
 
   def self.species; 'rabbit'; end
-  def self.max_health; 100; end
-  def self.max_vigor; 100; end
 
   def initialize(color: 'black')
     super(color: color)
     nil
   end
-
-  private
-    # As hunter
-    def eat_by_age
-      1.0 - Rabbit.age_curve[age]
-    end
-
-    def eat_by_health
-      Rabbit.health_curve[health]
-    end
-
-    def eat_by_vigor
-      Rabbit.vigor_curve[vigor]
-    end
-
-    # As prey
-    def eaten_vulnerability_by_age
-      Rabbit.age_curve[age]
-    end
-
-    def eaten_vulnerability_by_health
-      1.0 - Rabbit.health_curve[health]
-    end
-
-    def eaten_vulnerability_by_vigor
-      1.0
-      #1.0 - Rabbit.vigor_curve[vigor]
-    end
 end

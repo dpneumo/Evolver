@@ -45,6 +45,24 @@ class RabbitTest < Minitest::Test
     end
   end
 
+  def test_Rabbit_age_curve_always_returns_the_same_hash
+    initial_curve = Rabbit.age_curve
+    assert initial_curve == Rabbit.age_curve
+    assert_equal Hash, Rabbit.age_curve.class
+  end
+
+  def test_Rabbit_health_curve_always_returns_the_same_hash
+    initial_curve = Rabbit.health_curve
+    assert initial_curve == Rabbit.health_curve
+    assert_equal Hash, Rabbit.health_curve.class 
+  end
+
+  def test_Rabbit_vigor_curve_always_returns_the_same_hash
+    initial_curve = Rabbit.vigor_curve
+    assert initial_curve == Rabbit.vigor_curve
+    assert_equal Hash, Rabbit.vigor_curve.class 
+  end
+
 # Instance tests
   def test_rabbit_defaults
     assert_equal 'black', @rabbit.color
@@ -57,15 +75,5 @@ class RabbitTest < Minitest::Test
   def test_can_set_color_in_instance_initialization
     @rabbit_con_color = Rabbit.new(color: 'mauve')
     assert_equal 'mauve', @rabbit_con_color.color
-  end
-
-  def test_a_new_rabbit_eats_prob_is_close_to_1
-    assert_in_delta 1.0, @rabbit.eats_prob, 0.1
-  end
-
-  def test_a_1_yo_rabbit_with_vigor_and_health_50_has_eaten_vulnerability_near_0
-    @rabbit.age = 1
-    @rabbit.health = @rabbit.vigor = 50
-    assert_in_delta 0.0, @rabbit.eaten_vulnerability, 0.1
   end
 end

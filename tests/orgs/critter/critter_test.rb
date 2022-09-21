@@ -45,6 +45,24 @@ class CritterTest < Minitest::Test
     end
   end
 
+  def test_Critter_age_curve_always_returns_the_same_hash
+    initial_curve = Critter.age_curve
+    assert initial_curve == Critter.age_curve
+    assert_equal Hash, Critter.age_curve.class
+  end
+
+  def test_Critter_health_curve_always_returns_the_same_hash
+    initial_curve = Critter.health_curve
+    assert initial_curve == Critter.health_curve
+    assert_equal Hash, Critter.health_curve.class 
+  end
+
+  def test_Critter_vigor_curve_always_returns_the_same_hash
+    initial_curve = Critter.vigor_curve
+    assert initial_curve == Critter.vigor_curve
+    assert_equal Hash, Critter.vigor_curve.class 
+  end
+
 # Instance tests
   def test_critter_defaults
     assert_equal 'red', @critter.color
@@ -57,15 +75,5 @@ class CritterTest < Minitest::Test
   def test_can_set_color_in_instance_initialization
     @critter_con_color = Critter.new(color: 'green')
     assert_equal 'green', @critter_con_color.color
-  end
-
-  def test_a_new_critter_eats_prob_is_close_to_1
-    assert_in_delta 1.0, @critter.eats_prob, 0.1
-  end
-
-  def test_a_1_yo_critter_with_vigor_and_health_50_has_eaten_vulnerability_near_0
-    @critter.age = 1
-    @critter.health = @critter.vigor = 50
-    assert_in_delta 0.0, @critter.eaten_vulnerability, 0.1
   end
 end

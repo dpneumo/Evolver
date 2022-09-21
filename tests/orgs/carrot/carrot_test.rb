@@ -45,6 +45,24 @@ class CarrotTest < Minitest::Test
     end
   end
 
+  def test_Carrot_age_curve_always_returns_the_same_hash
+    initial_curve = Carrot.age_curve
+    assert initial_curve == Carrot.age_curve
+    assert_equal Hash, Carrot.age_curve.class
+  end
+
+  def test_Carrot_health_curve_always_returns_the_same_hash
+    initial_curve = Carrot.health_curve
+    assert initial_curve == Carrot.health_curve
+    assert_equal Hash, Carrot.health_curve.class 
+  end
+
+  def test_Carrot_vigor_curve_always_returns_the_same_hash
+    initial_curve = Carrot.vigor_curve
+    assert initial_curve == Carrot.vigor_curve
+    assert_equal Hash, Carrot.vigor_curve.class 
+  end
+
 
 # Instance tests
   def test_carrot_defaults
@@ -58,13 +76,5 @@ class CarrotTest < Minitest::Test
   def test_can_set_color_in_instance_initialization
     @carrot_con_color = Carrot.new(color: 'mauve')
     assert_equal 'mauve', @carrot_con_color.color
-  end
-
-  def test_carrot_eats_prob_is_0
-    assert_equal 0.0, @carrot.eats_prob
-  end
-
-  def test_carrot_eaten_vulnerability_is_1
-    assert_equal 1.0, @carrot.eaten_vulnerability
   end
 end
