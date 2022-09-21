@@ -46,4 +46,10 @@ class StatStoreTest < Minitest::Test
     expected = {"coyote"=>{"brown"=>{:summed_ages=>3, :summed_count=>2}}}
     assert_equal expected, @store.death_age_counts
   end
+
+  def test_reports_save_failure
+    @store.stub :save, false do 
+      assert_output(/Critter/) {@store.save_raw_data(creatures: [@crit2], period: 2)}
+    end
+  end
 end

@@ -45,14 +45,19 @@ class OrgbaseEncountersTest < Minitest::Test
 		assert_equal 10, TestOrg.enctr_hash[10.0]
 	end
 
-=begin
-	# Using log2_encounter
-	def test_enctr_hash_for_1_is_0
-		assert_equal 0, TestOrg.enctr_hash[1]
-	end
+  def test_logistic_encounter_returns_0_for_ratio_1
+  	assert_equal 0, TestOrg.send(:logistic_encounter, 0)
+  end
 
-	def test_enctr_hash_sets_value_for_enctr_hash_of_10
-		assert_equal 5, TestOrg.enctr_hash[2]
-	end
-=end
+  def test_logistic_encounter_returns_0_for_ratio_2
+  	assert_equal 10, TestOrg.send(:logistic_encounter, 10.0)
+  end
+
+  def test_log2_encounter_returns_0_for_ratio_1
+  	assert_equal 0, TestOrg.send(:log2_encounter, 1)
+  end
+
+  def test_log2_encounter_returns_0_for_ratio_2
+  	assert_equal 5, TestOrg.send(:log2_encounter, 2)
+  end
 end

@@ -9,6 +9,3 @@ require 'pry'
 
 require_relative '../support/utility_methods'
 require_relative 'test_mocks'
-
-VERBOSE = false
-BACKTRACE = false

@@ -44,7 +44,7 @@ end
 
 class MockCreatures
   attr_accessor :census
-  attr_reader   :foodchain, :hunter_chain
+  attr_reader   :hunter_chain
   def initialize(foodchain:)
     @foodchain =    { 'sterile_critter' => {size: 2, prey: 'fertile_critter'},
                       'fertile_critter' => {size: 2, prey: 'none'} }

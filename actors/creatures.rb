@@ -9,7 +9,7 @@ class Creatures
   include UtilityMethods
 
   attr_accessor :census
-  attr_reader   :foodchain, :hunter_chain
+  attr_reader   :hunter_chain
 
   def initialize(foodchain:)
     @foodchain = foodchain
@@ -54,10 +54,6 @@ class Creatures
       err_msg = 'foodchain does not have a base_species'
       raise ArgumentError, err_msg unless res 
       nil
-    end
-
-    def del_base_sp(hc)
-      @hunter_chain.delete_if {|_, prop| prop[:prey] == 'none'}
     end
 
     def ratio(hunter, prey)
