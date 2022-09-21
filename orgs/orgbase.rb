@@ -78,28 +78,12 @@ class Orgbase
   private
   # Fertility
     def self.adjusted_fertility(age, color)
-      fertility_by_age(age) * fertility_color_adjust(color)
-    end
-
-    def self.fertility_by_age(age)
-      raise NotImplementedError, "fertility_by_age not implemented in OrgbaseFertility"
-    end
-
-    def self.fertility_color_adjust(color)
-      raise NotImplementedError, "fertility_color_adjust not implemented in OrgbaseFertility"
+      fertility_by_age[age] * fertility_color_adjust[color]
     end
 
   # Vitality
     def self.adjusted_vitality(age, color)
-      survive_by_age(age) * survival_color_adjust(color)
-    end
-
-    def self.survive_by_age(age)
-      raise NotImplementedError, "survive_by_age not implemented in OrgbaseVitality"
-    end
-
-    def self.survival_color_adjust(color)
-      raise NotImplementedError, "survival_color_adjust not implemented in OrgbaseFertility"
+      survive_by_age[age] * survival_color_adjust[color]
     end
 
   # Feeding

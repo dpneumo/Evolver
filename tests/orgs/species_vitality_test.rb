@@ -4,7 +4,7 @@ require_relative '../test_helper'
 
 ['Critter', 'Coyote', 'Rabbit', 'Carrot'].each do |sp|
   species = sp.downcase
-  require_relative "../../orgs/#{species}/#{species}_vitality"
+  require_relative "../../orgs/#{species}/#{species}_parms"
   eval <<~DYNAMIC
     class #{sp}VitalityTest < Minitest::Test
       def test_#{species}_survival_probability_returns_a_result_between_0_and_1

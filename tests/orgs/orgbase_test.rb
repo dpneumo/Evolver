@@ -17,18 +17,6 @@ class OrgbaseTest < Minitest::Test
     assert Orgbase.enctr_scale
   end
 
-  def test_Orgbase_birth_probability_raises
-    assert_raises NotImplementedError do
-      Orgbase.birth_probability(age: 2, color: 'red')
-    end
-  end
-
-  def test_Orgbase_survival_probability_raises
-    assert_raises NotImplementedError do
-      Orgbase.survival_probability(age: 2, color: 'red')
-    end
-  end
-
 # Instance tests
   def test_orgbase_instance_defaults_are_set
     assert @org.species
@@ -109,24 +97,6 @@ class OrgbaseTest < Minitest::Test
   def test_vigor_gt_max_vigor_is_forced_to_max_vigor
     @org.vigor = @org.class.max_vigor + 1
     assert_equal @org.class.max_vigor, @org.vigor
-  end
-
-  def test_fertility_adjustments_are_not_implemented
-    assert_raises NotImplementedError do
-      Orgbase.fertility_by_age(2)
-    end
-    assert_raises NotImplementedError do 
-      Orgbase.fertility_color_adjust('red')
-    end
-  end
-
-  def test_vitality_adjustments_are_not_implemented
-    assert_raises NotImplementedError do 
-      Orgbase.survive_by_age(3)
-    end
-    assert_raises NotImplementedError do 
-      Orgbase.survival_color_adjust('green')
-    end
   end
 
   def test_a_new_org_eats_prob_is_close_to_1
