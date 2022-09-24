@@ -4,9 +4,7 @@ module CarrotParms
 # Initialize class >instance< variable enctr_sizes_hash
   class << self
     def extended(base)
-      if base.method_defined?(:enctr_hash)
-        base.enctr_sizes_hash = base.enctr_hash
-      end
+      base.enctr_sizes_hash = base.enctr_hash
     end
   end
 
@@ -40,6 +38,7 @@ module CarrotParms
   def enctr_scale; 4.7; end
 
   private
+  
 # Fertility
     def car_age_fertility
       fert = Hash.new { |h, age| h[age] = 1.00 }

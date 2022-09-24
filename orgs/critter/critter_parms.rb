@@ -4,9 +4,7 @@ module CritterParms
 # Initialize class >instance< variable enctr_sizes_hash
   class << self
     def extended(base)
-      if base.method_defined?(:enctr_hash)
-        base.enctr_sizes_hash = base.enctr_hash
-      end
+      base.enctr_sizes_hash = base.enctr_hash
     end
   end
 
