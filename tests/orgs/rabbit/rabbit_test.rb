@@ -19,15 +19,16 @@ class RabbitTest < Minitest::Test
 
   def test_Rabbit_colors_returns_an_array
     assert Rabbit.colors.is_a? Array
+    Rabbit.colors.each do |color|
+      assert color.is_a? String
+    end
   end
 
   def test_Rabbit_mutations_is_a_hash_of_hashes_with_float_values
     assert Rabbit.mutations.is_a? Hash
-    Rabbit.mutations.each do |key, mutation_hash|
+    Rabbit.mutations.each do |_, mutation_hash|
       assert mutation_hash.is_a? Hash
-      mutation_hash.values.each do |val|
-        assert_equal Float, val.class
-      end
+      assert_equal 1.00, mutation_hash.values.sum
     end
   end
 

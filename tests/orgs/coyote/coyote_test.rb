@@ -19,15 +19,16 @@ class CoyoteTest < Minitest::Test
 
   def test_Coyote_colors_returns_an_array
     assert Coyote.colors.is_a? Array
+    Coyote.colors.each do |color|
+      assert color.is_a? String
+    end
   end
 
-  def test_Coyote_mutations_is_a_hash_of_hashes_with_float_values
+  def test_Coyote_mutations_is_a_hash_of_hashes_with_float_values_summing_to_one
     assert Coyote.mutations.is_a? Hash
-    Coyote.mutations.each do |key, mutation_hash|
+    Coyote.mutations.each do |_, mutation_hash|
       assert mutation_hash.is_a? Hash
-      mutation_hash.values.each do |val|
-        assert_equal Float, val.class
-      end
+      assert_equal 1.00, mutation_hash.values.sum
     end
   end
 
