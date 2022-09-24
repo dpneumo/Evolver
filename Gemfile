@@ -7,10 +7,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '3.0.2'
+ruby '3.1.2'
 
 
 gem 'minitest'
-gem 'pry', '~> 0.13.1'
-gem 'pry-byebug'
 gem 'simplecov', require: false, group: :test
