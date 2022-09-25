@@ -75,7 +75,7 @@ class UtilityMethodsTest < Minitest::Test
     assert_equal 3.0, self.class.sinecurve(x:Math::PI/2, scale:3)
   end
 
-  def test_descendants
+  def donot_test_descendants
     assert_equal [B,A,D], C.descendants
   end
 end

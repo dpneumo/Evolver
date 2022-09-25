@@ -58,6 +58,7 @@ module UtilityMethods
 
     # Evolved from Rails
     #   activesupport/lib/active_support/core_ext/class/subclasses.rb
+    # In Ruby 3.1+ use Class#subclasses
     def descendants
       ObjectSpace.each_object(singleton_class).reduce([]) do |des, k|
         des.unshift k unless k.singleton_class? || k == self
