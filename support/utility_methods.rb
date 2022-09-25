@@ -55,5 +55,14 @@ module UtilityMethods
     def sinecurve(x:, x0:0.0, period:1.0, scale:1.0)
       scale*Math::sin((x-x0)/period)
     end
+
+    # Evolved from Rails
+    #   activesupport/lib/active_support/core_ext/class/subclasses.rb
+    def descendants
+      ObjectSpace.each_object(singleton_class).reduce([]) do |des, k|
+        des.unshift k unless k.singleton_class? || k == self
+        des
+      end
+    end
   end
 end

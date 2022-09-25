@@ -74,6 +74,10 @@ class UtilityMethodsTest < Minitest::Test
   def test_sinecurve_for_x_eq_half_PI_and_scale_eq_3_returns_3
     assert_equal 3.0, self.class.sinecurve(x:Math::PI/2, scale:3)
   end
+
+  def test_descendants
+    assert_equal [B,A,D], C.descendants
+  end
 end
 
 class NoisyClass
@@ -83,3 +87,7 @@ class NoisyClass
   end
 end
 class MyClass;end
+class C; include UtilityMethods; end
+class B < C; end
+class A < B; end
+class D < C; end
