@@ -32,6 +32,13 @@ class OrgbaseEncountersTest < Minitest::Test
   end
 
   # Test the encounters hash object
+  def test_each_creature_class_has_its_own_enctr_sizes_hash
+    oids = Orgbase.descendants.collect do |dsndt| 
+    	dsndt.enctr_sizes_hash.object_id 
+    end
+    assert_nil oids.uniq!
+  end
+
 	def test_enctr_hash_returns_a_Hash
 		assert TestOrg.enctr_hash.is_a? Hash
 	end
