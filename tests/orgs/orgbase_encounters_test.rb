@@ -4,8 +4,8 @@ require_relative '../test_helper'
 require_relative '../../orgs/orgbase_encounters'
 
 class TestOrg
-  include OrgbaseEncounters
   include UtilityMethods
+  extend OrgbaseEncounters
 end
 
 class OrgbaseEncountersTest < Minitest::Test

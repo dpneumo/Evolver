@@ -3,30 +3,12 @@
 module CoyoteParms
 # Initialize class >instance< variable enctr_sizes_hash
   class << self
-    def included(base)
-      base.extend ClassMethods
+    def extended(base)
       base.enctr_sizes_hash = base.enctr_hash
     end
   end
 
-  module ClassMethods
-    def enctr_sizes_hash
-      @enctr_sizes_hash
-    end
-
-    def enctr_sizes_hash=(value)
-      @enctr_sizes_hash = value
-    end
-
-    def enctr_hash
-      Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
-    end
-
-    def logistic_encounter(ratio)
-      logistic(x:ratio, x0:ratio_midpoint, limit:satiety).truncate
-    end
-
-#   Colors
+# Colors
   def colors
     ['black', 'brown', 'gray', 'white', 'test_color']
   end
@@ -71,61 +53,71 @@ module CoyoteParms
     }
   end
 
-#   Encounters
+# Encounters
   def satiety; 20; end
   def enctr_scale; 4.7; end
 
-  private
-  
-#   Fertility
-    def coy_age_fertility
-      fert = Hash.new {|h, age| h[age] = 0.00 }
-      fert[0] = 0.05
-      fert[1] = 0.10
-      fert[2] = 0.20
-      fert[3] = 0.80
-      fert[4] = 0.50
-      fert[5] = 0.20
-      fert[6] = 0.05
-      fert
-    end
+  def enctr_sizes_hash
+    @enctr_sizes_hash
+  end
 
-    def coy_fert_color_adj
-      adj = Hash.new {|h, color| h[color] = 0.0 }
-      adj['black'] = 1.10
-      adj['brown'] = 0.95
-      adj['gray']  = 1.30
-      adj['white'] = 0.90
-      adj['test_color1'] = 1.00
-      adj['test_color2'] = 2.00
-      adj
-    end
+  def enctr_sizes_hash=(value)
+    @enctr_sizes_hash = value
+  end
 
-#   Survival
-    def coy_age_survival
-      surv = Hash.new { |h, age| h[age] = 0.00 }
-      surv[0] = 1.00
-      surv[1] = 1.00
-      surv[2] = 1.00
-      surv[3] = 0.95
-      surv[4] = 0.90
-      surv[5] = 0.85
-      surv[6] = 0.70
-      surv[7] = 0.50
-      surv[8] = 0.20
-      surv[9] = 0.0
-      surv
-    end
+  # Users of the returned hash MUST insure keys are non-negative Integers
+  def enctr_hash
+    Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
+  end
 
-    def coy_surv_color_adj
-      adj = Hash.new {|h, color| h[color] = 0.0 }
-      adj['black'] = 1.10
-      adj['brown'] = 1.00
-      adj['gray']  = 1.00
-      adj['white'] = 1.00
-      adj['test_color1'] = 1.00
-      adj['test_color2'] = 2.00
-      adj
-    end
+# Fertility
+  def coy_age_fertility
+    fert = Hash.new {|h, age| h[age] = 0.00 }
+    fert[0] = 0.05
+    fert[1] = 0.10
+    fert[2] = 0.20
+    fert[3] = 0.80
+    fert[4] = 0.50
+    fert[5] = 0.20
+    fert[6] = 0.05
+    fert
+  end
+
+  def coy_fert_color_adj
+    adj = Hash.new {|h, color| h[color] = 0.0 }
+    adj['black'] = 1.10
+    adj['brown'] = 0.95
+    adj['gray']  = 1.30
+    adj['white'] = 0.90
+    adj['test_color1'] = 1.00
+    adj['test_color2'] = 2.00
+    adj
+  end
+
+# Survival
+  def coy_age_survival
+    surv = Hash.new { |h, age| h[age] = 0.00 }
+    surv[0] = 1.00
+    surv[1] = 1.00
+    surv[2] = 1.00
+    surv[3] = 0.95
+    surv[4] = 0.90
+    surv[5] = 0.85
+    surv[6] = 0.70
+    surv[7] = 0.50
+    surv[8] = 0.20
+    surv[9] = 0.0
+    surv
+  end
+
+  def coy_surv_color_adj
+    adj = Hash.new {|h, color| h[color] = 0.0 }
+    adj['black'] = 1.10
+    adj['brown'] = 1.00
+    adj['gray']  = 1.00
+    adj['white'] = 1.00
+    adj['test_color1'] = 1.00
+    adj['test_color2'] = 2.00
+    adj
   end
 end

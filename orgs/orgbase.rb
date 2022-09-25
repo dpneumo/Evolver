@@ -3,8 +3,8 @@
 require_relative 'orgbase_encounters'
 
 class Orgbase
-  include OrgbaseEncounters
   include UtilityMethods
+  extend OrgbaseEncounters
 
   class << self
     def age_curve
