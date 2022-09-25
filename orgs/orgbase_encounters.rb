@@ -12,20 +12,6 @@ module OrgbaseEncounters
     def satiety; 20; end
     def ratio_midpoint; 10.0; end
     def enctr_scale; 5.0; end
-
-    def enctr_sizes_hash
-      @enctr_sizes_hash
-    end
-
-    def enctr_sizes_hash=(value)
-      @enctr_sizes_hash = value
-    end
-
-    def enctr_hash
-      # Users of the returned hash MUST insure keys are non-negative Integers
-      Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
-      #Hash.new {|h, ratio| h[ratio] = log2_encounter(ratio) }
-    end
     
     private
       def logistic_encounter(ratio)

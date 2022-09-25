@@ -3,12 +3,29 @@
 module CritterParms
 # Initialize class >instance< variable enctr_sizes_hash
   class << self
-    def extended(base)
+    def included(base)
+      base.extend ClassMethods
       base.enctr_sizes_hash = base.enctr_hash
     end
   end
 
-# Colors
+  module ClassMethods
+    def enctr_sizes_hash
+      @enctr_sizes_hash
+    end
+
+    def enctr_sizes_hash=(value)
+      @enctr_sizes_hash = value
+    end
+
+    def enctr_hash
+      Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
+    end
+    
+    def logistic_encounter(ratio)
+      logistic(x:ratio, x0:ratio_midpoint, limit:satiety).truncate
+    end
+#   Colors
   def colors
     ['blue', 'green', 'red', 'yellow', 'test_color']
   end
@@ -53,13 +70,13 @@ module CritterParms
     }
   end
 
-# Encounters
+#   Encounters
   def satiety; 20; end
   def enctr_scale; 5.0; end
 
   private
 
-# Fertility
+#   Fertility
     def crt_age_fertility
       fert = Hash.new { |h, age| h[age] = 0.00 }
       fert[2] = 0.05
@@ -81,7 +98,7 @@ module CritterParms
       adj
     end
 
-# Survival
+#   Survival
     def crt_age_survival
       surv = Hash.new { |h, age| h[age] = 0.00 }
       surv[0] = 1.00
@@ -107,4 +124,5 @@ module CritterParms
       adj['test_color2'] = 2.00
       adj
     end
+  end
 end

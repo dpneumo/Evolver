@@ -4,7 +4,7 @@ require_relative '../orgbase'
 require_relative 'coyote_parms'
 
 class Coyote < Orgbase
-  extend CoyoteParms
+  include CoyoteParms
 
   class << self
     def age_curve; @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }; end
@@ -16,8 +16,6 @@ class Coyote < Orgbase
 
     def survive_by_age;        @coy_age_survival ||= coy_age_survival; end
     def survival_color_adjust; @coy_surv_color_adj ||= coy_surv_color_adj; end
-
-
   end
 
   def self.species; 'coyote'; end

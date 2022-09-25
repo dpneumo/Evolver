@@ -3,12 +3,27 @@
 module RabbitParms
 # Initialize class >instance< variable enctr_sizes_hash
   class << self
-    def extended(base)
+    def included(base)
+      base.extend ClassMethods
       base.enctr_sizes_hash = base.enctr_hash
     end
   end
 
-# Colors
+  module ClassMethods
+    def enctr_sizes_hash
+      @enctr_sizes_hash
+    end
+
+    def enctr_sizes_hash=(value)
+      @enctr_sizes_hash = value
+    end
+
+    # Users of the returned hash MUST insure keys are non-negative Integers
+    def enctr_hash
+      Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
+      #Hash.new {|h, ratio| h[ratio] = log2_encounter(ratio) }
+    end
+#   Colors
   def colors
     ['beige', 'black', 'chocolate', 'white', 'test_color']
   end
@@ -53,13 +68,13 @@ module RabbitParms
     }
   end
 
-# Encounters
+#   Encounters
   def satiety; 20; end
   def enctr_scale; 20.0; end
 
   private
   
-#Fertility
+#   Fertility
     def rab_age_fertility
       fert = Hash.new { |h, age| h[age] = 0.00 }
       fert[0] = 0.05
@@ -86,7 +101,7 @@ module RabbitParms
       adj
     end
 
-#Survival
+#   Survival
     def rab_age_survival
       surv = Hash.new { |h, age| h[age] = 0.00 }
       surv[0] = 1.00
@@ -112,4 +127,5 @@ module RabbitParms
       adj['test_color2'] = 2.00
       adj
     end
+  end
 end

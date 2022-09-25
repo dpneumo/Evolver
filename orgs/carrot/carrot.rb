@@ -4,7 +4,7 @@ require_relative '../orgbase'
 require_relative 'carrot_parms'
 
 class Carrot < Orgbase
-  extend CarrotParms
+  include CarrotParms
 
   class << self
     def age_curve;    @age_curve ||= Hash.new {|h,key| h[key] = 1.0 }; end

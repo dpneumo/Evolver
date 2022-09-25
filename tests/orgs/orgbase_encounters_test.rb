@@ -26,32 +26,14 @@ class OrgbaseEncountersTest < Minitest::Test
 	end
 
 	# Test encounter size logic
-  def test_can_set_and_retrieve_enctr_sizes_hash
-  	TestOrg.enctr_sizes_hash = {}
-  	assert TestOrg.enctr_sizes_hash.is_a? Hash
-  end
-
-  # Test the encounters hash object
-  def test_each_creature_class_has_its_own_enctr_sizes_hash
-    oids = Orgbase.descendants.collect do |dsndt| 
-    	dsndt.enctr_sizes_hash.object_id 
+  def test_each_creature_class_has_a_unique_enctr_sizes_hash
+    oids = Orgbase.subclasses.collect do |klass| 
+    	klass.enctr_sizes_hash.object_id 
     end
     assert_nil oids.uniq!
   end
 
-	def test_enctr_hash_returns_a_Hash
-		assert TestOrg.enctr_hash.is_a? Hash
-	end
-
 	# Using logistic_encounter
-	def test_enctr_hash_for_0_is_0
-		assert_equal 0, TestOrg.enctr_hash[0]
-	end
-
-	def test_enctr_hash_sets_value_for_enctr_hash_of_10
-		assert_equal 10, TestOrg.enctr_hash[10.0]
-	end
-
   def test_logistic_encounter_returns_0_for_ratio_1
   	assert_equal 0, TestOrg.send(:logistic_encounter, 0)
   end
