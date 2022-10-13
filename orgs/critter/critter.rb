@@ -7,12 +7,9 @@ class Critter < Orgbase
   extend CritterParms
 
   class << self
-    def age_curve; @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }; end
+    def age_curve;    @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }; end
     def health_curve; @health_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }; end
-    def vigor_curve; @vigor_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }; end
-
-    def fertility_by_age; @crt_age_fertility ||= crt_age_fertility; end
-    def fertility_color_adjust; @crt_fert_color_adj ||= crt_fert_color_adj; end
+    def vigor_curve;  @vigor_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }; end
 
     def survive_by_age;        @crt_age_survival ||= crt_age_survival; end
     def survival_color_adjust; @crt_surv_color_adj ||= crt_surv_color_adj; end

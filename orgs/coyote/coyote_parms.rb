@@ -71,27 +71,38 @@ module CoyoteParms
   end
 
 # Fertility
-  def coy_age_fertility
-    fert = Hash.new {|h, age| h[age] = 0.00 }
-    fert[0] = 0.05
-    fert[1] = 0.10
-    fert[2] = 0.20
-    fert[3] = 0.80
-    fert[4] = 0.50
-    fert[5] = 0.20
-    fert[6] = 0.05
-    fert
+  def fert_prob(color:, age:)
+    return 0 unless constantize(species).colors.include? color
+    parms = fert_parms[color]
+    start = age-parms['maturation_start']
+    plateau = parms['max_fertility']
+    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
+    [start, plateau, decline].min.clamp(0..1)
   end
 
-  def coy_fert_color_adj
-    adj = Hash.new {|h, color| h[color] = 0.0 }
-    adj['black'] = 1.10
-    adj['brown'] = 0.95
-    adj['gray']  = 1.30
-    adj['white'] = 0.90
-    adj['test_color1'] = 1.00
-    adj['test_color2'] = 2.00
-    adj
+  def fert_parms
+    {
+      'black' => {
+        'maturation_start' => 0,
+        'max_fertility' => 0.80,
+        'decline_onset' => 4,
+        'decline_rate' => 4 },
+      'brown' => {
+        'maturation_start' => 1,
+        'max_fertility' => 0.80,
+        'decline_onset' => 5,
+        'decline_rate' => 1 },
+      'gray' => {
+        'maturation_start' => 0,
+        'max_fertility' => 0.80,
+        'decline_onset' => 6,
+        'decline_rate' => 1 },
+      'white' => {
+        'maturation_start' => 1,
+        'max_fertility' => 0.80,
+        'decline_onset' => 4,
+        'decline_rate' => 2 },
+    }
   end
 
 # Survival

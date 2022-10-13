@@ -56,6 +56,10 @@ module UtilityMethods
       scale*Math::sin((x-x0)/period)
     end
 
+    def constantize(my_str)
+      Object.const_get(my_str.split('_').map(&:capitalize).join)
+    end
+
     # Evolved from Rails
     #   activesupport/lib/active_support/core_ext/class/subclasses.rb
     # In Ruby 3.1+ use Class#subclasses
