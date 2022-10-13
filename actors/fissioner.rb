@@ -34,7 +34,9 @@ class Fissioner
     end
 
     def biased_coin(critter)
-      critter.class.birth_probability(age: critter.age, color: critter.color)
+      critter.class.birth_probability(species: critter.species, \
+                                      age: critter.age, \
+                                      color: critter.color)
     end
 
     def child_color(critter)

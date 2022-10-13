@@ -71,25 +71,38 @@ module CritterParms
   end
 
 # Fertility
-  def crt_age_fertility
-    fert = Hash.new { |h, age| h[age] = 0.00 }
-    fert[2] = 0.05
-    fert[3] = 0.80
-    fert[4] = 0.50
-    fert[5] = 0.20
-    fert[6] = 0.05
-    fert
+  def fert_prob(color:, age:)
+    return 0 unless constantize(species).colors.include? color
+    parms = fert_parms[color]
+    start = age-parms['maturation_start']
+    plateau = parms['max_fertility']
+    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
+    [start, plateau, decline].min.clamp(0..1)
   end
 
-  def crt_fert_color_adj
-    adj = Hash.new {|h, color| h[color] = 0.0 }
-    adj['blue']   = 1.10
-    adj['green']  = 0.95
-    adj['red']    = 1.30
-    adj['yellow'] = 0.90
-    adj['test_color1'] = 1.00
-    adj['test_color2'] = 2.00
-    adj
+  def fert_parms
+    {
+      'blue' => {
+        'maturation_start' => 2,
+        'max_fertility' => 0.80,
+        'decline_onset' => 6,
+        'decline_rate' => 1 },
+      'green' => {
+        'maturation_start' => 0,
+        'max_fertility' => 0.80,
+        'decline_onset' => 4,
+        'decline_rate' => 1 },
+      'red' => {
+        'maturation_start' => 1,
+        'max_fertility' => 1.00,
+        'decline_onset' => 6,
+        'decline_rate' => 0.25 },
+      'yellow' => {
+        'maturation_start' => 2,
+        'max_fertility' => 0.80,
+        'decline_onset' => 5,
+        'decline_rate' => 1 },
+    }
   end
 
 # Survival

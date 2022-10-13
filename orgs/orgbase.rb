@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require_relative 'orgbase_encounters'
+require_relative 'fertility'
 
 class Orgbase
   include UtilityMethods
   extend OrgbaseEncounters
+  extend Fertility
 
   class << self
     def age_curve
@@ -24,20 +26,11 @@ class Orgbase
   def self.max_health; 100; end
   def self.max_vigor; 100; end
 
-  def self.birth_probability(age:, color:)
-    return 0.00 unless (age.is_a? Integer) && age >= 0
-    return 0.00 unless color.is_a? String
-
-    adjusted_fertility(age, color).clamp(0.0, 1.0)
-  end
-
   def self.survival_probability(age:, color:)
     return 0.00 unless (age.is_a? Integer) && age >= 0
     return 0.00 unless color.is_a? String
-
     adjusted_vitality(age, color).clamp(0.0, 1.0)
   end
-
 
   #Instance
   attr_reader :species, :satiety, 
@@ -76,11 +69,6 @@ class Orgbase
   end
 
   private
-  # Fertility
-    def self.adjusted_fertility(age, color)
-      fertility_by_age[age] * fertility_color_adjust[color]
-    end
-
   # Vitality
     def self.adjusted_vitality(age, color)
       survive_by_age[age] * survival_color_adjust[color]

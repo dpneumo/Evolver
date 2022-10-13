@@ -51,21 +51,28 @@ module CarrotParms
   end
 
 # Fertility
-  def car_age_fertility
-    fert = Hash.new { |h, age| h[age] = 1.00 }
-    fert[0] = 1.00
-    fert[1] = 1.00
-    fert[2] = 1.00
-    fert
+  def fert_prob(color:, age:)
+    return 0 unless constantize(species).colors.include? color
+    parms = fert_parms[color]
+    start = age-parms['maturation_start']
+    plateau = parms['max_fertility']
+    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
+    [start, plateau, decline].min.clamp(0..1)
   end
 
-  def car_fert_color_adj
-    adj = Hash.new {|h, color| h[color] = 0.0 }
-    adj['yellow'] = 1.10
-    adj['red']    = 0.95
-    adj['test_color1'] = 0.25
-    adj['test_color2'] = 2.00
-    adj
+  def fert_parms
+    {
+      'yellow' => {
+        'maturation_start' => 0,
+        'max_fertility' => 1.00,
+        'decline_onset' => 10,
+        'decline_rate' => 1 },
+      'red' => {
+        'maturation_start' => 0,
+        'max_fertility' => 0.80,
+        'decline_onset' => 6,
+        'decline_rate' => 1 },
+    }
   end
 
 # Survival

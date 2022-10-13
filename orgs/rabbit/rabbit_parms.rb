@@ -71,30 +71,38 @@ module RabbitParms
   end
 
 # Fertility
-  def rab_age_fertility
-    fert = Hash.new { |h, age| h[age] = 0.00 }
-    fert[0] = 0.05
-    fert[1] = 0.10
-    fert[2] = 0.20
-    fert[3] = 0.80
-    fert[4] = 0.95
-    fert[5] = 0.80
-    fert[6] = 0.75
-    fert[7] = 0.50
-    fert[8] = 0.20
-    fert[9] = 0.05
-    fert
+  def fert_prob(color:, age:)
+    return 0 unless constantize(species).colors.include? color
+    parms = fert_parms[color]
+    start = age-parms['maturation_start']
+    plateau = parms['max_fertility']
+    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
+    [start, plateau, decline].min.clamp(0..1)
   end
 
-  def rab_fert_color_adj
-    adj = Hash.new {|h, color| h[color] = 0.0 }
-    adj['beige']      = 1.10
-    adj['black']      = 0.95
-    adj['chocolate']  = 1.30
-    adj['white']      = 0.90
-    adj['test_color1'] = 1.00
-    adj['test_color2'] = 2.00
-    adj
+  def fert_parms
+    {
+      'beige' => {
+        'maturation_start' => 2,
+        'max_fertility' => 0.80,
+        'decline_onset' => 6,
+        'decline_rate' => 1 },
+      'black' => {
+        'maturation_start' => 0,
+        'max_fertility' => 1.00,
+        'decline_onset' => 6,
+        'decline_rate' => 1 },
+      'chocolate' => {
+        'maturation_start' => 0,
+        'max_fertility' => 1.00,
+        'decline_onset' => 8,
+        'decline_rate' => 0.5 },
+      'white' => {
+        'maturation_start' => 2,
+        'max_fertility' => 0.80,
+        'decline_onset' => 10,
+        'decline_rate' => 0.25 },
+    }
   end
 
 # Survival

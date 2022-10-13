@@ -5,7 +5,7 @@ class SterileCritter
   def self.enctr_scale; 3.9; end
   def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 10 }; end
   def self.survival_probability(age:, color:); 0.0; end
-  def self.birth_probability(age:, color:); 0.0; end
+  def self.birth_probability(species:, color:, age:); 0.0; end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
@@ -27,7 +27,7 @@ class FertileCritter
   def self.enctr_scale; 2.4; end
   def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 20 }; end
   def self.survival_probability(age:, color:); 1.0; end
-  def self.birth_probability(age:, color:); 1.0; end
+  def self.birth_probability(species:, color:, age:); 1.0; end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
