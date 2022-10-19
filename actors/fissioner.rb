@@ -20,31 +20,31 @@ class Fissioner
     end
 
     def additions(list)
-      list.map {|critter| new_child(critter) }.compact
+      list.map {|creature| new_child(creature) }.compact
     end
 
-    def new_child(critter)
-      return unless child_this_period?(critter)
+    def new_child(creature)
+      return unless child_this_period?(creature)
 
-      critter.class.new(color: child_color(critter))
+      creature.class.new(color: child_color(creature))
     end
 
-    def child_this_period?(critter)
-      flip(biased_coin: biased_coin(critter))
+    def child_this_period?(creature)
+      flip(biased_coin: fertility_biased_coin(creature))
     end
 
-    def biased_coin(critter)
-      critter.class.birth_probability(species: critter.species, \
-                                      age: critter.age, \
-                                      color: critter.color)
+    def fertility_biased_coin(creature)
+      creature.class.superclass.birth_probability(species: creature.species, \
+                                      age: creature.age, \
+                                      color: creature.color)
     end
 
-    def child_color(critter)
-      roll(loaded_die: loaded_die(critter))
+    def child_color(creature)
+      roll(loaded_die: loaded_die(creature))
     end
 
-    def loaded_die(critter)
-      critter.class.mutations[critter.color]
+    def loaded_die(creature)
+      creature.class.mutations[creature.color]
     end
 end
 
