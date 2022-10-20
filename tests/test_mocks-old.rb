@@ -6,6 +6,8 @@ class SterileCritter
   def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 10 }; end
   def self.survival_probability(age:, color:); 0.0; end
   def self.birth_probability(species:, color:, age:); 0.0; end
+  def self.vit_prob(color:, age:); 0.0; end
+  def self.fert_prob(color:, age:) 0.0; end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
@@ -28,6 +30,11 @@ class FertileCritter
   def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 20 }; end
   def self.survival_probability(age:, color:); 1.0; end
   def self.birth_probability(species:, color:, age:); 1.0; end
+  def self.vit_prob(color:, age:); 1.0; end
+  def self.fert_prob(color:, age:)
+    return 0.0 if color == 'What?' || age == 99
+    1.0
+  end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
@@ -37,6 +44,33 @@ class FertileCritter
   def health; 100; end
   def color; 'red'; end
   def species; "fertile_critter"; end
+  def health=(health); @health = health; end
+  def eats_prob; 0.5; end
+  def eaten_vulnerability; 0.5; end
+end
+
+class VitalCritter
+  def initialize(color: 'green'); @color = color; end
+  def self.max_health; 100; end
+  def self.max_vigor; 100; end
+  def self.enctr_scale; 2.4; end
+  def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 20 }; end
+  def self.survival_probability(age:, color:); 1.0; end
+  def self.birth_probability(species:, color:, age:); 1.0; end
+  def self.vit_prob(color:, age:)
+    return 0 if color == 'What?' || age == 99
+    0.5 
+  end
+  def self.fert_prob(color:, age:); 1.0; end
+  def self.mutations
+    { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
+      'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
+      'red'   => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,}, }
+  end
+  def age; 2; end
+  def health; 100; end
+  def color; 'red'; end
+  def species; "vital_critter"; end
   def health=(health); @health = health; end
   def eats_prob; 0.5; end
   def eaten_vulnerability; 0.5; end
@@ -60,6 +94,11 @@ end
 
 class MockConsumer
   def encounters(creatures:);end
+end
+
+class MockFissioner
+  def initialize; nil; end
+  def reproduce(creatures:); nil;end
 end
 
 class MockStats

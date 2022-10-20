@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require_relative '../test_helper'
+require_relative '../../tests/test/mocks'
+require_relative '../test/interfaces/publisher_interface_test'
 require_relative '../../actors/publisher'
-require_relative '../../tests/test_mocks'
 
 class PublisherTest < Minitest::Test
+  include PublisherInterfaceTest
   def setup
     mockstats = MockStats.new(store: MockStatStore.new)
-    @publisher = Publisher.new(stats: mockstats, statements: MockStatements)
+    @publisher = @object = Publisher.new(stats: mockstats, statements: MockStatements)
   end
 
   def test_publish_returns_nil

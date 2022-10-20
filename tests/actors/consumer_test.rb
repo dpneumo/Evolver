@@ -2,14 +2,16 @@
 
 require_relative '../test_helper'
 require_relative '../../orgs/critter/critter'
+require_relative '../test/interfaces/consumer_interface_test'
 require_relative '../../actors/consumer'
 
 class ConsumerTest < Minitest::Test
+  include ConsumerInterfaceTest
   def setup
-    @cnsmr = Consumer.new
-    foodchain = { 'coyote' => {size: 1, prey: 'rabbit'},
-                  'rabbit' => {size: 2, prey: 'critter'},
-                  'critter' => {size: 0, prey: 'none'} }
+    @cnsmr = @object = Consumer.new
+    foodchain = { 'fertile_critter' => {size: 1, prey: 'vital_critter'},
+                  'vital_critter' => {size: 2, prey: 'sterile_critter'},
+                  'sterile_critter' => {size: 0, prey: 'none'} }
     @crturs = MockCreatures.new(foodchain: foodchain)
   end
 

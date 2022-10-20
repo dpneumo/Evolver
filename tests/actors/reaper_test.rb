@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 require_relative '../test_helper'
-require_relative '../../orgs/critter/critter'
+require_relative '../test/interfaces/reaper_interface_test'
 require_relative '../../actors/reaper'
 
 class ReaperTest < Minitest::Test
+  include ReaperInterfaceTest
   def setup
     foodchain = { 'sterile_critter' => {size: 2, prey: 'fertile_critter'},
                   'fertile_critter' => {size: 2, prey: 'none'} }
     @mockcreatures = MockCreatures.new(foodchain: foodchain)
     @mockstats = MockStats.new(store: MockStatStore.new)
-    @reaper = Reaper.new(stats: @mockstats)
+    @reaper = @object = Reaper.new(stats: @mockstats)
   end
 
   def test_survive_returns_nil
