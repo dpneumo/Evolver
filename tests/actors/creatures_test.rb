@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 require_relative '../test_helper'
+require_relative '../test/interfaces/creatures_interface_test'
 require_relative '../../actors/creatures'
 require_relative '../../orgs/coyote/coyote'
 require_relative '../../orgs/rabbit/rabbit'
 
 class CreaturesTest < Minitest::Test
-
+  include CreaturesInterfaceTest
   def setup
     @foodchain = { 'coyote' =>        {size: 1, prey: 'rabbit'},
                    'rabbit' =>        {size: 2, prey: 'fertile_critter'},
                    'fertile_critter' => {size: 0, prey: 'none'} }
-    @creatures = Creatures.new(foodchain: @foodchain)
+    @creatures = @object = Creatures.new(foodchain: @foodchain)
   end
 
   def test_raises_when_base_species_missing_from_foodchain

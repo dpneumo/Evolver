@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 require_relative '../test_helper'
-require_relative '../../orgs/critter/critter'
+require_relative '../test/interfaces/fissioner_interface_test'
 require_relative '../../actors/fissioner'
 
 class FissionerTest < Minitest::Test
+  include FissionerInterfaceTest
   def setup
     foodchain = { 'sterile_critter' => {size: 2, prey: 'fertile_critter'},
                   'fertile_critter' => {size: 2, prey: 'none'} }
     @creatures = MockCreatures.new(foodchain: foodchain)
-    @fis = Fissioner.new
+    @fis = @object =Fissioner.new
     def @fis.child_color(critter); 'red'; end
   end
 

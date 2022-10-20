@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative '../test_helper'
+require_relative '../test/interfaces/orgbase_interface_test'
 require_relative '../../orgs/orgbase'
 
 class OrgbaseTest < Minitest::Test
+  include OrgbaseInterfaceTest
   def setup
-    @org = Orgbase.new
+    @org = @object = Orgbase.new
   end
 
 # Class tests

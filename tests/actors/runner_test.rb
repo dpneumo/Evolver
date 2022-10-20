@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 require_relative '../test_helper'
-require_relative '../../actors/creatures'
-require_relative '../../actors/consumer'
+require_relative '../test/interfaces/runner_interface_test'
 require_relative '../../actors/runner'
 
 class RunnerTest < Minitest::Test
+  include RunnerInterfaceTest
   def setup
-    foodchain = { 'coyote' => { size: 1, prey: 'rabbit' },
-                  'rabbit' => { size: 2, prey: 'carrot' } }
-    @runner = Runner.new( foodchain: foodchain,
+    foodchain = { 'fertile_critter' => { size: 1, prey: 'vital_critter' },
+                  'vital_critter' => { size: 2, prey: 'sterile_critter' } }
+    @runner = @object = Runner.new( foodchain: foodchain,
                           creatures: MockCreatures, 
                           consumer: MockConsumer,
+                          fissioner: MockFissioner,
+                          reaper: MockReaper,
                           stats: MockStats, statstore: MockStatStore,
                           publisher: MockPublisher )
   end

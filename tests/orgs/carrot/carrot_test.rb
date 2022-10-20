@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 require_relative '../../test_helper'
+require_relative '../../test/interfaces/orgbase_interface_test'
+require_relative '../../test/interfaces/mock_creatures_interface_test'
 require_relative '../../../orgs/carrot/carrot'
 
 class CarrotTest < Minitest::Test
+  include OrgbaseInterfaceTest
+  include MockCreaturesInterfaceTest
   def setup
-    @carrot = Carrot.new
+    @carrot = @object = Carrot.new
   end
 
 # Class tests
