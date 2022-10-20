@@ -2,35 +2,23 @@
 
 require_relative 'orgbase_encounters'
 require_relative 'fertility'
+require_relative 'vitality'
 
 class Orgbase
   include UtilityMethods
   extend OrgbaseEncounters
   extend Fertility
+  extend Vitality
 
   class << self
-    def age_curve
-      @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }
-    end
-
-    def health_curve
-      @health_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }
-    end
-
-    def vigor_curve
-      @vigor_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }
-    end
+    def age_curve;    @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }; end
+    def health_curve; @health_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }; end
+    def vigor_curve;  @vigor_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.15, x0:100).round(4) }; end
   end
 
   def self.species; 'orgbase'; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
-
-  def self.survival_probability(age:, color:)
-    return 0.00 unless (age.is_a? Integer) && age >= 0
-    return 0.00 unless color.is_a? String
-    adjusted_vitality(age, color).clamp(0.0, 1.0)
-  end
 
   #Instance
   attr_reader :species, :satiety, 
@@ -69,11 +57,6 @@ class Orgbase
   end
 
   private
-  # Vitality
-    def self.adjusted_vitality(age, color)
-      survive_by_age[age] * survival_color_adjust[color]
-    end
-
   # Feeding
     # As hunter
     def eat_by_age

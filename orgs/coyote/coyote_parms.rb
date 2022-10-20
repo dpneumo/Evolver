@@ -71,15 +71,6 @@ module CoyoteParms
   end
 
 # Fertility
-  def fert_prob(color:, age:)
-    return 0 unless constantize(species).colors.include? color
-    parms = fert_parms[color]
-    start = age-parms['maturation_start']
-    plateau = parms['max_fertility']
-    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
-    [start, plateau, decline].min.clamp(0..1)
-  end
-
   def fert_parms
     {
       'black' => {
@@ -106,29 +97,26 @@ module CoyoteParms
   end
 
 # Survival
-  def coy_age_survival
-    surv = Hash.new { |h, age| h[age] = 0.00 }
-    surv[0] = 1.00
-    surv[1] = 1.00
-    surv[2] = 1.00
-    surv[3] = 0.95
-    surv[4] = 0.90
-    surv[5] = 0.85
-    surv[6] = 0.70
-    surv[7] = 0.50
-    surv[8] = 0.20
-    surv[9] = 0.0
-    surv
+  def vit_prob(color:, age:)
+    return 0.00 unless constantize(species).colors.include? color
+    parms = vit_parms[color]
+    1.00 - logistic(x: age, k:parms['slope'], x0:parms['midpoint'])
   end
 
-  def coy_surv_color_adj
-    adj = Hash.new {|h, color| h[color] = 0.0 }
-    adj['black'] = 1.10
-    adj['brown'] = 1.00
-    adj['gray']  = 1.00
-    adj['white'] = 1.00
-    adj['test_color1'] = 1.00
-    adj['test_color2'] = 2.00
-    adj
+  def vit_parms
+    {
+      'black' => {
+        'slope' => 0.25,
+        'midpoint' => 4 },
+      'brown' => {
+        'slope' => 0.8,
+        'midpoint' => 4 },
+      'gray' => {
+        'slope' => 0.5,
+        'midpoint' => 4 },
+      'white' => {
+        'slope' => 1,
+        'midpoint' => 4 },
+    }
   end
 end

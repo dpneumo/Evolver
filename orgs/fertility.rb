@@ -9,14 +9,12 @@ module Fertility
   end
 
   def birth_probability(species:, color:, age:)
-    Orgbase.send(:fertility, species:, color:, age:)
+    return 0.00 unless valid?(species:, color:, age:)
+    fertility(species:, color:, age:)
   end
 
 private
   def fertility(species:, color:, age:)
-    raise ArgumentError unless species && color && age
-    return 0.00 unless (age.is_a? Integer) && age >= 0
-    return 0.00 unless color.is_a? String
     @fertility[species][color][age]
   end
 
@@ -28,10 +26,31 @@ private
     Hash.new do |h, species|
       h[species] = Hash.new do |h1, color|
         h1[color] = Hash.new do |h2, age|
-          h2[age] = constantize(species).fert_prob(color: color, age: age)
+          h2[age] = fertility_dflt(species:, color:, age:)
         end
       end
     end
   end
-end
 
+  def fertility_dflt(species:, color:, age:)
+    parms = parms(species:, color:)
+    fertility_prob(parms:,color:, age:)
+  end
+
+  def parms(species:, color:)
+    constantize(species).fert_parms[color]
+  end
+
+  def fertility_prob(parms:, color:, age:)
+    start = age - parms['maturation_start']
+    plateau = parms['max_fertility']
+    decline = 1 - Math.sqrt(parms['decline_rate']*(age - parms['decline_onset']).clamp(0..))
+    [start, plateau, decline].min.clamp(0..1)
+  end
+
+  def valid?(species:, color:, age:)
+    raise ArgumentError unless species && color && age
+    return false unless (color.is_a? String) && (age.is_a? Integer) && age >= 0
+    true
+  end    
+end
