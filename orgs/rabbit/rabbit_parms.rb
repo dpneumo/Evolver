@@ -71,15 +71,6 @@ module RabbitParms
   end
 
 # Fertility
-  def fert_prob(color:, age:)
-    return 0 unless constantize(species).colors.include? color
-    parms = fert_parms[color]
-    start = age-parms['maturation_start']
-    plateau = parms['max_fertility']
-    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
-    [start, plateau, decline].min.clamp(0..1)
-  end
-
   def fert_parms
     {
       'beige' => {
@@ -106,29 +97,20 @@ module RabbitParms
   end
 
 # Survival
-  def rab_age_survival
-    surv = Hash.new { |h, age| h[age] = 0.00 }
-    surv[0] = 1.00
-    surv[1] = 1.00
-    surv[2] = 1.00
-    surv[3] = 0.95
-    surv[4] = 0.90
-    surv[5] = 0.85
-    surv[6] = 0.70
-    surv[7] = 0.50
-    surv[8] = 0.20
-    surv[9] = 0.0
-    surv
-  end
-
-  def rab_surv_color_adj
-    adj = Hash.new {|h, color| h[color] = 0.0 }
-    adj['beige']      = 1.10
-    adj['black']      = 1.00
-    adj['chocolate']  = 1.00
-    adj['white']      = 1.00
-    adj['test_color1'] = 1.00
-    adj['test_color2'] = 2.00
-    adj
+  def vit_parms
+    {
+      'beige' => {
+        'slope' => 0.25,
+        'midpoint' => 4 },
+      'black' => {
+        'slope' => 0.8,
+        'midpoint' => 4 },
+      'chocolate' => {
+        'slope' => 0.5,
+        'midpoint' => 4 },
+      'white' => {
+        'slope' => 1,
+        'midpoint' => 4 },
+    }
   end
 end

@@ -34,13 +34,13 @@ class Reaper
     end
 
     def vitality_biased_coin(creature)
-      class_survival_prob(creature) * individual_survival_prob(creature)
+      klass = creature.class.superclass
+      klass.survival_probability( species: creature.species, 
+                                  age: creature.age, 
+                                  color: creature.color )
     end
 
-    def class_survival_prob(creature)
-      creature.class.survival_probability(age: creature.age, color: creature.color)
-    end
-
+    # Will use this when health taken into account
     def individual_survival_prob(creature)
       creature.health.fdiv(creature.class.max_health)
     end

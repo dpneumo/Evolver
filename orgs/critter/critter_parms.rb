@@ -71,15 +71,6 @@ module CritterParms
   end
 
 # Fertility
-  def fert_prob(color:, age:)
-    return 0 unless constantize(species).colors.include? color
-    parms = fert_parms[color]
-    start = age-parms['maturation_start']
-    plateau = parms['max_fertility']
-    decline = 1 - Math.sqrt(parms['decline_rate']*(age-parms['decline_onset']).clamp(0..))
-    [start, plateau, decline].min.clamp(0..1)
-  end
-
   def fert_parms
     {
       'blue' => {
