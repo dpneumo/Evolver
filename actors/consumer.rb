@@ -19,9 +19,9 @@ class Consumer
 
   private
     def enctrs_count(hunter_species, ratios)
-      hunter_class = constantize(hunter_species)
-      hunter_prey_ratio = ratios[hunter_species]
-      hunter_class.enctr_sizes_hash[hunter_prey_ratio]
+      baseclass = constantize(hunter_species).superclass
+      prey2hunter_ratio = ratios[hunter_species]
+      baseclass.encounter_count(species: hunter_species, ratio: prey2hunter_ratio)
     end
 
     def hunt(hunter, prey_population, number_of_encounters)

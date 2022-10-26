@@ -16,7 +16,6 @@ class OrgbaseTest < Minitest::Test
     assert Orgbase.satiety
     assert Orgbase.max_health
     assert Orgbase.max_vigor
-    assert Orgbase.enctr_scale
   end
 
 # Instance tests

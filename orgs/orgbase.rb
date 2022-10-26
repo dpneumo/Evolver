@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative 'orgbase_encounters'
 require_relative 'fertility'
 require_relative 'vitality'
+require_relative 'encounters'
 
 class Orgbase
   include UtilityMethods
-  extend OrgbaseEncounters
   extend Fertility
   extend Vitality
+  extend Encounters
 
   class << self
     def age_curve;    @age_curve ||= Hash.new {|h,key| h[key] = logistic(x: 2*key, k:0.25, x0:10).round(4) }; end
@@ -19,6 +19,7 @@ class Orgbase
   def self.species; 'orgbase'; end
   def self.max_health; 100; end
   def self.max_vigor; 100; end
+  def self.satiety; 20; end
 
   #Instance
   attr_reader :species, :satiety, 

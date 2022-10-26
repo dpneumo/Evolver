@@ -18,7 +18,6 @@ class RabbitTest < Minitest::Test
     assert Rabbit.satiety
     assert Rabbit.max_health
     assert Rabbit.max_vigor
-    assert Rabbit.enctr_scale
   end
 
   def test_Rabbit_colors_returns_an_array

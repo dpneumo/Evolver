@@ -18,7 +18,6 @@ class CritterTest < Minitest::Test
     assert Critter.satiety
     assert Critter.max_health
     assert Critter.max_vigor
-    assert Critter.enctr_scale
   end
 
   def test_Critter_colors_returns_an_array

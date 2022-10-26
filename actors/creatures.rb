@@ -34,12 +34,6 @@ class Creatures
     end
   end
 
-  def scale_factors
-    @foodchain.reduce({}) do |s, (hunter, prey)|
-      s.update(hunter => constantize(hunter).enctr_scale)
-    end
-  end
-
   private
     def init_census
       @foodchain.reduce({}) do |c, (species, properties)|
@@ -58,6 +52,6 @@ class Creatures
 
     def ratio(hunter, prey)
       return 20.0 if @census[hunter].count.zero?
-      @census[prey].count.fdiv(@census[hunter].count).clamp(1.0 .. 20.0)
+      @census[prey].count.fdiv(@census[hunter].count).round(1).clamp(1.0 .. 50.0)
     end
 end

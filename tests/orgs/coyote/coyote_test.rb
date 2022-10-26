@@ -18,7 +18,6 @@ class CoyoteTest < Minitest::Test
     assert Coyote.satiety
     assert Coyote.max_health
     assert Coyote.max_vigor
-    assert Coyote.enctr_scale
   end
 
   def test_Coyote_colors_returns_an_array

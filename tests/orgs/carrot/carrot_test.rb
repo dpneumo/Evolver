@@ -18,7 +18,6 @@ class CarrotTest < Minitest::Test
     assert Carrot.satiety
     assert Carrot.max_health
     assert Carrot.max_vigor
-    assert Carrot.enctr_scale
   end
 
   def test_Carrot_colors_returns_an_array

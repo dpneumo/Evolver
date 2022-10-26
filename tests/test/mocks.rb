@@ -12,12 +12,18 @@ class MockOrgbase
                       'vital_critter'   => 1.0  }
     survive_probs[species]
   end
-  def self.age_curve;    end
-  def self.health_curve; end
-  def self.vigor_curve;  end
-  def self.species;  end
-  def self.max_health; end
-  def self.max_vigor; end
+  def self.encounter_count(species:, ratio:)
+    encounters = { 'sterile_critter' => 2,
+                   'fertile_critter' => 10,
+                   'vital_critter'   => 18  }
+    encounters[species]
+  end
+  def self.age_curve;    raise NotImplementedError; end
+  def self.health_curve; raise NotImplementedError; end
+  def self.vigor_curve;  raise NotImplementedError; end
+  def self.species;      raise NotImplementedError; end
+  def self.max_health;   raise NotImplementedError; end
+  def self.max_vigor;    raise NotImplementedError; end
   #instance method
   attr_accessor :species, :satiety, 
                 :color, :age, :health, :vigor
@@ -27,8 +33,7 @@ end
 
 class SterileCritter < MockOrgbase
   def initialize(color: 'red'); @color = color; end
-  def self.enctr_scale; 3.9; end
-  def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 10 }; end
+  def self.species; 'sterile_critter'; end
   def self.vit_prob(color:, age:); 0.0; end
   def self.fert_parms
     Hash.new do |h, color|
@@ -36,7 +41,10 @@ class SterileCritter < MockOrgbase
         'decline_onset' => 1, 'decline_rate' => 1 }
     end
   end
-  def self.colors; end
+  def self.enctr_parms
+    {'slope' => 0.25, 'midpoint' => 4,'satiety' => 20 }
+  end
+  def self.colors; ['red', 'green', 'blue'];; end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
@@ -50,8 +58,7 @@ end
 
 class FertileCritter < MockOrgbase
   def initialize(color: 'green'); @color = color; end
-  def self.enctr_scale; 2.4; end
-  def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 20 }; end
+  def self.species; 'fertile_critter'; end
   def self.vit_prob(color:, age:); 1.0; end
   def self.fert_parms
     Hash.new do |h, color|
@@ -59,7 +66,10 @@ class FertileCritter < MockOrgbase
         'decline_onset' => 1, 'decline_rate' => 1 }
     end
   end
-  def self.colors; end
+  def self.enctr_parms
+    {'slope' => 0.25, 'midpoint' => 4,'satiety' => 20 }
+  end
+  def self.colors; ['red', 'green', 'blue'];; end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
@@ -72,9 +82,8 @@ class FertileCritter < MockOrgbase
 end
 
 class VitalCritter < MockOrgbase
+  def self.species; 'vital_critter'; end
   def initialize(color: 'green'); @color = color; end
-  def self.enctr_scale; 2.4; end
-  def self.enctr_sizes_hash; Hash.new {|h,r| h[r] = 20 }; end
   def self.vit_prob(color:, age:)
     return 0 if color == 'What?' || age == 99
     0.5 
@@ -85,7 +94,10 @@ class VitalCritter < MockOrgbase
         'decline_onset' => 1, 'decline_rate' => 1 }
     end
   end
-  def self.colors; end
+  def self.enctr_parms
+    {'slope' => 0.25, 'midpoint' => 16,'satiety' => 20 }
+  end
+  def self.colors; ['red', 'green', 'blue']; end
   def self.mutations
     { 'blue'  => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
       'green' => { 'red' => 0.20, 'green' => 0.30, 'blue' => 0.50,},
@@ -110,7 +122,6 @@ class MockCreatures
   def populate(size:, species:); end
   def age; end
   def ratios; {'sterile' => 3.4}; end
-  def scale_factors; {'sterile' => 2}; end
 end
 
 class MockRunner

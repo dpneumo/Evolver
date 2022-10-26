@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 module CarrotParms
-# Initialize class >instance< variable enctr_sizes_hash
-  class << self
-    def extended(base)
-      base.enctr_sizes_hash = base.enctr_hash
-    end
-  end
-
 # Colors
   def colors
     ['yellow', 'red', 'test_color']
@@ -35,19 +28,9 @@ module CarrotParms
 
 # Encounters
   def satiety; 20; end
-  def enctr_scale; 4.7; end
 
-  def enctr_sizes_hash
-    @enctr_sizes_hash
-  end
-
-  def enctr_sizes_hash=(value)
-    @enctr_sizes_hash = value
-  end
-
-  # Users of the returned hash MUST insure keys are non-negative Integers
-  def enctr_hash
-    Hash.new {|h, ratio| h[ratio] = logistic_encounter(ratio) }
+  def enctr_parms
+    {'slope' => 0.25, 'midpoint' => 16,'satiety' => 20 }
   end
 
 # Fertility

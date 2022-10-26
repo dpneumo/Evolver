@@ -27,9 +27,4 @@ module CreaturesInterfaceTest
 		assert_respond_to(@object, :ratios)
 		assert_equal 0, @object.method(:ratios).arity
 	end
-
-	def test_implements_scale_factors_interface
-		assert_respond_to(@object, :scale_factors)
-		assert_equal 0, @object.method(:scale_factors).arity
-	end
 end

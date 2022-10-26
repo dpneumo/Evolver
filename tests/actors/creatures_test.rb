@@ -41,11 +41,6 @@ class CreaturesTest < Minitest::Test
     assert_equal expected, @creatures.ratios
   end
 
-  def test_can_get_scale_factors_for_hunter_prey_encounters
-    expected = {"coyote"=>4.7, "rabbit"=>20, "fertile_critter"=>2.4}
-    assert_equal expected, @creatures.scale_factors
-  end
-
   private
     def creature_ages(creatures)
       creatures.census.reduce({}) do |h, (species, list)|
